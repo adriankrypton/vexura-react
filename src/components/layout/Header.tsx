@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Server } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -30,35 +30,85 @@ function MobileNavLink({ href, children }: NavLinkProps) {
   );
 }
 
+function DropdownNavLink({ title, items }: { title: string; items: { label: string; href: string }[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="relative group" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
+      <button className="text-gray-600 hover:text-primary transition-colors font-medium">
+        {title}
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-100"
+          >
+            {items.map((item, index) => (
+              <Link
+                key={index}
+                to={item.href}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 hover:text-primary transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const infoPages = [
+    { label: 'Elterninformationen', href: '/info/parents' },
+    { label: 'Rechenzentrum', href: '/info/datacenter' },
+    { label: 'Zahlungsmethoden', href: '/info/payment' },
+    { label: 'Infrastruktur', href: '/info/infrastructure' },
+    { label: 'Reselling', href: '/info/reselling' },
+    { label: 'Partner', href: '/info/partners' }
+  ];
+
+  const products = [
+    { label: 'RootServer / KVM', href: '/products/root-server' },
+    { label: 'Domains', href: '/products/domains' },
+    { label: 'GameServer', href: '/products/game-server' },
+    { label: 'Webspaces', href: '/products/webspaces' },
+    { label: 'Teamspeak Server', href: '/products/teamspeak' },
+    { label: 'Storageboxen', href: '/products/storage' },
+    { label: 'Dedicated Server', href: '/products/dedicated' }
+  ];
+
+  const legal = [
+    { label: 'Impressum', href: '/legal/imprint' },
+    { label: 'Datenschutz', href: '/legal/privacy' },
+    { label: 'AGB', href: '/legal/terms' }
+  ];
 
   return (
     <header className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2">
-          <Server className="h-8 w-8 text-primary" />
-          <span className="font-display font-bold text-xl text-primary hidden sm:block">
-            Vexura
-          </span>
+        <Link to="/" className="flex items-center">
+          <img src="/img/logo.png" alt="Vexura" className="h-8" />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <NavLink href="/products">Produkte</NavLink>
-          <NavLink href="/infrastructure">Infrastruktur</NavLink>
-          <NavLink href="/about">Über uns</NavLink>
-          <Link 
-            to="/register" 
-            className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-light transition-colors"
-          >
-            Jetzt starten
-          </Link>
+        <div className="hidden lg:flex items-center space-x-6">
+          <NavLink href="/">Startseite</NavLink>
+          <DropdownNavLink title="Infoseiten" items={infoPages} />
+          <DropdownNavLink title="Produkte" items={products} />
+          <DropdownNavLink title="Legal" items={legal} />
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -77,18 +127,37 @@ export function Header() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden bg-white border-b border-gray-200"
+            className="lg:hidden bg-white border-b border-gray-200"
           >
             <div className="container mx-auto px-4 py-4 space-y-4">
-              <MobileNavLink href="/products">Produkte</MobileNavLink>
-              <MobileNavLink href="/infrastructure">Infrastruktur</MobileNavLink>
-              <MobileNavLink href="/about">Über uns</MobileNavLink>
-              <Link 
-                to="/register"
-                className="block w-full bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-light transition-colors text-center"
-              >
-                Jetzt starten
-              </Link>
+              <MobileNavLink href="/">Startseite</MobileNavLink>
+              
+              <div className="py-2">
+                <p className="font-semibold mb-2">Infoseiten</p>
+                {infoPages.map((item, index) => (
+                  <MobileNavLink key={index} href={item.href}>
+                    {item.label}
+                  </MobileNavLink>
+                ))}
+              </div>
+
+              <div className="py-2">
+                <p className="font-semibold mb-2">Produkte</p>
+                {products.map((item, index) => (
+                  <MobileNavLink key={index} href={item.href}>
+                    {item.label}
+                  </MobileNavLink>
+                ))}
+              </div>
+
+              <div className="py-2">
+                <p className="font-semibold mb-2">Legal</p>
+                {legal.map((item, index) => (
+                  <MobileNavLink key={index} href={item.href}>
+                    {item.label}
+                  </MobileNavLink>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
