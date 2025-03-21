@@ -59,7 +59,7 @@ export function Footer() {
 
             {/* Info Pages */}
             <div>
-              <h3 className="font-display text-lg font-semibold mb-4">Infoseiten</h3>
+              <h3 className="font-display text-lg font-semibold mb-4">Informationen</h3>
               <ul className="space-y-2">
                 {infoPages.map((item, index) => (
                   <li key={index}>

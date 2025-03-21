@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 interface NavLinkProps {
   href: string;
@@ -65,6 +65,17 @@ function DropdownNavLink({ title, items }: { title: string; items: { label: stri
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const products = [
+    { label: 'KVM Root Server', href: '/products/root-server' },
+    { label: 'Dedicated Server', href: '/products/dedicated' },
+    { label: 'Webspaces', href: '/products/webspaces' },
+    { label: 'Domains', href: '/products/domains' },
+    { label: 'Game Server', href: '/products/game-server' },
+    { label: 'Teamspeak Server', href: '/products/teamspeak' },
+    { label: 'Storageboxen', href: '/products/storage' }
+  ];
 
   const infoPages = [
     { label: 'Elterninformationen', href: '/info/parents' },
@@ -75,21 +86,16 @@ export function Header() {
     { label: 'Partner', href: '/info/partners' }
   ];
 
-  const products = [
-    { label: 'RootServer / KVM', href: '/products/root-server' },
-    { label: 'Domains', href: '/products/domains' },
-    { label: 'GameServer', href: '/products/game-server' },
-    { label: 'Webspaces', href: '/products/webspaces' },
-    { label: 'Teamspeak Server', href: '/products/teamspeak' },
-    { label: 'Storageboxen', href: '/products/storage' },
-    { label: 'Dedicated Server', href: '/products/dedicated' }
-  ];
-
   const legal = [
     { label: 'Impressum', href: '/legal/imprint' },
     { label: 'Datenschutz', href: '/legal/privacy' },
     { label: 'AGB', href: '/legal/terms' }
   ];
+
+  // Update document title based on current route
+  const currentPage = location.pathname.split('/').pop();
+  const pageTitle = currentPage ? `Vexure | ${currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}` : 'Vexure';
+  document.title = pageTitle;
 
   return (
     <header className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
@@ -101,8 +107,8 @@ export function Header() {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-6">
           <NavLink href="/">Startseite</NavLink>
-          <DropdownNavLink title="Infoseiten" items={infoPages} />
           <DropdownNavLink title="Produkte" items={products} />
+          <DropdownNavLink title="Info" items={infoPages} />
           <DropdownNavLink title="Legal" items={legal} />
         </div>
 
@@ -133,8 +139,8 @@ export function Header() {
               <MobileNavLink href="/">Startseite</MobileNavLink>
               
               <div className="py-2">
-                <p className="font-semibold mb-2">Infoseiten</p>
-                {infoPages.map((item, index) => (
+                <p className="font-semibold mb-2">Produkte</p>
+                {products.map((item, index) => (
                   <MobileNavLink key={index} href={item.href}>
                     {item.label}
                   </MobileNavLink>
@@ -142,8 +148,8 @@ export function Header() {
               </div>
 
               <div className="py-2">
-                <p className="font-semibold mb-2">Produkte</p>
-                {products.map((item, index) => (
+                <p className="font-semibold mb-2">Info</p>
+                {infoPages.map((item, index) => (
                   <MobileNavLink key={index} href={item.href}>
                     {item.label}
                   </MobileNavLink>

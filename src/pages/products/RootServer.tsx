@@ -1,6 +1,93 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Server, Cpu, HardDrive, Map } from 'lucide-react';
+
+interface Package {
+  name: string;
+  price: number;
+  cpu: number;
+  ram: number;
+  storage: number;
+  bandwidth: string;
+}
+
+interface ConfiguratorState {
+  cpu: number;
+  ram: number;
+  storage: number;
+  location: string;
+}
 
 export function RootServer() {
+  const [config, setConfig] = useState<ConfiguratorState>({
+    cpu: 2,
+    ram: 4,
+    storage: 50,
+    location: 'frankfurt'
+  });
+
+  const packages: Package[] = [
+    {
+      name: 'Starter',
+      price: 9.99,
+      cpu: 2,
+      ram: 4,
+      storage: 50,
+      bandwidth: '1 Gbit/s'
+    },
+    {
+      name: 'Professional',
+      price: 19.99,
+      cpu: 4,
+      ram: 8,
+      storage: 100,
+      bandwidth: '1 Gbit/s'
+    },
+    {
+      name: 'Business',
+      price: 39.99,
+      cpu: 8,
+      ram: 16,
+      storage: 200,
+      bandwidth: '1 Gbit/s'
+    },
+    {
+      name: 'Enterprise',
+      price: 79.99,
+      cpu: 16,
+      ram: 32,
+      storage: 400,
+      bandwidth: '1 Gbit/s'
+    }
+  ];
+
+  const calculatePrice = () => {
+    return (
+      config.cpu * 5 +
+      config.ram * 2 +
+      config.storage * 0.1
+    ).toFixed(2);
+  };
+
+  const faqs = [
+    {
+      question: 'Was ist ein KVM Root Server?',
+      answer: 'Ein KVM Root Server ist ein virtueller Server mit garantierten Ressourcen und voller Root-Zugriff. Sie haben die komplette Kontrolle über Ihr System und können es nach Ihren Wünschen konfigurieren.'
+    },
+    {
+      question: 'Welche Betriebssysteme werden unterstützt?',
+      answer: 'Wir unterstützen alle gängigen Linux-Distributionen (Ubuntu, Debian, CentOS, etc.) sowie Windows Server. Sie können das Betriebssystem jederzeit neu installieren.'
+    },
+    {
+      question: 'Wie schnell ist die Bereitstellung?',
+      answer: 'Die Bereitstellung Ihres KVM Root Servers erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.'
+    },
+    {
+      question: 'Gibt es eine Mindestvertragslaufzeit?',
+      answer: 'Nein, unsere Server können monatlich gekündigt werden. Wir bieten auch Rabatte bei längerer Vertragsbindung an.'
+    }
+  ];
+
   return (
     <div className="container mx-auto px-4 py-12">
       <motion.div
@@ -8,11 +95,166 @@ export function RootServer() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-4xl font-display font-bold mb-8">Root Server / KVM</h1>
-        <div className="prose max-w-none">
-          <p className="text-lg text-gray-600 mb-6">
-            Unsere Root Server und KVM-Lösungen.
-          </p>
+        <h1 className="text-4xl font-display font-bold mb-8">KVM Root Server</h1>
+        
+        {/* Packages */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          {packages.map((pkg, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:border-primary/20"
+            >
+              <h3 className="text-xl font-semibold mb-4">{pkg.name}</h3>
+              <p className="text-3xl font-bold mb-6">{pkg.price} €<span className="text-sm font-normal">/Monat</span></p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center">
+                  <Cpu className="h-5 w-5 text-primary mr-2" />
+                  {pkg.cpu} Kerne
+                </li>
+                <li className="flex items-center">
+                  <Server className="h-5 w-5 text-primary mr-2" />
+                  {pkg.ram} GB RAM
+                </li>
+                <li className="flex items-center">
+                  <HardDrive className="h-5 w-5 text-primary mr-2" />
+                  {pkg.storage} GB SSD
+                </li>
+                <li className="flex items-center">
+                  <Map className="h-5 w-5 text-primary mr-2" />
+                  {pkg.bandwidth}
+                </li>
+              </ul>
+              <button className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition-colors">
+                Jetzt bestellen
+              </button>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Configurator */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-16">
+          <h2 className="text-2xl font-semibold mb-6">Server Konfigurator</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  CPU Kerne
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="32"
+                  value={config.cpu}
+                  onChange={(e) => setConfig({ ...config, cpu: parseInt(e.target.value) })}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>1 Kern</span>
+                  <span>{config.cpu} Kerne</span>
+                  <span>32 Kerne</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  RAM
+                </label>
+                <input
+                  type="range"
+                  min="2"
+                  max="64"
+                  step="2"
+                  value={config.ram}
+                  onChange={(e) => setConfig({ ...config, ram: parseInt(e.target.value) })}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>2 GB</span>
+                  <span>{config.ram} GB</span>
+                  <span>64 GB</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Speicher (SSD)
+                </label>
+                <input
+                  type="range"
+                  min="25"
+                  max="1000"
+                  step="25"
+                  value={config.storage}
+                  onChange={(e) => setConfig({ ...config, storage: parseInt(e.target.value) })}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>25 GB</span>
+                  <span>{config.storage} GB</span>
+                  <span>1000 GB</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Standort
+                </label>
+                <select
+                  value={config.location}
+                  onChange={(e) => setConfig({ ...config, location: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                >
+                  <option value="frankfurt">Frankfurt</option>
+                  <option value="berlin">Berlin</option>
+                  <option value="munich">München</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Ihre Konfiguration</h3>
+              <ul className="space-y-3 mb-6">
+                <li className="flex justify-between">
+                  <span>CPU:</span>
+                  <span>{config.cpu} Kerne</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>RAM:</span>
+                  <span>{config.ram} GB</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Speicher:</span>
+                  <span>{config.storage} GB SSD</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Standort:</span>
+                  <span>{config.location}</span>
+                </li>
+              </ul>
+              <div className="text-2xl font-bold mb-4">
+                {calculatePrice()} €<span className="text-sm font-normal">/Monat</span>
+              </div>
+              <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors">
+                Jetzt bestellen
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-semibold mb-6">Häufig gestellte Fragen</h2>
+          <div className="space-y-6">
+            {faqs.map((faq, index) => (
+              <div key={index}>
+                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+                <p className="text-gray-600">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </motion.div>
     </div>
