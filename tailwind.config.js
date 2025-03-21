@@ -12,6 +12,10 @@ export default {
           turquoise: '#00BCD4',
           ice: '#E3F2FD',
         },
+        footer: {
+          from: '#7FB069',
+          to: '#C6E377',
+        }
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
@@ -30,6 +34,9 @@ export default {
           '0%': { transform: 'translateY(10px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
+      },
+      backgroundImage: {
+        'grid-white': 'linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
       },
     },
   },

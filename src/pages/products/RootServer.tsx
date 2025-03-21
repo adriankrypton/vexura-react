@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Server, Cpu, HardDrive, Map } from 'lucide-react';
+import { Server, Cpu, HardDrive, Map, Shield, Gauge, Globe } from 'lucide-react';
 
 interface Package {
   name: string;
@@ -61,6 +61,24 @@ export function RootServer() {
     }
   ];
 
+  const features = [
+    {
+      icon: Shield,
+      title: 'DDoS Protection',
+      description: 'Automatischer Schutz vor DDoS-Angriffen'
+    },
+    {
+      icon: Gauge,
+      title: 'High Performance',
+      description: 'SSD Speicher & High-End Hardware'
+    },
+    {
+      icon: Globe,
+      title: 'Beste Anbindung',
+      description: 'Multiple Carrier & niedrige Latenz'
+    }
+  ];
+
   const calculatePrice = () => {
     return (
       config.cpu * 5 +
@@ -89,14 +107,44 @@ export function RootServer() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1 className="text-4xl font-display font-bold mb-8">KVM Root Server</h1>
-        
+    <div>
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-r from-primary to-primary-light overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
+        <div className="container mx-auto px-4 py-24 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-3xl text-white"
+          >
+            <h1 className="text-5xl font-display font-bold mb-6">
+              KVM Root Server
+            </h1>
+            <p className="text-xl mb-8 text-white/90">
+              Maximale Performance und volle Kontrolle: Unsere KVM Root Server bieten Ihnen die perfekte Basis für Ihre Projekte.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-lg p-6"
+                >
+                  <feature.icon className="h-8 w-8 text-accent-turquoise mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-white/80">{feature.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
         {/* Packages */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {packages.map((pkg, index) => (
@@ -105,10 +153,10 @@ export function RootServer() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:border-primary/20"
+              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:border-primary/20 hover:shadow-xl transition-all"
             >
               <h3 className="text-xl font-semibold mb-4">{pkg.name}</h3>
-              <p className="text-3xl font-bold mb-6">{pkg.price} €<span className="text-sm font-normal">/Monat</span></p>
+              <p className="text-3xl font-bold mb-6 text-primary">{pkg.price} €<span className="text-sm font-normal text-gray-600">/Monat</span></p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center">
                   <Cpu className="h-5 w-5 text-primary mr-2" />
@@ -127,7 +175,7 @@ export function RootServer() {
                   {pkg.bandwidth}
                 </li>
               </ul>
-              <button className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition-colors">
+              <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors">
                 Jetzt bestellen
               </button>
             </motion.div>
@@ -135,7 +183,7 @@ export function RootServer() {
         </div>
 
         {/* Configurator */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-16">
+        <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg p-8 mb-16 border border-gray-100">
           <h2 className="text-2xl font-semibold mb-6">Server Konfigurator</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
@@ -149,7 +197,7 @@ export function RootServer() {
                   max="32"
                   value={config.cpu}
                   onChange={(e) => setConfig({ ...config, cpu: parseInt(e.target.value) })}
-                  className="w-full"
+                  className="w-full accent-primary"
                 />
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>1 Kern</span>
@@ -169,7 +217,7 @@ export function RootServer() {
                   step="2"
                   value={config.ram}
                   onChange={(e) => setConfig({ ...config, ram: parseInt(e.target.value) })}
-                  className="w-full"
+                  className="w-full accent-primary"
                 />
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>2 GB</span>
@@ -189,7 +237,7 @@ export function RootServer() {
                   step="25"
                   value={config.storage}
                   onChange={(e) => setConfig({ ...config, storage: parseInt(e.target.value) })}
-                  className="w-full"
+                  className="w-full accent-primary"
                 />
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>25 GB</span>
@@ -205,7 +253,7 @@ export function RootServer() {
                 <select
                   value={config.location}
                   onChange={(e) => setConfig({ ...config, location: e.target.value })}
-                  className="w-full border border-gray-300 rounded-lg p-2"
+                  className="w-full border border-gray-300 rounded-lg p-2 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
                 >
                   <option value="frankfurt">Frankfurt</option>
                   <option value="berlin">Berlin</option>
@@ -214,28 +262,28 @@ export function RootServer() {
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
+            <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
               <h3 className="text-xl font-semibold mb-4">Ihre Konfiguration</h3>
               <ul className="space-y-3 mb-6">
                 <li className="flex justify-between">
                   <span>CPU:</span>
-                  <span>{config.cpu} Kerne</span>
+                  <span className="font-medium">{config.cpu} Kerne</span>
                 </li>
                 <li className="flex justify-between">
                   <span>RAM:</span>
-                  <span>{config.ram} GB</span>
+                  <span className="font-medium">{config.ram} GB</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Speicher:</span>
-                  <span>{config.storage} GB SSD</span>
+                  <span className="font-medium">{config.storage} GB SSD</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Standort:</span>
-                  <span>{config.location}</span>
+                  <span className="font-medium">{config.location}</span>
                 </li>
               </ul>
-              <div className="text-2xl font-bold mb-4">
-                {calculatePrice()} €<span className="text-sm font-normal">/Monat</span>
+              <div className="text-3xl font-bold mb-4 text-primary">
+                {calculatePrice()} €<span className="text-sm font-normal text-gray-600">/Monat</span>
               </div>
               <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors">
                 Jetzt bestellen
@@ -249,14 +297,14 @@ export function RootServer() {
           <h2 className="text-2xl font-semibold mb-6">Häufig gestellte Fragen</h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div key={index}>
-                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+              <div key={index} className="border-b border-gray-100 last:border-0 pb-6 last:pb-0">
+                <h3 className="text-lg font-semibold mb-2 text-primary">{faq.question}</h3>
                 <p className="text-gray-600">{faq.answer}</p>
               </div>
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
