@@ -13,8 +13,8 @@ export default {
           ice: '#E3F2FD',
         },
         footer: {
-          from: '#7FB069',
-          to: '#C6E377',
+          from: '#4286f4',
+          to: '#373B44',
         }
       },
       fontFamily: {
