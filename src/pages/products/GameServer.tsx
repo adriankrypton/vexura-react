@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { Gamepad2, Cpu, Gauge, Shield, Server, Clock, Users } from 'lucide-react';
+import { Gamepad2, Cpu, Gauge, Shield, Server, Clock, Users, Wifi, HardDrive } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface GameServerPlan {
   name: string;
@@ -8,18 +9,66 @@ interface GameServerPlan {
   slots: number;
   cpu: string;
   ram: string;
+  storage: string;
   features: string[];
   recommended?: boolean;
 }
 
-export function GameServer() {
-  const [selectedGame, setSelectedGame] = useState('minecraft');
+interface Game {
+  id: string;
+  name: string;
+  icon: string;
+  image: string;
+  price: number;
+  platforms: string[];
+  minSlots: number;
+  maxSlots: number;
+}
 
-  const games = [
-    { id: 'minecraft', name: 'Minecraft', icon: '🎮' },
-    { id: 'valheim', name: 'Valheim', icon: '⚔️' },
-    { id: 'ark', name: 'ARK', icon: '🦖' },
-    { id: 'csgo', name: 'CS:GO', icon: '🎯' },
+export function GameServer() {
+  const [selectedGame, setSelectedGame] = useState<string | null>(null);
+
+  const games: Game[] = [
+    {
+      id: 'minecraft-java',
+      name: 'Minecraft Java Edition',
+      icon: '⛏️',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80',
+      price: 2.00,
+      platforms: ['windows'],
+      minSlots: 4,
+      maxSlots: 100
+    },
+    {
+      id: 'minecraft-bedrock',
+      name: 'Minecraft Bedrock',
+      icon: '🏗️',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80',
+      price: 1.50,
+      platforms: ['windows', 'android', 'xbox', 'playstation', 'cross'],
+      minSlots: 4,
+      maxSlots: 50
+    },
+    {
+      id: 'palworld',
+      name: 'Palworld',
+      icon: '🎮',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80',
+      price: 4.00,
+      platforms: ['windows', 'xbox', 'cross'],
+      minSlots: 4,
+      maxSlots: 32
+    },
+    {
+      id: 'zomboid',
+      name: 'Project Zomboid',
+      icon: '🧟',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80',
+      price: 5.40,
+      platforms: ['windows'],
+      minSlots: 4,
+      maxSlots: 64
+    }
   ];
 
   const plans: GameServerPlan[] = [
@@ -29,6 +78,7 @@ export function GameServer() {
       slots: 10,
       cpu: '3.8 GHz',
       ram: '4GB',
+      storage: '50GB SSD',
       features: ['DDoS Protection', 'Backup System', '24/7 Support']
     },
     {
@@ -37,6 +87,7 @@ export function GameServer() {
       slots: 25,
       cpu: '4.2 GHz',
       ram: '8GB',
+      storage: '100GB SSD',
       features: ['DDoS Protection', 'Backup System', '24/7 Support', 'Mod Support', 'Priority Setup'],
       recommended: true
     },
@@ -46,6 +97,7 @@ export function GameServer() {
       slots: 100,
       cpu: '4.5 GHz',
       ram: '16GB',
+      storage: '250GB SSD',
       features: ['DDoS Protection', 'Backup System', '24/7 Support', 'Mod Support', 'Priority Setup', 'Custom Domain']
     }
   ];
@@ -73,6 +125,23 @@ export function GameServer() {
     }
   ];
 
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case 'windows':
+        return '🪟';
+      case 'android':
+        return '📱';
+      case 'xbox':
+        return '🎮';
+      case 'playstation':
+        return '🎮';
+      case 'cross':
+        return '↔️';
+      default:
+        return '💻';
+    }
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -97,21 +166,58 @@ export function GameServer() {
       {/* Game Selection */}
       <div className="container mx-auto px-4 -mt-12 relative z-10">
         <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
-          <h2 className="text-2xl font-semibold mb-6">Wähle dein Spiel</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-semibold">
+              <Gamepad2 className="inline-block mr-2 h-6 w-6 text-primary" />
+              Beliebte Spiele
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {games.map((game) => (
-              <button
+              <Link
                 key={game.id}
-                onClick={() => setSelectedGame(game.id)}
-                className={`p-6 rounded-lg border-2 transition-all ${
-                  selectedGame === game.id
-                    ? 'border-primary bg-primary/5'
-                    : 'border-gray-200 hover:border-primary/50'
-                }`}
+                to={`/products/game-server/${game.id}`}
+                className="block group relative overflow-hidden rounded-lg shadow-lg transform transition-transform hover:-translate-y-1"
               >
-                <div className="text-4xl mb-2">{game.icon}</div>
-                <div className="font-medium">{game.name}</div>
-              </button>
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${game.image})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20" />
+                <div className="relative p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-2xl">{game.icon}</span>
+                    <span className="bg-white/90 text-primary px-2 py-1 rounded text-sm font-medium">
+                      bereits ab {game.price.toFixed(2)} €
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">{game.name}</h3>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {game.platforms.map((platform) => (
+                      <span key={platform} className="text-white/80">
+                        {getPlatformIcon(platform)}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-4 text-sm text-white/80">
+                    <div className="flex items-center">
+                      <Users className="h-4 w-4 mr-1" />
+                      {game.minSlots}-{game.maxSlots} Slots
+                    </div>
+                    <div className="flex items-center">
+                      <HardDrive className="h-4 w-4 mr-1" />
+                      SSD
+                    </div>
+                    <div className="flex items-center">
+                      <Wifi className="h-4 w-4 mr-1" />
+                      DDoS
+                    </div>
+                  </div>
+                  <div className="mt-4 text-center text-white/90 group-hover:text-white transition-colors">
+                    Alle Server ansehen →
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -119,6 +225,9 @@ export function GameServer() {
 
       {/* Plans */}
       <div className="container mx-auto px-4 py-16">
+        <h2 className="text-3xl font-display font-bold text-center mb-12">
+          Unsere Server-Pakete
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
             <motion.div
@@ -153,6 +262,10 @@ export function GameServer() {
                 <li className="flex items-center">
                   <Server className="h-5 w-5 text-primary mr-2" />
                   {plan.ram} RAM
+                </li>
+                <li className="flex items-center">
+                  <HardDrive className="h-5 w-5 text-primary mr-2" />
+                  {plan.storage}
                 </li>
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-center">
