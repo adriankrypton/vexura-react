@@ -109,7 +109,7 @@ export function RootServer() {
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-primary to-primary-light overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#00B4DB] to-[#0083B0] overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
         <div className="container mx-auto px-4 py-24 relative">
