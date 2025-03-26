@@ -30,7 +30,7 @@ export function Footer() {
   return (
     <footer className="relative">
       {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-l from-[#00B4DB] to-[#0083B0] opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#8f94fb] to-[#4e54c8] opacity-90" />
       
       <div className="relative text-white pt-16 pb-12">
         <div className="container mx-auto px-4">
