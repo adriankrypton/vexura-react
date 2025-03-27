@@ -18,7 +18,8 @@ export function Footer() {
     { label: 'Webspaces', href: '/products/webspaces' },
     { label: 'Teamspeak Server', href: '/products/teamspeak' },
     { label: 'Storageboxen', href: '/products/storage' },
-    { label: 'Dedicated Server', href: '/products/dedicated' }
+    { label: 'Dedicated Server', href: '/products/dedicated' },
+    { label: 'Lizenzen', href: '/products/licenses' }
   ];
 
   const legal = [
@@ -102,7 +103,7 @@ export function Footer() {
               </div>
 
               <div>
-                <h3 className="font-display text-lg font-semibold mb-4 text-white">Legal</h3>
+                <h3 className="font-display text-lg font-semibold mb-4 text-white">Rechtliches</h3>
                 <ul className="space-y-2">
                   {legal.map((item, index) => (
                     <li key={index}>

@@ -74,7 +74,8 @@ export function Header() {
     { label: 'Domains', href: '/products/domains' },
     { label: 'Game Server', href: '/products/game-server' },
     { label: 'Teamspeak Server', href: '/products/teamspeak' },
-    { label: 'Storageboxen', href: '/products/storage' }
+    { label: 'Storageboxen', href: '/products/storage' },
+    { label: 'Lizenzen', href: '/products/licenses' }
   ];
 
   const infoPages = [
@@ -109,7 +110,7 @@ export function Header() {
           <NavLink href="/">Startseite</NavLink>
           <DropdownNavLink title="Produkte" items={products} />
           <DropdownNavLink title="Info" items={infoPages} />
-          <DropdownNavLink title="Legal" items={legal} />
+          <DropdownNavLink title="Rechtliches" items={legal} />
         </div>
 
         {/* Mobile Menu Button */}
@@ -157,7 +158,7 @@ export function Header() {
               </div>
 
               <div className="py-2">
-                <p className="font-semibold mb-2">Legal</p>
+                <p className="font-semibold mb-2">Rechtliches</p>
                 {legal.map((item, index) => (
                   <MobileNavLink key={index} href={item.href}>
                     {item.label}

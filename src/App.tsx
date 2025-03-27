@@ -15,6 +15,7 @@ import { Webspaces } from './pages/products/Webspaces';
 import { Teamspeak } from './pages/products/Teamspeak';
 import { Storage } from './pages/products/Storage';
 import { DedicatedServer } from './pages/products/DedicatedServer';
+import { Licenses } from './pages/products/Licenses';
 import { Imprint } from './pages/legal/Imprint';
 import { Privacy } from './pages/legal/Privacy';
 import { Terms } from './pages/legal/Terms';
@@ -44,6 +45,7 @@ function App() {
             <Route path="/products/teamspeak" element={<Teamspeak />} />
             <Route path="/products/storage" element={<Storage />} />
             <Route path="/products/dedicated" element={<DedicatedServer />} />
+            <Route path="/products/licenses" element={<Licenses />} />
             
             {/* Legal Pages */}
             <Route path="/legal/imprint" element={<Imprint />} />
