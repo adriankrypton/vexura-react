@@ -67,15 +67,24 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  const products = [
+  const serverProducts = [
     { label: 'KVM Root Server', href: '/products/root-server' },
     { label: 'Dedicated Server', href: '/products/dedicated' },
-    { label: 'Webspaces', href: '/products/webspaces' },
-    { label: 'Domains', href: '/products/domains' },
     { label: 'Game Server', href: '/products/game-server' },
-    { label: 'Teamspeak Server', href: '/products/teamspeak' },
-    { label: 'Storageboxen', href: '/products/storage' },
-    { label: 'Lizenzen', href: '/products/licenses' }
+    { label: 'Teamspeak Server', href: '/products/teamspeak' }
+  ];
+
+  const webhosting = [
+    { label: 'Webspaces', href: '/products/webspaces' },
+    { label: 'Domains', href: '/products/domains' }
+  ];
+
+  const services = [
+    { label: 'Storageboxen', href: '/products/storage' }
+  ];
+
+  const licenses = [
+    { label: 'Plesk Lizenzen', href: '/products/licenses' }
   ];
 
   const infoPages = [
@@ -108,7 +117,10 @@ export function Header() {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-6">
           <NavLink href="/">Startseite</NavLink>
-          <DropdownNavLink title="Produkte" items={products} />
+          <DropdownNavLink title="Server" items={serverProducts} />
+          <DropdownNavLink title="Webhosting" items={webhosting} />
+          <DropdownNavLink title="Dienste" items={services} />
+          <DropdownNavLink title="Lizenzen" items={licenses} />
           <DropdownNavLink title="Info" items={infoPages} />
           <DropdownNavLink title="Rechtliches" items={legal} />
         </div>
@@ -140,8 +152,35 @@ export function Header() {
               <MobileNavLink href="/">Startseite</MobileNavLink>
               
               <div className="py-2">
-                <p className="font-semibold mb-2">Produkte</p>
-                {products.map((item, index) => (
+                <p className="font-semibold mb-2">Server</p>
+                {serverProducts.map((item, index) => (
+                  <MobileNavLink key={index} href={item.href}>
+                    {item.label}
+                  </MobileNavLink>
+                ))}
+              </div>
+
+              <div className="py-2">
+                <p className="font-semibold mb-2">Webhosting</p>
+                {webhosting.map((item, index) => (
+                  <MobileNavLink key={index} href={item.href}>
+                    {item.label}
+                  </MobileNavLink>
+                ))}
+              </div>
+
+              <div className="py-2">
+                <p className="font-semibold mb-2">Dienste</p>
+                {services.map((item, index) => (
+                  <MobileNavLink key={index} href={item.href}>
+                    {item.label}
+                  </MobileNavLink>
+                ))}
+              </div>
+
+              <div className="py-2">
+                <p className="font-semibold mb-2">Lizenzen</p>
+                {licenses.map((item, index) => (
                   <MobileNavLink key={index} href={item.href}>
                     {item.label}
                   </MobileNavLink>
