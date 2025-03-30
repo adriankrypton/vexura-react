@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Server, Shield, Gauge, Globe, Code, Database, Clock, Users } from 'lucide-react';
+import { HardDrive, Shield, Gauge, Globe, Code, Database, Clock, Users } from 'lucide-react';
 
 interface WebspaceFeature {
   icon: any;
@@ -103,10 +103,29 @@ export function Webspaces() {
     }
   ];
 
+  const faqs = [
+    {
+      question: 'Wie schnell ist mein Webspace verfügbar?',
+      answer: 'Nach erfolgreicher Bestellung wird Ihr Webspace innerhalb weniger Minuten automatisch eingerichtet.'
+    },
+    {
+      question: 'Kann ich eine bestehende Website umziehen?',
+      answer: 'Ja, wir unterstützen Sie beim Umzug Ihrer Website. Unser Support-Team hilft Ihnen gerne dabei.'
+    },
+    {
+      question: 'Welche PHP-Versionen werden unterstützt?',
+      answer: 'Wir unterstützen alle aktuellen PHP-Versionen von 7.4 bis 8.3. Sie können die Version jederzeit wechseln.'
+    },
+    {
+      question: 'Sind Backups inklusive?',
+      answer: 'Ja, wir erstellen automatisch tägliche Backups Ihrer Daten und bewahren diese 30 Tage lang auf.'
+    }
+  ];
+
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#00B4DB] to-[#0083B0] py-24">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-4 relative">
           <motion.div
@@ -143,7 +162,7 @@ export function Webspaces() {
               transition={{ delay: index * 0.1 }}
               className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
             >
-              <feature.icon className="h-12 w-12 text-[#00B4DB] mb-4" />
+              <feature.icon className="h-12 w-12 text-[#0B3D91] mb-4" />
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </motion.div>
@@ -165,12 +184,12 @@ export function Webspaces() {
               transition={{ delay: index * 0.1 }}
               className={`relative bg-white rounded-xl shadow-lg p-8 border-2 ${
                 plan.recommended
-                  ? 'border-[#00B4DB]'
+                  ? 'border-[#0B3D91]'
                   : 'border-gray-100'
               }`}
             >
               {plan.recommended && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#00B4DB] text-white px-4 py-1 rounded-full text-sm font-medium">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0B3D91] text-white px-4 py-1 rounded-full text-sm font-medium">
                   Empfohlen
                 </div>
               )}
@@ -180,27 +199,27 @@ export function Webspaces() {
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center">
-                  <Server className="h-5 w-5 text-[#00B4DB] mr-2" />
+                  <Server className="h-5 w-5 text-[#0B3D91] mr-2" />
                   {plan.storage} SSD Speicher
                 </li>
                 <li className="flex items-center">
-                  <Globe className="h-5 w-5 text-[#00B4DB] mr-2" />
+                  <Globe className="h-5 w-5 text-[#0B3D91] mr-2" />
                   {plan.domains}
                 </li>
                 <li className="flex items-center">
-                  <Database className="h-5 w-5 text-[#00B4DB] mr-2" />
+                  <Database className="h-5 w-5 text-[#0B3D91] mr-2" />
                   {plan.databases}
                 </li>
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-center">
-                    <div className="h-5 w-5 text-[#00B4DB] mr-2">✓</div>
+                    <div className="h-5 w-5 text-[#0B3D91] mr-2">✓</div>
                     {feature}
                   </li>
                 ))}
               </ul>
               <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
                 plan.recommended
-                  ? 'bg-[#00B4DB] text-white hover:bg-[#0083B0]'
+                  ? 'bg-[#0B3D91] text-white hover:bg-[#1E88E5]'
                   : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
               }`}>
                 Jetzt bestellen
@@ -234,21 +253,17 @@ export function Webspaces() {
 
       {/* FAQ Section */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-display font-bold text-center mb-12">
-          Häufig gestellte Fragen
-        </h2>
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Wie schnell ist mein Webspace verfügbar?</h3>
-            <p className="text-gray-600">Nach erfolgreicher Bestellung wird Ihr Webspace innerhalb weniger Minuten automatisch eingerichtet.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Kann ich eine bestehende Website umziehen?</h3>
-            <p className="text-gray-600">Ja, wir unterstützen Sie beim Umzug Ihrer Website. Unser Support-Team hilft Ihnen gerne dabei.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Welche PHP-Versionen werden unterstützt?</h3>
-            <p className="text-gray-600">Wir unterstützen alle aktuellen PHP-Versionen von 7.4 bis 8.3. Sie können die Version jederzeit wechseln.</p>
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+          <h2 className="text-3xl font-display font-bold text-center mb-12">
+            Häufig gestellte Fragen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+                <p className="text-white/90">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -62,6 +62,25 @@ export function Storage() {
     }
   ];
 
+  const faqs = [
+    {
+      question: 'Wie sicher sind meine Daten?',
+      answer: 'Ihre Daten werden mit AES-256 verschlüsselt und in mehreren Rechenzentren redundant gespeichert.'
+    },
+    {
+      question: 'Welche Zugriffsmöglichkeiten gibt es?',
+      answer: 'Sie können über WebDAV, FTP, SFTP oder unsere Web-Oberfläche auf Ihre Daten zugreifen.'
+    },
+    {
+      question: 'Gibt es Backup-Systeme?',
+      answer: 'Ja, wir erstellen automatisch tägliche Backups Ihrer Daten und bewahren diese 30 Tage lang auf.'
+    },
+    {
+      question: 'Wie funktioniert die Abrechnung?',
+      answer: 'Sie zahlen nur für den tatsächlich genutzten Speicherplatz. Die Abrechnung erfolgt monatlich.'
+    }
+  ];
+
   const calculatePrice = () => {
     return (storageSize * 0.05).toFixed(2);
   };
@@ -69,7 +88,7 @@ export function Storage() {
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-primary to-primary-light py-24">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-4 relative">
           <motion.div
@@ -223,6 +242,23 @@ export function Storage() {
             <Download className="h-12 w-12 text-primary mb-4" />
             <h3 className="text-xl font-semibold mb-2">Cloud Storage</h3>
             <p className="text-gray-600">Greife von überall auf deine Daten zu.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+          <h2 className="text-3xl font-display font-bold text-center mb-12">
+            Häufig gestellte Fragen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+                <p className="text-white/90">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

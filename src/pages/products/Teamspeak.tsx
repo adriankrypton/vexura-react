@@ -33,10 +33,29 @@ export function Teamspeak() {
     }
   ];
 
+  const faqs = [
+    {
+      question: 'Wie schnell ist mein TeamSpeak Server verfügbar?',
+      answer: 'Dein TeamSpeak Server wird sofort nach der Bestellung automatisch eingerichtet und ist innerhalb weniger Sekunden verfügbar.'
+    },
+    {
+      question: 'Kann ich die Anzahl der Slots später ändern?',
+      answer: 'Ja, du kannst die Anzahl der Slots jederzeit erhöhen oder verringern. Die Änderung wird sofort wirksam.'
+    },
+    {
+      question: 'Welche TeamSpeak Version wird unterstützt?',
+      answer: 'Wir unterstützen die neueste TeamSpeak 3 Version und halten deinen Server immer automatisch aktuell.'
+    },
+    {
+      question: 'Gibt es eine Mindestlaufzeit?',
+      answer: 'Nein, du kannst monatlich kündigen. Es gibt keine langfristige Vertragsbindung.'
+    }
+  ];
+
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-primary to-primary-light py-24">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-4 relative">
           <motion.div
@@ -142,21 +161,17 @@ export function Teamspeak() {
 
       {/* FAQ Section */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-display font-bold text-center mb-12">
-          Häufig gestellte Fragen
-        </h2>
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Wie schnell ist mein TeamSpeak Server verfügbar?</h3>
-            <p className="text-gray-600">Dein TeamSpeak Server wird sofort nach der Bestellung automatisch eingerichtet und ist innerhalb weniger Sekunden verfügbar.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Kann ich die Anzahl der Slots später ändern?</h3>
-            <p className="text-gray-600">Ja, du kannst die Anzahl der Slots jederzeit erhöhen oder verringern. Die Änderung wird sofort wirksam.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Welche TeamSpeak Version wird unterstützt?</h3>
-            <p className="text-gray-600">Wir unterstützen die neueste TeamSpeak 3 Version und halten deinen Server immer automatisch aktuell.</p>
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+          <h2 className="text-3xl font-display font-bold text-center mb-12">
+            Häufig gestellte Fragen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+                <p className="text-white/90">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

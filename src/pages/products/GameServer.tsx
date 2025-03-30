@@ -73,6 +73,25 @@ export function GameServer() {
     }
   ];
 
+  const faqs = [
+    {
+      question: 'Wie schnell ist mein Game Server verfügbar?',
+      answer: 'Nach erfolgreicher Bestellung wird dein Server innerhalb weniger Minuten automatisch eingerichtet und ist sofort einsatzbereit.'
+    },
+    {
+      question: 'Kann ich meinen Server jederzeit upgraden?',
+      answer: 'Ja, du kannst deinen Server jederzeit upgraden oder downgraden. Die Änderungen werden sofort wirksam.'
+    },
+    {
+      question: 'Gibt es eine Mindestvertragslaufzeit?',
+      answer: 'Nein, unsere Server können monatlich gekündigt werden. Es gibt keine langfristige Vertragsbindung.'
+    },
+    {
+      question: 'Welche Spiele werden unterstützt?',
+      answer: 'Wir unterstützen alle gängigen Spiele wie Minecraft, ARK, Valheim, CS:GO und viele mehr. Die Liste wird ständig erweitert.'
+    }
+  ];
+
   return (
     <div>
       {/* Hero Section */}
@@ -199,21 +218,17 @@ export function GameServer() {
 
       {/* FAQ Section */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-display font-bold text-center mb-12">
-          Häufig gestellte Fragen
-        </h2>
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Wie schnell ist mein Server verfügbar?</h3>
-            <p className="text-gray-600">Nach erfolgreicher Bestellung wird dein Server innerhalb weniger Minuten automatisch eingerichtet und ist sofort einsatzbereit.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Kann ich meinen Server jederzeit upgraden?</h3>
-            <p className="text-gray-600">Ja, du kannst deinen Server jederzeit upgraden oder downgraden. Die Änderungen werden sofort wirksam.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Gibt es eine Mindestvertragslaufzeit?</h3>
-            <p className="text-gray-600">Nein, unsere Server können monatlich gekündigt werden. Es gibt keine langfristige Vertragsbindung.</p>
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+          <h2 className="text-3xl font-display font-bold text-center mb-12">
+            Häufig gestellte Fragen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+                <p className="text-white/90">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

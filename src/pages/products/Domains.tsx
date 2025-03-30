@@ -45,10 +45,29 @@ export function Domains() {
     }
   ];
 
+  const faqs = [
+    {
+      question: 'Wie lange dauert die Domain-Registrierung?',
+      answer: 'Die Registrierung erfolgt in der Regel innerhalb weniger Minuten. Bei manchen TLDs kann es bis zu 24 Stunden dauern.'
+    },
+    {
+      question: 'Kann ich meine bestehende Domain umziehen?',
+      answer: 'Ja, Sie können Ihre bestehende Domain zu uns transferieren. Wir unterstützen Sie beim gesamten Prozess.'
+    },
+    {
+      question: 'Welche Zahlungsmethoden werden akzeptiert?',
+      answer: 'Wir akzeptieren alle gängigen Zahlungsmethoden wie Kreditkarte, PayPal, Überweisung und mehr.'
+    },
+    {
+      question: 'Sind SSL-Zertifikate inklusive?',
+      answer: 'Ja, für alle Domains bieten wir kostenlose Let\'s Encrypt SSL-Zertifikate an.'
+    }
+  ];
+
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-primary to-primary-light py-24">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-4 relative">
           <motion.div
@@ -75,10 +94,10 @@ export function Domains() {
                 />
                 <button
                   onClick={() => setSearchActive(true)}
-                  className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-light transition-colors flex items-center"
+                  className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-light transition-colors flex items-center group"
                 >
                   Suchen
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
@@ -174,21 +193,17 @@ export function Domains() {
 
       {/* FAQ Section */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-display font-bold text-center mb-12">
-          Häufig gestellte Fragen
-        </h2>
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Wie lange dauert die Domain-Registrierung?</h3>
-            <p className="text-gray-600">Die Registrierung erfolgt in der Regel innerhalb weniger Minuten. Bei manchen TLDs kann es bis zu 24 Stunden dauern.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Kann ich meine bestehende Domain umziehen?</h3>
-            <p className="text-gray-600">Ja, Sie können Ihre bestehende Domain zu uns transferieren. Wir unterstützen Sie beim gesamten Prozess.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Welche Zahlungsmethoden werden akzeptiert?</h3>
-            <p className="text-gray-600">Wir akzeptieren alle gängigen Zahlungsmethoden wie Kreditkarte, PayPal, Überweisung und mehr.</p>
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+          <h2 className="text-3xl font-display font-bold text-center mb-12">
+            Häufig gestellte Fragen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+                <p className="text-white/90">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

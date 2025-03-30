@@ -109,7 +109,7 @@ export function RootServer() {
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#00B4DB] to-[#0083B0] overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
         <div className="container mx-auto px-4 py-24 relative">
@@ -293,13 +293,13 @@ export function RootServer() {
         </div>
 
         {/* FAQ Section */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-2xl font-semibold mb-6">Häufig gestellte Fragen</h2>
-          <div className="space-y-6">
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+          <h2 className="text-2xl font-semibold mb-6 text-center">Häufig gestellte Fragen</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-100 last:border-0 pb-6 last:pb-0">
-                <h3 className="text-lg font-semibold mb-2 text-primary">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
+                <p className="text-white/90">{faq.answer}</p>
               </div>
             ))}
           </div>
