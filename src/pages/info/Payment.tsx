@@ -52,7 +52,7 @@ export function Payment() {
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#00B4DB] to-[#0083B0] py-24">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-4 relative">
           <motion.div

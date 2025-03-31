@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { HardDrive, Shield, Gauge, Globe, Code, Database, Clock, Users } from 'lucide-react';
+import { HardDrive, Shield, Gauge, Globe, Code, Database, Clock, Users, Server } from 'lucide-react';
 
 interface WebspaceFeature {
   icon: any;
