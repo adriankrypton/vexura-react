@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './pages/HomePage';
@@ -19,43 +20,70 @@ import { Licenses } from './pages/products/Licenses';
 import { Imprint } from './pages/legal/Imprint';
 import { Privacy } from './pages/legal/Privacy';
 import { Terms } from './pages/legal/Terms';
+import { useEffect } from 'react';
+
+function ScrollToTop() {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location]);
+
+  return null;
+}
+
+function PageWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 function App() {
+  const location = useLocation();
+
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow pt-16">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <ScrollToTop />
+      <main className="flex-grow pt-16">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
             
             {/* Info Pages */}
-            <Route path="/info/parents" element={<ParentsInfo />} />
-            <Route path="/info/datacenter" element={<Datacenter />} />
-            <Route path="/info/payment" element={<Payment />} />
-            <Route path="/info/infrastructure" element={<Infrastructure />} />
-            <Route path="/info/reselling" element={<Reselling />} />
-            <Route path="/info/partners" element={<Partners />} />
+            <Route path="/info/parents" element={<PageWrapper><ParentsInfo /></PageWrapper>} />
+            <Route path="/info/datacenter" element={<PageWrapper><Datacenter /></PageWrapper>} />
+            <Route path="/info/payment" element={<PageWrapper><Payment /></PageWrapper>} />
+            <Route path="/info/infrastructure" element={<PageWrapper><Infrastructure /></PageWrapper>} />
+            <Route path="/info/reselling" element={<PageWrapper><Reselling /></PageWrapper>} />
+            <Route path="/info/partners" element={<PageWrapper><Partners /></PageWrapper>} />
             
             {/* Product Pages */}
-            <Route path="/products/root-server" element={<RootServer />} />
-            <Route path="/products/domains" element={<Domains />} />
-            <Route path="/products/game-server" element={<GameServer />} />
-            <Route path="/products/webspaces" element={<Webspaces />} />
-            <Route path="/products/teamspeak" element={<Teamspeak />} />
-            <Route path="/products/storage" element={<Storage />} />
-            <Route path="/products/dedicated" element={<DedicatedServer />} />
-            <Route path="/products/licenses" element={<Licenses />} />
+            <Route path="/products/root-server" element={<PageWrapper><RootServer /></PageWrapper>} />
+            <Route path="/products/domains" element={<PageWrapper><Domains /></PageWrapper>} />
+            <Route path="/products/game-server" element={<PageWrapper><GameServer /></PageWrapper>} />
+            <Route path="/products/webspaces" element={<PageWrapper><Webspaces /></PageWrapper>} />
+            <Route path="/products/teamspeak" element={<PageWrapper><Teamspeak /></PageWrapper>} />
+            <Route path="/products/storage" element={<PageWrapper><Storage /></PageWrapper>} />
+            <Route path="/products/dedicated" element={<PageWrapper><DedicatedServer /></PageWrapper>} />
+            <Route path="/products/licenses" element={<PageWrapper><Licenses /></PageWrapper>} />
             
             {/* Legal Pages */}
-            <Route path="/legal/imprint" element={<Imprint />} />
-            <Route path="/legal/privacy" element={<Privacy />} />
-            <Route path="/legal/terms" element={<Terms />} />
+            <Route path="/legal/imprint" element={<PageWrapper><Imprint /></PageWrapper>} />
+            <Route path="/legal/privacy" element={<PageWrapper><Privacy /></PageWrapper>} />
+            <Route path="/legal/terms" element={<PageWrapper><Terms /></PageWrapper>} />
           </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+        </AnimatePresence>
+      </main>
+      <Footer />
+    </div>
   );
 }
 

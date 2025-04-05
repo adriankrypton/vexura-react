@@ -2,27 +2,49 @@ import { motion } from 'framer-motion';
 import { Gamepad2, Cpu, Gauge, Shield, Server, Clock, Users } from 'lucide-react';
 import { useState } from 'react';
 
-interface GameServerPlan {
+interface Game {
+  id: string;
   name: string;
+  image: string;
   price: number;
-  slots: number;
-  cpu: string;
-  ram: string;
-  features: string[];
-  recommended?: boolean;
+  platforms: string[];
 }
 
 export function GameServer() {
   const [selectedGame, setSelectedGame] = useState('minecraft');
 
-  const games = [
-    { id: 'minecraft', name: 'Minecraft', icon: '🎮' },
-    { id: 'valheim', name: 'Valheim', icon: '⚔️' },
-    { id: 'ark', name: 'ARK', icon: '🦖' },
-    { id: 'csgo', name: 'CS:GO', icon: '🎯' },
+  const games: Game[] = [
+    {
+      id: 'minecraft-java',
+      name: 'Minecraft Java Edition',
+      image: 'https://images.unsplash.com/photo-1627856014754-2246bc00a590?q=80&w=1740&auto=format&fit=crop',
+      price: 2.00,
+      platforms: ['windows', 'mobile']
+    },
+    {
+      id: 'minecraft-bedrock',
+      name: 'Minecraft Bedrock Edition',
+      image: 'https://images.unsplash.com/photo-1627856014754-2246bc00a590?q=80&w=1740&auto=format&fit=crop',
+      price: 1.50,
+      platforms: ['windows', 'mobile', 'xbox', 'playstation', 'switch']
+    },
+    {
+      id: 'csgo',
+      name: 'Counter-Strike 2',
+      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1740&auto=format&fit=crop',
+      price: 2.00,
+      platforms: ['windows']
+    },
+    {
+      id: 'gta5',
+      name: 'alt:V',
+      image: 'https://images.unsplash.com/photo-1544985361-b420d7a77043?q=80&w=1740&auto=format&fit=crop',
+      price: 2.00,
+      platforms: ['windows']
+    }
   ];
 
-  const plans: GameServerPlan[] = [
+  const plans = [
     {
       name: 'Starter',
       price: 4.99,
@@ -115,24 +137,52 @@ export function GameServer() {
 
       {/* Game Selection */}
       <div className="container mx-auto px-4 -mt-12 relative z-10">
-        <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
-          <h2 className="text-2xl font-semibold mb-6">Wähle dein Spiel</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {games.map((game) => (
-              <button
-                key={game.id}
-                onClick={() => setSelectedGame(game.id)}
-                className={`p-6 rounded-lg border-2 transition-all ${
-                  selectedGame === game.id
-                    ? 'border-[#0B3D91] bg-[#0B3D91]/5'
-                    : 'border-gray-200 hover:border-[#0B3D91]/50'
-                }`}
-              >
-                <div className="text-4xl mb-2">{game.icon}</div>
-                <div className="font-medium">{game.name}</div>
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {games.map((game) => (
+            <motion.div
+              key={game.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5 }}
+              className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer group"
+              onClick={() => setSelectedGame(game.id)}
+            >
+              <div className="relative h-48">
+                <div className="absolute inset-0">
+                  <img 
+                    src={game.image} 
+                    alt={game.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/50" />
+                </div>
+                <div className="absolute top-2 left-2">
+                  <div className="bg-white/90 text-primary px-2 py-1 rounded text-sm font-medium">
+                    bereits ab {game.price.toFixed(2)} €
+                  </div>
+                </div>
+                <div className="absolute bottom-2 left-2 flex gap-1">
+                  {game.platforms.map((platform) => (
+                    <div 
+                      key={platform}
+                      className="w-6 h-6 bg-white/90 rounded flex items-center justify-center"
+                    >
+                      {platform === 'windows' && <span>🖥️</span>}
+                      {platform === 'mobile' && <span>📱</span>}
+                      {platform === 'xbox' && <span>🎮</span>}
+                      {platform === 'playstation' && <span>🎮</span>}
+                      {platform === 'switch' && <span>🎮</span>}
+                    </div>
+                  ))}
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <h3 className="text-white text-xl font-bold text-center">
+                    {game.name}
+                  </h3>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
