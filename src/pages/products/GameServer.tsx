@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
-import { Gamepad2, Cpu, Gauge, Shield, Server, Clock, Users } from 'lucide-react';
 import { useState } from 'react';
+import { Users, Shield, Cpu, Server, Clock, Gauge } from 'lucide-react';
 
 interface Game {
   id: string;
   name: string;
   image: string;
   price: number;
-  platforms: string[];
 }
 
 export function GameServer() {
@@ -17,58 +16,26 @@ export function GameServer() {
     {
       id: 'minecraft-java',
       name: 'Minecraft Java Edition',
-      image: 'https://images.unsplash.com/photo-1627856014754-2246bc00a590?q=80&w=1740&auto=format&fit=crop',
-      price: 2.00,
-      platforms: ['windows', 'mobile']
+      image: '/img/minecraftjava.jpg',
+      price: 2.00
     },
     {
       id: 'minecraft-bedrock',
       name: 'Minecraft Bedrock Edition',
-      image: 'https://images.unsplash.com/photo-1627856014754-2246bc00a590?q=80&w=1740&auto=format&fit=crop',
-      price: 1.50,
-      platforms: ['windows', 'mobile', 'xbox', 'playstation', 'switch']
+      image: '/img/mcbedrock.webp',
+      price: 1.50
     },
     {
       id: 'csgo',
       name: 'Counter-Strike 2',
-      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1740&auto=format&fit=crop',
-      price: 2.00,
-      platforms: ['windows']
+      image: '/img/csgo2.webp',
+      price: 2.00
     },
     {
       id: 'gta5',
       name: 'alt:V',
-      image: 'https://images.unsplash.com/photo-1544985361-b420d7a77043?q=80&w=1740&auto=format&fit=crop',
-      price: 2.00,
-      platforms: ['windows']
-    }
-  ];
-
-  const plans = [
-    {
-      name: 'Starter',
-      price: 4.99,
-      slots: 10,
-      cpu: '3.8 GHz',
-      ram: '4GB',
-      features: ['DDoS Protection', 'Backup System', '24/7 Support']
-    },
-    {
-      name: 'Pro',
-      price: 9.99,
-      slots: 25,
-      cpu: '4.2 GHz',
-      ram: '8GB',
-      features: ['DDoS Protection', 'Backup System', '24/7 Support', 'Mod Support', 'Priority Setup'],
-      recommended: true
-    },
-    {
-      name: 'Ultimate',
-      price: 19.99,
-      slots: 100,
-      cpu: '4.5 GHz',
-      ram: '16GB',
-      features: ['DDoS Protection', 'Backup System', '24/7 Support', 'Mod Support', 'Priority Setup', 'Custom Domain']
+      image: '/img/altv.jpg',
+      price: 2.00
     }
   ];
 
@@ -80,37 +47,37 @@ export function GameServer() {
     },
     {
       icon: Cpu,
-      title: 'High-End Hardware',
-      description: 'Neueste Server-Generation'
+      title: 'High Performance',
+      description: 'Beste Sprachqualität'
     },
     {
-      icon: Clock,
-      title: 'Sofortige Aktivierung',
-      description: 'Server in Minuten online'
+      icon: Server,
+      title: 'Eigene Domain',
+      description: 'Kostenlose .ts3.cloud Domain'
     },
     {
-      icon: Gauge,
-      title: 'Anti-Lag System',
-      description: 'Optimierte Performance'
+      icon: Users,
+      title: 'Unbegrenzte Channels',
+      description: 'Keine Channel-Limitierung'
     }
   ];
 
   const faqs = [
     {
-      question: 'Wie schnell ist mein Game Server verfügbar?',
-      answer: 'Nach erfolgreicher Bestellung wird dein Server innerhalb weniger Minuten automatisch eingerichtet und ist sofort einsatzbereit.'
+      question: 'Wie schnell ist mein TeamSpeak Server verfügbar?',
+      answer: 'Dein TeamSpeak Server wird sofort nach der Bestellung automatisch eingerichtet und ist innerhalb weniger Sekunden verfügbar.'
     },
     {
-      question: 'Kann ich meinen Server jederzeit upgraden?',
-      answer: 'Ja, du kannst deinen Server jederzeit upgraden oder downgraden. Die Änderungen werden sofort wirksam.'
+      question: 'Kann ich die Anzahl der Slots später ändern?',
+      answer: 'Ja, du kannst die Anzahl der Slots jederzeit erhöhen oder verringern. Die Änderung wird sofort wirksam.'
     },
     {
-      question: 'Gibt es eine Mindestvertragslaufzeit?',
-      answer: 'Nein, unsere Server können monatlich gekündigt werden. Es gibt keine langfristige Vertragsbindung.'
+      question: 'Welche TeamSpeak Version wird unterstützt?',
+      answer: 'Wir unterstützen die neueste TeamSpeak 3 Version und halten deinen Server immer automatisch aktuell.'
     },
     {
-      question: 'Welche Spiele werden unterstützt?',
-      answer: 'Wir unterstützen alle gängigen Spiele wie Minecraft, ARK, Valheim, CS:GO und viele mehr. Die Liste wird ständig erweitert.'
+      question: 'Gibt es eine Mindestlaufzeit?',
+      answer: 'Nein, du kannst monatlich kündigen. Es gibt keine langfristige Vertragsbindung.'
     }
   ];
 
@@ -161,20 +128,6 @@ export function GameServer() {
                     bereits ab {game.price.toFixed(2)} €
                   </div>
                 </div>
-                <div className="absolute bottom-2 left-2 flex gap-1">
-                  {game.platforms.map((platform) => (
-                    <div 
-                      key={platform}
-                      className="w-6 h-6 bg-white/90 rounded flex items-center justify-center"
-                    >
-                      {platform === 'windows' && <span>🖥️</span>}
-                      {platform === 'mobile' && <span>📱</span>}
-                      {platform === 'xbox' && <span>🎮</span>}
-                      {platform === 'playstation' && <span>🎮</span>}
-                      {platform === 'switch' && <span>🎮</span>}
-                    </div>
-                  ))}
-                </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <h3 className="text-white text-xl font-bold text-center">
                     {game.name}
@@ -186,67 +139,11 @@ export function GameServer() {
         </div>
       </div>
 
-      {/* Plans */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`relative bg-white rounded-xl shadow-lg p-8 border-2 ${
-                plan.recommended
-                  ? 'border-[#0B3D91]'
-                  : 'border-gray-100'
-              }`}
-            >
-              {plan.recommended && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0B3D91] text-white px-4 py-1 rounded-full text-sm font-medium">
-                  Empfohlen
-                </div>
-              )}
-              <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
-              <div className="text-3xl font-bold mb-6">
-                {plan.price} €<span className="text-lg font-normal text-gray-600">/Monat</span>
-              </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center">
-                  <Users className="h-5 w-5 text-[#0B3D91] mr-2" />
-                  {plan.slots} Spieler-Slots
-                </li>
-                <li className="flex items-center">
-                  <Cpu className="h-5 w-5 text-[#0B3D91] mr-2" />
-                  {plan.cpu} CPU
-                </li>
-                <li className="flex items-center">
-                  <Server className="h-5 w-5 text-[#0B3D91] mr-2" />
-                  {plan.ram} RAM
-                </li>
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center">
-                    <div className="h-5 w-5 text-[#0B3D91] mr-2">✓</div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                plan.recommended
-                  ? 'bg-[#0B3D91] text-white hover:bg-[#1E88E5]'
-                  : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-              }`}>
-                Server bestellen
-              </button>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
       {/* Features */}
       <div className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-display font-bold text-center mb-12">
-            Warum unsere Game Server?
+            Inklusive Features
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
@@ -257,7 +154,7 @@ export function GameServer() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white p-6 rounded-xl shadow-md"
               >
-                <feature.icon className="h-12 w-12 text-[#0B3D91] mb-4" />
+                <feature.icon className="h-12 w-12 text-primary mb-4" />
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
               </motion.div>
