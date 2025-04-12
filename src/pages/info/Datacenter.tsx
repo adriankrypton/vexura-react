@@ -1,5 +1,17 @@
 import { motion } from 'framer-motion';
 import { Shield, Server, Zap, Wifi, Cloud, Lock, ThermometerSnowflake, Users } from 'lucide-react';
+import { useState } from 'react';
+
+interface Location {
+  city: string;
+  country: string;
+  lat: string;
+  lng: string;
+  features: string[];
+  certifications: string[];
+  connectivity: string;
+  power: string;
+}
 
 interface Datacenter {
   name: string;
@@ -16,6 +28,8 @@ interface Datacenter {
 }
 
 export function Datacenter() {
+  const [view, setView] = useState<'datacenter' | 'infrastructure'>('datacenter');
+
   const datacenters: Datacenter[] = [
     {
       name: "NorthC",
@@ -95,10 +109,33 @@ export function Datacenter() {
     }
   ];
 
+  const infrastructureFeatures = [
+    {
+      icon: Server,
+      title: 'Hardware',
+      description: 'Hochwertige Server-Hardware von führenden Herstellern für maximale Zuverlässigkeit'
+    },
+    {
+      icon: Cloud,
+      title: 'Netzwerk',
+      description: 'Redundante Netzwerkanbindung mit mehreren 100 GBit/s Uplinks und DDoS-Schutz'
+    },
+    {
+      icon: Lock,
+      title: 'Sicherheit',
+      description: '24/7 Überwachung und mehrstufige Sicherheitssysteme zum Schutz Ihrer Daten'
+    },
+    {
+      icon: Users,
+      title: 'Support',
+      description: 'Kompetenter technischer Support rund um die Uhr für alle Ihre Anliegen'
+    }
+  ];
+
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-[#0B3D91] via-[#1E88E5] to-[#00BCD4] py-24">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-4 relative">
           <motion.div
@@ -107,184 +144,198 @@ export function Datacenter() {
             className="max-w-3xl text-white"
           >
             <h1 className="text-5xl font-display font-bold mb-6">
-              Unsere Rechenzentren
+              {view === 'datacenter' ? 'Unsere Rechenzentren' : 'Unsere Infrastruktur'}
             </h1>
             <p className="text-xl text-white/90 mb-6">
-              Modernste Infrastruktur für höchste Ansprüche an Sicherheit, 
-              Verfügbarkeit und Performance.
+              {view === 'datacenter' 
+                ? 'Modernste Infrastruktur für höchste Ansprüche an Sicherheit, Verfügbarkeit und Performance.'
+                : 'State-of-the-Art Technologie und redundante Systeme für maximale Verfügbarkeit.'}
             </p>
           </motion.div>
+
+          {/* View Toggle */}
+          <div className="flex justify-center mt-8">
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-1 inline-flex">
+              <button
+                onClick={() => setView('datacenter')}
+                className={`px-4 py-2 rounded-md transition-colors ${
+                  view === 'datacenter'
+                    ? 'bg-white text-primary'
+                    : 'text-white hover:bg-white/10'
+                }`}
+              >
+                Rechenzentren
+              </button>
+              <button
+                onClick={() => setView('infrastructure')}
+                className={`px-4 py-2 rounded-md transition-colors ${
+                  view === 'infrastructure'
+                    ? 'bg-white text-primary'
+                    : 'text-white hover:bg-white/10'
+                }`}
+              >
+                Infrastruktur
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Datacenter Grid */}
-      <div className="container mx-auto px-4 -mt-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {datacenters.map((dc, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
-              className="bg-white rounded-xl shadow-xl p-8"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold">{dc.name} Datacenter</h2>
-                  <p className="text-gray-600">{dc.location}, {dc.country}</p>
-                </div>
-                <div className="flex gap-2">
-                  {dc.certifications.map((cert, i) => (
-                    <span
-                      key={i}
-                      className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
-                    >
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="font-semibold mb-3 flex items-center">
-                    <Zap className="h-5 w-5 text-primary mr-2" />
-                    Stromversorgung
-                  </h3>
-                  <ul className="space-y-2 text-gray-600">
-                    {dc.specs.power.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                        {item}
-                      </li>
+      {view === 'datacenter' ? (
+        // Datacenter View
+        <div className="container mx-auto px-4 -mt-12 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {datacenters.map((dc, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+                className="bg-white rounded-xl shadow-xl p-8"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold">{dc.name} Datacenter</h2>
+                    <p className="text-gray-600">{dc.location}, {dc.country}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {dc.certifications.map((cert, i) => (
+                      <span
+                        key={i}
+                        className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
+                      >
+                        {cert}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
 
-                <div>
-                  <h3 className="font-semibold mb-3 flex items-center">
-                    <ThermometerSnowflake className="h-5 w-5 text-primary mr-2" />
-                    Klimatisierung
-                  </h3>
-                  <ul className="space-y-2 text-gray-600">
-                    {dc.specs.cooling.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center">
+                      <Zap className="h-5 w-5 text-primary mr-2" />
+                      Stromversorgung
+                    </h3>
+                    <ul className="space-y-2 text-gray-600">
+                      {dc.specs.power.map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                <div>
-                  <h3 className="font-semibold mb-3 flex items-center">
-                    <Shield className="h-5 w-5 text-primary mr-2" />
-                    Sicherheit
-                  </h3>
-                  <ul className="space-y-2 text-gray-600">
-                    {dc.specs.security.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center">
+                      <ThermometerSnowflake className="h-5 w-5 text-primary mr-2" />
+                      Klimatisierung
+                    </h3>
+                    <ul className="space-y-2 text-gray-600">
+                      {dc.specs.cooling.map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                <div>
-                  <h3 className="font-semibold mb-3 flex items-center">
-                    <Wifi className="h-5 w-5 text-primary mr-2" />
-                    Netzwerk
-                  </h3>
-                  <ul className="space-y-2 text-gray-600">
-                    {dc.specs.network.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center">
+                      <Shield className="h-5 w-5 text-primary mr-2" />
+                      Sicherheit
+                    </h3>
+                    <ul className="space-y-2 text-gray-600">
+                      {dc.specs.security.map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center">
+                      <Wifi className="h-5 w-5 text-primary mr-2" />
+                      Netzwerk
+                    </h3>
+                    <ul className="space-y-2 text-gray-600">
+                      {dc.specs.network.map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        // Infrastructure View
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {infrastructureFeatures.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white p-6 rounded-xl shadow-lg"
+              >
+                <feature.icon className="h-12 w-12 text-primary mb-4" />
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
 
-      {/* Infrastructure Overview */}
-      <div className="container mx-auto px-4 py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-display font-bold mb-6">
-            Unsere Infrastruktur
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Modernste Technologie und redundante Systeme für maximale 
-            Verfügbarkeit und Performance.
-          </p>
-        </motion.div>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+              <h3 className="text-xl font-semibold mb-4">Netzwerk</h3>
+              <p className="text-gray-600">
+                Redundante Netzwerkanbindung mit mehreren 100 GBit/s Uplinks und DDoS-Schutz.
+              </p>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white p-6 rounded-xl shadow-lg"
-          >
-            <Server className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Hardware</h3>
-            <p className="text-gray-600">
-              Hochwertige Server-Hardware von führenden Herstellern für maximale Zuverlässigkeit
-            </p>
-          </motion.div>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+              <h3 className="text-xl font-semibold mb-4">Hardware</h3>
+              <p className="text-gray-600">
+                Modernste Server-Hardware von führenden Herstellern für maximale Zuverlässigkeit.
+              </p>
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="bg-white p-6 rounded-xl shadow-lg"
-          >
-            <Cloud className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Netzwerk</h3>
-            <p className="text-gray-600">
-              Redundante Netzwerkanbindung mit mehreren 100 GBit/s Uplinks und DDoS-Schutz
-            </p>
-          </motion.div>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+              <h3 className="text-xl font-semibold mb-4">Sicherheit</h3>
+              <p className="text-gray-600">
+                24/7 Überwachung und mehrstufige Sicherheitssysteme zum Schutz Ihrer Daten.
+              </p>
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="bg-white p-6 rounded-xl shadow-lg"
-          >
-            <Lock className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Sicherheit</h3>
-            <p className="text-gray-600">
-              24/7 Überwachung und mehrstufige Sicherheitssysteme zum Schutz Ihrer Daten
-            </p>
-          </motion.div>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+              <h3 className="text-xl font-semibold mb-4">Verfügbarkeit</h3>
+              <p className="text-gray-600">
+                99,9% garantierte Verfügbarkeit durch redundante Systeme und USV-Anlagen.
+              </p>
+            </div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="bg-white p-6 rounded-xl shadow-lg"
-          >
-            <Users className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Support</h3>
-            <p className="text-gray-600">
-              Kompetenter technischer Support rund um die Uhr für alle Ihre Anliegen
-            </p>
-          </motion.div>
+          <div className="mt-12">
+            <h2 className="text-2xl font-semibold mb-4">Technische Details</h2>
+            <ul className="list-disc pl-6 space-y-2 text-gray-600">
+              <li>Mehrere redundante Stromversorgungen</li>
+              <li>Klimatisierte Serverräume mit präziser Temperaturkontrolle</li>
+              <li>Automatische Backup-Systeme</li>
+              <li>Modernste Firewall-Systeme</li>
+              <li>24/7 technischer Support</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
