@@ -17,7 +17,7 @@ interface Datacenter {
   name: string;
   location: string;
   country: string;
-  features: string[];
+  image: string;
   certifications: string[];
   specs: {
     power: string[];
@@ -35,12 +35,7 @@ export function Datacenter() {
       name: "NorthC",
       location: "Nürnberg",
       country: "Deutschland",
-      features: [
-        'Tier 4 Design',
-        'Redundante Stromversorgung',
-        'Modernste Klimatisierung',
-        '24/7 Sicherheitspersonal'
-      ],
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80",
       certifications: ['ISO 27001', 'ISO 9001', 'PCI DSS'],
       specs: {
         power: [
@@ -73,12 +68,7 @@ export function Datacenter() {
       name: "SkyLink",
       location: "Eygelshoven",
       country: "Niederlande",
-      features: [
-        'Tier 3+ Design',
-        'Grüne Energie',
-        'Modernste Sicherheitssysteme',
-        'Multi-Carrier-Anbindung'
-      ],
+      image: "https://images.unsplash.com/photo-1586772002130-b0f3daa6288e?auto=format&fit=crop&q=80",
       certifications: ['ISO 27001', 'ISO 14001', 'ISO 50001'],
       specs: {
         power: [
@@ -183,26 +173,33 @@ export function Datacenter() {
 
       {view === 'datacenter' ? (
         // Datacenter View
-        <div className="container mx-auto px-4 -mt-12 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="container mx-auto px-4 py-12">
+          <div className="space-y-12">
             {datacenters.map((dc, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
-                className="bg-white rounded-xl shadow-xl p-8"
+                className="bg-white rounded-xl shadow-xl overflow-hidden"
               >
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold">{dc.name} Datacenter</h2>
-                    <p className="text-gray-600">{dc.location}, {dc.country}</p>
+                {/* Datacenter Header with Image */}
+                <div className="relative h-64">
+                  <img
+                    src={dc.image}
+                    alt={dc.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-0 left-0 p-8 text-white">
+                    <h2 className="text-3xl font-bold mb-2">{dc.name} Datacenter</h2>
+                    <p className="text-xl">{dc.location}, {dc.country}</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="absolute top-4 right-4 flex gap-2">
                     {dc.certifications.map((cert, i) => (
                       <span
                         key={i}
-                        className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
+                        className="bg-white/90 text-primary px-3 py-1 rounded-full text-sm font-medium"
                       >
                         {cert}
                       </span>
@@ -210,65 +207,68 @@ export function Datacenter() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold mb-3 flex items-center">
-                      <Zap className="h-5 w-5 text-primary mr-2" />
-                      Stromversorgung
-                    </h3>
-                    <ul className="space-y-2 text-gray-600">
-                      {dc.specs.power.map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                {/* Datacenter Specs */}
+                <div className="p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div>
+                      <h3 className="font-semibold mb-4 flex items-center text-lg">
+                        <Zap className="h-6 w-6 text-primary mr-2" />
+                        Stromversorgung
+                      </h3>
+                      <ul className="space-y-3">
+                        {dc.specs.power.map((item, i) => (
+                          <li key={i} className="flex items-center text-gray-700">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div>
-                    <h3 className="font-semibold mb-3 flex items-center">
-                      <ThermometerSnowflake className="h-5 w-5 text-primary mr-2" />
-                      Klimatisierung
-                    </h3>
-                    <ul className="space-y-2 text-gray-600">
-                      {dc.specs.cooling.map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    <div>
+                      <h3 className="font-semibold mb-4 flex items-center text-lg">
+                        <ThermometerSnowflake className="h-6 w-6 text-primary mr-2" />
+                        Klimatisierung
+                      </h3>
+                      <ul className="space-y-3">
+                        {dc.specs.cooling.map((item, i) => (
+                          <li key={i} className="flex items-center text-gray-700">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div>
-                    <h3 className="font-semibold mb-3 flex items-center">
-                      <Shield className="h-5 w-5 text-primary mr-2" />
-                      Sicherheit
-                    </h3>
-                    <ul className="space-y-2 text-gray-600">
-                      {dc.specs.security.map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    <div>
+                      <h3 className="font-semibold mb-4 flex items-center text-lg">
+                        <Shield className="h-6 w-6 text-primary mr-2" />
+                        Sicherheit
+                      </h3>
+                      <ul className="space-y-3">
+                        {dc.specs.security.map((item, i) => (
+                          <li key={i} className="flex items-center text-gray-700">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div>
-                    <h3 className="font-semibold mb-3 flex items-center">
-                      <Wifi className="h-5 w-5 text-primary mr-2" />
-                      Netzwerk
-                    </h3>
-                    <ul className="space-y-2 text-gray-600">
-                      {dc.specs.network.map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                    <div>
+                      <h3 className="font-semibold mb-4 flex items-center text-lg">
+                        <Wifi className="h-6 w-6 text-primary mr-2" />
+                        Netzwerk
+                      </h3>
+                      <ul className="space-y-3">
+                        {dc.specs.network.map((item, i) => (
+                          <li key={i} className="flex items-center text-gray-700">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </motion.div>

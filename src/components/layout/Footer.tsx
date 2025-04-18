@@ -6,7 +6,6 @@ export function Footer() {
     { label: 'Elterninformationen', href: '/info/parents' },
     { label: 'Rechenzentrum', href: '/info/datacenter' },
     { label: 'Zahlungsmethoden', href: '/info/payment' },
-    { label: 'Infrastruktur', href: '/info/infrastructure' },
     { label: 'Reselling', href: '/info/reselling' },
     { label: 'Partner', href: '/info/partners' }
   ];

@@ -6,7 +6,6 @@ import { HomePage } from './pages/HomePage';
 import { ParentsInfo } from './pages/info/ParentsInfo';
 import { Datacenter } from './pages/info/Datacenter';
 import { Payment } from './pages/info/Payment';
-import { Infrastructure } from './pages/info/Infrastructure';
 import { Reselling } from './pages/info/Reselling';
 import { Partners } from './pages/info/Partners';
 import { RootServer } from './pages/products/RootServer';
@@ -61,7 +60,6 @@ function App() {
             <Route path="/info/parents" element={<PageWrapper><ParentsInfo /></PageWrapper>} />
             <Route path="/info/datacenter" element={<PageWrapper><Datacenter /></PageWrapper>} />
             <Route path="/info/payment" element={<PageWrapper><Payment /></PageWrapper>} />
-            <Route path="/info/infrastructure" element={<PageWrapper><Infrastructure /></PageWrapper>} />
             <Route path="/info/reselling" element={<PageWrapper><Reselling /></PageWrapper>} />
             <Route path="/info/partners" element={<PageWrapper><Partners /></PageWrapper>} />
             
