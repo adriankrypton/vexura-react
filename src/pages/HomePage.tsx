@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Server, Users, Clock, Shield } from 'lucide-react';
+import { Server, Users, Clock, Shield, ArrowRight } from 'lucide-react';
 import { HeroSection } from '../components/home/HeroSection';
 import { ProductShowcase } from '../components/home/ProductShowcase';
 import { NewsHighlight } from '../components/home/NewsHighlight';
