@@ -1,0 +1,109 @@
+import { motion } from 'framer-motion';
+import { Calendar, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+
+interface NewsItem {
+  id: number;
+  title: string;
+  date: string;
+  category: string;
+  excerpt: string;
+  content: string;
+  image: string;
+}
+
+export function NewsHighlight() {
+  const [activeNews, setActiveNews] = useState<NewsItem | null>(null);
+
+  const news: NewsItem[] = [
+    {
+      id: 1,
+      title: "Neue Generation von Root-Servern",
+      date: "2025-03-15",
+      category: "Produkte",
+      excerpt: "Erleben Sie unsere neuesten High-Performance Server mit DDR5 RAM",
+      content: "Detaillierte Beschreibung der neuen Server-Generation...",
+      image: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg"
+    },
+    {
+      id: 2,
+      title: "Frankfurt Rechenzentrum Update",
+      date: "2025-03-10",
+      category: "Infrastruktur",
+      excerpt: "Erweiterung unserer Kapazitäten im Frankfurter Rechenzentrum",
+      content: "Details zur Erweiterung des Rechenzentrums...",
+      image: "https://images.pexels.com/photos/1770775/pexels-photo-1770775.jpeg"
+    },
+    {
+      id: 3,
+      title: "Neue Backup-Funktionen",
+      date: "2025-03-05",
+      category: "Features",
+      excerpt: "Automatische Backups und verbesserte Wiederherstellungsoptionen",
+      content: "Informationen zu den neuen Backup-Funktionen...",
+      image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg"
+    }
+  ];
+
+  return (
+    <section className="py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91]/5 via-white to-[#00BCD4]/5" />
+      <div className="container mx-auto px-4 relative">
+        <div className="flex justify-between items-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-display font-bold"
+          >
+            Aktuelle News
+          </motion.h2>
+          <motion.a
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            href="/news"
+            className="flex items-center text-primary hover:text-primary-light transition-colors group"
+          >
+            Alle News
+            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+          </motion.a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {news.map((item, index) => (
+            <motion.article
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="group cursor-pointer"
+              onClick={() => setActiveNews(item)}
+            >
+              <div className="relative h-48 mb-4 rounded-xl overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="inline-block bg-white/90 text-primary px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    {item.category}
+                  </span>
+                  <h3 className="text-white font-semibold">{item.title}</h3>
+                </div>
+              </div>
+              <div className="flex items-center text-sm text-gray-600 mb-2">
+                <Calendar className="h-4 w-4 mr-1" />
+                {new Date(item.date).toLocaleDateString('de-DE')}
+              </div>
+              <p className="text-gray-600">{item.excerpt}</p>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
