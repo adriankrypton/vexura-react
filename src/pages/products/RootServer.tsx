@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Server, Cpu, HardDrive, Map, Shield, Gauge, Globe } from 'lucide-react';
+import { LocationSelector } from '../../components/LocationSelector';
 
 interface Package {
   name: string;
@@ -23,7 +24,7 @@ export function RootServer() {
     cpu: 2,
     ram: 4,
     storage: 50,
-    location: 'frankfurt'
+    location: 'nuremberg'
   });
 
   const packages: Package[] = [
@@ -80,10 +81,12 @@ export function RootServer() {
   ];
 
   const calculatePrice = () => {
+    // Location-based price adjustment
+    const locationMultiplier = config.location === 'eygelshoven' ? 0.95 : 1;
     return (
-      config.cpu * 5 +
+      (config.cpu * 5 +
       config.ram * 2 +
-      config.storage * 0.1
+      config.storage * 0.1) * locationMultiplier
     ).toFixed(2);
   };
 
@@ -185,7 +188,7 @@ export function RootServer() {
         {/* Configurator */}
         <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg p-8 mb-16 border border-gray-100">
           <h2 className="text-2xl font-semibold mb-6">Server Konfigurator</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -246,20 +249,11 @@ export function RootServer() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Standort
-                </label>
-                <select
-                  value={config.location}
-                  onChange={(e) => setConfig({ ...config, location: e.target.value })}
-                  className="w-full border border-gray-300 rounded-lg p-2 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
-                >
-                  <option value="frankfurt">Frankfurt</option>
-                  <option value="berlin">Berlin</option>
-                  <option value="munich">München</option>
-                </select>
-              </div>
+              <LocationSelector
+                selectedLocation={config.location}
+                onLocationSelect={(locationId) => setConfig({ ...config, location: locationId })}
+                className="mt-6"
+              />
             </div>
 
             <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
@@ -279,7 +273,9 @@ export function RootServer() {
                 </li>
                 <li className="flex justify-between">
                   <span>Standort:</span>
-                  <span className="font-medium">{config.location}</span>
+                  <span className="font-medium">
+                    {config.location === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
+                  </span>
                 </li>
               </ul>
               <div className="text-3xl font-bold mb-4 text-primary">

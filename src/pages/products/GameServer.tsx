@@ -10,32 +10,55 @@ interface Game {
 }
 
 export function GameServer() {
-  const [selectedGame, setSelectedGame] = useState('minecraft');
+  const [step, setStep] = useState<'game' | 'region' | 'config'>('game');
+  const [selectedGame, setSelectedGame] = useState<string>('');
+  const [selectedRegion, setSelectedRegion] = useState<string>('');
+  const [slots, setSlots] = useState(32);
+  const [serverName, setServerName] = useState('');
 
   const games: Game[] = [
     {
       id: 'minecraft-java',
       name: 'Minecraft Java Edition',
-      image: '/img/minecraftjava.jpg',
+      image: 'https://images.pexels.com/photos/163036/mario-luigi-yoschi-figures-163036.jpeg',
       price: 2.00
     },
     {
       id: 'minecraft-bedrock',
       name: 'Minecraft Bedrock Edition',
-      image: '/img/mcbedrock.webp',
+      image: 'https://images.pexels.com/photos/371924/pexels-photo-371924.jpeg',
       price: 1.50
     },
     {
       id: 'csgo',
       name: 'Counter-Strike 2',
-      image: '/img/csgo2.webp',
+      image: 'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg',
       price: 2.00
     },
     {
       id: 'gta5',
       name: 'alt:V',
-      image: '/img/altv.jpg',
+      image: 'https://images.pexels.com/photos/275033/pexels-photo-275033.jpeg',
       price: 2.00
+    }
+  ];
+
+  const regions = [
+    {
+      id: 'nuremberg',
+      name: 'Nürnberg',
+      country: 'Deutschland',
+      flag: '🇩🇪',
+      status: 'available',
+      ping: '~10ms'
+    },
+    {
+      id: 'eygelshoven',
+      name: 'Eygelshoven',
+      country: 'Niederlande',
+      flag: '🇳🇱',
+      status: 'available',
+      ping: '~15ms'
     }
   ];
 
@@ -62,24 +85,202 @@ export function GameServer() {
     }
   ];
 
-  const faqs = [
-    {
-      question: 'Wie schnell ist mein TeamSpeak Server verfügbar?',
-      answer: 'Dein TeamSpeak Server wird sofort nach der Bestellung automatisch eingerichtet und ist innerhalb weniger Sekunden verfügbar.'
-    },
-    {
-      question: 'Kann ich die Anzahl der Slots später ändern?',
-      answer: 'Ja, du kannst die Anzahl der Slots jederzeit erhöhen oder verringern. Die Änderung wird sofort wirksam.'
-    },
-    {
-      question: 'Welche TeamSpeak Version wird unterstützt?',
-      answer: 'Wir unterstützen die neueste TeamSpeak 3 Version und halten deinen Server immer automatisch aktuell.'
-    },
-    {
-      question: 'Gibt es eine Mindestlaufzeit?',
-      answer: 'Nein, du kannst monatlich kündigen. Es gibt keine langfristige Vertragsbindung.'
+  const calculatePrice = () => {
+    const basePrice = slots * 0.08;
+    const regionMultiplier = selectedRegion === 'eygelshoven' ? 0.95 : 1;
+    return (basePrice * regionMultiplier).toFixed(2);
+  };
+
+  const renderStep = () => {
+    switch (step) {
+      case 'game':
+        return (
+          <div className="container mx-auto px-4 -mt-12 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-xl shadow-xl p-8"
+            >
+              <h2 className="text-2xl font-semibold mb-6">Wähle dein Spiel</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {games.map((game) => (
+                  <motion.div
+                    key={game.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ y: -5 }}
+                    className={`relative overflow-hidden rounded-lg shadow-lg cursor-pointer group ${
+                      selectedGame === game.id ? 'ring-2 ring-primary' : ''
+                    }`}
+                    onClick={() => {
+                      setSelectedGame(game.id);
+                      setStep('region');
+                    }}
+                  >
+                    <div className="relative h-48">
+                      <div className="absolute inset-0">
+                        <img 
+                          src={game.image} 
+                          alt={game.name}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/50" />
+                      </div>
+                      <div className="absolute top-2 left-2">
+                        <div className="bg-white/90 text-primary px-2 py-1 rounded text-sm font-medium">
+                          bereits ab {game.price.toFixed(2)} €
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <h3 className="text-white text-xl font-bold text-center px-4">
+                          {game.name}
+                        </h3>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        );
+
+      case 'region':
+        return (
+          <div className="container mx-auto px-4 -mt-12 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-xl shadow-xl p-8"
+            >
+              <button
+                onClick={() => setStep('game')}
+                className="text-primary hover:text-primary-light mb-4 flex items-center"
+              >
+                ← Zurück zur Spielauswahl
+              </button>
+              <h2 className="text-2xl font-semibold mb-6">Wähle deine Region</h2>
+              <p className="text-gray-600 mb-6">Wähle eine Region in der Nähe deiner Zielgruppe</p>
+              <div className="grid grid-cols-1 gap-4">
+                {regions.map((region) => (
+                  <motion.button
+                    key={region.id}
+                    onClick={() => {
+                      setSelectedRegion(region.id);
+                      setStep('config');
+                    }}
+                    className={`w-full p-6 rounded-lg border-2 transition-all ${
+                      selectedRegion === region.id
+                        ? 'border-primary bg-primary/5'
+                        : 'border-gray-200 hover:border-primary/50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <span className="text-2xl mr-3">{region.flag}</span>
+                        <div className="text-left">
+                          <h3 className="text-lg font-semibold">
+                            {region.name}, {region.country}
+                          </h3>
+                          <p className="text-sm text-gray-600">
+                            Latenz: {region.ping}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        );
+
+      case 'config':
+        return (
+          <div className="container mx-auto px-4 -mt-12 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-xl shadow-xl p-8"
+            >
+              <button
+                onClick={() => setStep('region')}
+                className="text-primary hover:text-primary-light mb-4 flex items-center"
+              >
+                ← Zurück zur Regionsauswahl
+              </button>
+              <h2 className="text-2xl font-semibold mb-8">Server Konfiguration</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Server Name
+                    </label>
+                    <input
+                      type="text"
+                      value={serverName}
+                      onChange={(e) => setServerName(e.target.value)}
+                      placeholder="Mein Game Server"
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Anzahl der Slots
+                    </label>
+                    <input
+                      type="range"
+                      min="5"
+                      max="100"
+                      value={slots}
+                      onChange={(e) => setSlots(parseInt(e.target.value))}
+                      className="w-full accent-primary"
+                    />
+                    <div className="flex justify-between text-sm text-gray-600 mt-2">
+                      <span>5 Slots</span>
+                      <span>{slots} Slots</span>
+                      <span>100 Slots</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
+                  <h3 className="text-xl font-semibold mb-4">Deine Konfiguration</h3>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex justify-between">
+                      <span>Spiel:</span>
+                      <span className="font-medium">
+                        {games.find(g => g.id === selectedGame)?.name}
+                      </span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Region:</span>
+                      <span className="font-medium">
+                        {regions.find(r => r.id === selectedRegion)?.name}
+                      </span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Server Name:</span>
+                      <span className="font-medium">{serverName || 'Nicht angegeben'}</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Slots:</span>
+                      <span className="font-medium">{slots}</span>
+                    </li>
+                  </ul>
+                  <div className="text-3xl font-bold mb-4 text-primary">
+                    {calculatePrice()} €<span className="text-sm font-normal text-gray-600">/Monat</span>
+                  </div>
+                  <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors">
+                    Jetzt bestellen
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        );
     }
-  ];
+  };
 
   return (
     <div>
@@ -93,7 +294,7 @@ export function GameServer() {
             className="max-w-3xl text-white"
           >
             <h1 className="text-5xl font-display font-bold mb-6">
-              Game Server Hosting
+              Game Server
             </h1>
             <p className="text-xl mb-8 text-white/90">
               Hochperformante Server für dein optimales Gaming-Erlebnis. Starte in wenigen Minuten durch!
@@ -102,45 +303,10 @@ export function GameServer() {
         </div>
       </div>
 
-      {/* Game Selection */}
-      <div className="container mx-auto px-4 -mt-12 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {games.map((game) => (
-            <motion.div
-              key={game.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -5 }}
-              className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-              onClick={() => setSelectedGame(game.id)}
-            >
-              <div className="relative h-48">
-                <div className="absolute inset-0">
-                  <img 
-                    src={game.image} 
-                    alt={game.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/50" />
-                </div>
-                <div className="absolute top-2 left-2">
-                  <div className="bg-white/90 text-primary px-2 py-1 rounded text-sm font-medium">
-                    bereits ab {game.price.toFixed(2)} €
-                  </div>
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-white text-xl font-bold text-center">
-                    {game.name}
-                  </h3>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+      {renderStep()}
 
       {/* Features */}
-      <div className="bg-gray-50 py-16">
+      <div className="bg-gray-50 py-16 mt-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-display font-bold text-center mb-12">
             Inklusive Features
@@ -158,23 +324,6 @@ export function GameServer() {
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
-            Häufig gestellte Fragen
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/90">{faq.answer}</p>
-              </div>
             ))}
           </div>
         </div>
