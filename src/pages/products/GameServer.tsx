@@ -20,25 +20,25 @@ export function GameServer() {
     {
       id: 'minecraft-java',
       name: 'Minecraft Java Edition',
-      image: 'https://images.pexels.com/photos/163036/mario-luigi-yoschi-figures-163036.jpeg',
+      image: 'https://assetsio.gnwcdn.com/ar1or8.jpg?width=1200&height=630&fit=crop&enable=upscale&auto=webp',
       price: 2.00
     },
     {
       id: 'minecraft-bedrock',
       name: 'Minecraft Bedrock Edition',
-      image: 'https://images.pexels.com/photos/371924/pexels-photo-371924.jpeg',
+      image: 'https://gagadget.com/media/post_big/apps.608.13510798887677013.5c7792f0-b887-4250-8c4e-4617af9c4509.jpeg',
       price: 1.50
     },
     {
       id: 'csgo',
       name: 'Counter-Strike 2',
-      image: 'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg',
+      image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1745368595',
       price: 2.00
     },
     {
       id: 'gta5',
       name: 'alt:V',
-      image: 'https://images.pexels.com/photos/275033/pexels-photo-275033.jpeg',
+      image: 'https://altv.mp/img/de/landing/og_image.jpg',
       price: 2.00
     }
   ];
