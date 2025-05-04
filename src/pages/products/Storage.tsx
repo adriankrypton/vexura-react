@@ -120,7 +120,7 @@ export function Storage() {
       <div className="container mx-auto px-4 -mt-12 relative z-10">
         <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
           <h2 className="text-2xl font-semibold mb-6">Storage Konfigurator</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Speicherplatz

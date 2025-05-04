@@ -92,7 +92,8 @@ export function Header() {
     { label: 'Rechenzentrum', href: '/info/datacenter' },
     { label: 'Zahlungsmethoden', href: '/info/payment' },
     { label: 'Reselling', href: '/info/reselling' },
-    { label: 'Partner', href: '/info/partners' }
+    { label: 'Partner', href: '/info/partners' },
+    { label: 'Widerrufsrecht', href: '/info/cancellation' }
   ];
 
   const legal = [
@@ -103,14 +104,33 @@ export function Header() {
 
   // Update document title based on current route
   const currentPage = location.pathname.split('/').pop();
-  const formatPageTitle = (path: string) => {
+  const getGermanPageTitle = (path: string) => {
     if (!path) return 'Startseite';
-    return path
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    
+    const germanTitles: { [key: string]: string } = {
+      'root-server': 'KVM Root Server',
+      'dedicated': 'Dedicated Server',
+      'game-server': 'Game Server',
+      'teamspeak': 'TeamSpeak Server',
+      'webspaces': 'Webhosting',
+      'domains': 'Domains',
+      'storage': 'Storageboxen',
+      'licenses': 'Plesk Lizenzen',
+      'datacenter': 'Rechenzentrum',
+      'payment': 'Zahlungsmethoden',
+      'reselling': 'Reselling',
+      'partners': 'Partner',
+      'parents': 'Elterninformationen',
+      'infrastructure': 'Infrastruktur',
+      'imprint': 'Impressum',
+      'privacy': 'Datenschutz',
+      'terms': 'AGB'
+    };
+
+    return germanTitles[path] || path;
   };
-  const pageTitle = currentPage ? `Vexura | ${formatPageTitle(currentPage)}` : 'Vexura | Startseite';
+
+  const pageTitle = currentPage ? `Vexura | ${getGermanPageTitle(currentPage)}` : 'Vexura | Startseite';
   document.title = pageTitle;
 
   return (

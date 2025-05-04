@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Server, Globe, Users, Check } from 'lucide-react';
+import { Shield, Server, Globe, Check } from 'lucide-react';
 import { useState } from 'react';
 
 interface LicensePlan {
@@ -230,21 +230,23 @@ export function Licenses() {
 
       {/* FAQ Section */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-display font-bold text-center mb-12">
-          Häufig gestellte Fragen
-        </h2>
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Was ist der Unterschied zwischen den Editionen?</h3>
-            <p className="text-gray-600">Die Pro Edition bietet zusätzliche Features wie Node.js Support und unbegrenzte Domains, während die Admin Edition für grundlegende Hosting-Anforderungen ausgelegt ist.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Kann ich die Edition später wechseln?</h3>
-            <p className="text-gray-600">Ja, Sie können jederzeit ein Upgrade oder Downgrade Ihrer Lizenz vornehmen. Die Änderungen werden sofort wirksam.</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-2">Sind Updates inklusive?</h3>
-            <p className="text-gray-600">Ja, alle Plesk-Updates sind in der Lizenz enthalten und werden automatisch zur Verfügung gestellt.</p>
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+          <h2 className="text-3xl font-display font-bold text-center mb-12">
+            Häufig gestellte Fragen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <h3 className="text-lg font-semibold mb-2">Was ist der Unterschied zwischen den Editionen?</h3>
+              <p className="text-white/90">Die Pro Edition bietet zusätzliche Features wie Node.js Support und unbegrenzte Domains, während die Admin Edition für grundlegende Hosting-Anforderungen ausgelegt ist.</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <h3 className="text-lg font-semibold mb-2">Kann ich die Edition später wechseln?</h3>
+              <p className="text-white/90">Ja, Sie können jederzeit ein Upgrade oder Downgrade Ihrer Lizenz vornehmen. Die Änderungen werden sofort wirksam.</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <h3 className="text-lg font-semibold mb-2">Sind Updates inklusive?</h3>
+              <p className="text-white/90">Ja, alle Plesk-Updates sind in der Lizenz enthalten und werden automatisch zur Verfügung gestellt.</p>
+            </div>
           </div>
         </div>
       </div>
