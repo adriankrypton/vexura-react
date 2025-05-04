@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Server, Cpu, HardDrive, Map, Shield, Gauge, Globe, X } from 'lucide-react';
+import { Server, Cpu, HardDrive, Map, Shield, Gauge, Globe } from 'lucide-react';
 import { LocationSelector } from '../../components/LocationSelector';
+import { useNavigate } from 'react-router-dom';
 
 interface Package {
   name: string;
@@ -26,6 +27,7 @@ interface OperatingSystem {
 }
 
 export function RootServer() {
+  const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState<string>('nuremberg');
   const [config, setConfig] = useState<ConfiguratorState>({
     cpu: 2,
@@ -33,9 +35,6 @@ export function RootServer() {
     storage: 50,
     operatingSystem: null,
   });
-  const [showOsModal, setShowOsModal] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
-  const [showOrderSummary, setShowOrderSummary] = useState(false);
 
   const operatingSystems: OperatingSystem[] = [
     { name: 'Ubuntu', category: 'Linux', version: '22.04 LTS' },
@@ -136,6 +135,43 @@ export function RootServer() {
     }
   ];
 
+  const handleOrder = (pkg: Package) => {
+    navigate('/order', {
+      state: {
+        orderDetails: {
+          productName: `KVM Root Server - ${pkg.name}`,
+          price: pkg.price,
+          features: [
+            { label: 'CPU', value: `${pkg.cpu} Kerne` },
+            { label: 'RAM', value: `${pkg.ram} GB` },
+            { label: 'Speicher', value: `${pkg.storage} GB SSD` },
+            { label: 'Bandbreite', value: pkg.bandwidth },
+            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' }
+          ],
+          isKVM: true
+        }
+      }
+    });
+  };
+
+  const handleCustomOrder = () => {
+    navigate('/order', {
+      state: {
+        orderDetails: {
+          productName: 'KVM Root Server - Individuell',
+          price: parseFloat(calculatePrice()),
+          features: [
+            { label: 'CPU', value: `${config.cpu} Kerne` },
+            { label: 'RAM', value: `${config.ram} GB` },
+            { label: 'Speicher', value: `${config.storage} GB SSD` },
+            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' }
+          ],
+          isKVM: true
+        }
+      }
+    });
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -217,160 +253,13 @@ export function RootServer() {
               </ul>
               <button 
                 className="w-full bg-primary text-white py-4 rounded-lg hover:bg-primary-light transition-colors text-lg font-semibold"
-                onClick={() => {
-                  setSelectedPackage(pkg);
-                  setShowOsModal(true);
-                }}
+                onClick={() => handleOrder(pkg)}
               >
                 Jetzt bestellen
               </button>
             </motion.div>
           ))}
         </div>
-
-        {/* OS Selection Modal */}
-        {showOsModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 relative"
-            >
-              <button
-                onClick={() => setShowOsModal(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-              
-              <h2 className="text-2xl font-semibold mb-6">Betriebssystem auswählen</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-medium mb-3">Linux Distributionen</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {operatingSystems
-                      .filter(os => os.category === 'Linux')
-                      .map((os, index) => (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            setConfig({ ...config, operatingSystem: os });
-                            setShowOsModal(false);
-                            if (showOrderSummary) {
-                              setShowOrderSummary(true);
-                            }
-                          }}
-                          className="p-4 border rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left"
-                        >
-                          <div className="font-medium">{os.name}</div>
-                          <div className="text-sm text-gray-600">{os.version}</div>
-                        </button>
-                      ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium mb-3">Windows Server</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {operatingSystems
-                      .filter(os => os.category === 'Windows')
-                      .map((os, index) => (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            setConfig({ ...config, operatingSystem: os });
-                            setShowOsModal(false);
-                            if (showOrderSummary) {
-                              setShowOrderSummary(true);
-                            }
-                          }}
-                          className="p-4 border rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left"
-                        >
-                          <div className="font-medium">{os.name}</div>
-                          <div className="text-sm text-gray-600">{os.version}</div>
-                        </button>
-                      ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-
-        {/* Order Summary Modal */}
-        {showOrderSummary && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 relative"
-            >
-              <button
-                onClick={() => setShowOrderSummary(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-              
-              <h2 className="text-2xl font-semibold mb-6">Bestellübersicht</h2>
-              
-              <div className="space-y-6">
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-medium mb-4">Ihre Server-Konfiguration</h3>
-                  <ul className="space-y-3">
-                    <li className="flex justify-between">
-                      <span className="text-gray-600">CPU:</span>
-                      <span className="font-medium">{config.cpu} Kerne</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-600">RAM:</span>
-                      <span className="font-medium">{config.ram} GB</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-600">Speicher:</span>
-                      <span className="font-medium">{config.storage} GB SSD</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-600">Standort:</span>
-                      <span className="font-medium">
-                        {selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
-                      </span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-600">Betriebssystem:</span>
-                      <span className="font-medium">
-                        {config.operatingSystem?.name} {config.operatingSystem?.version}
-                      </span>
-                    </li>
-                    <li className="flex justify-between pt-3 border-t">
-                      <span className="text-gray-600">Monatspreis:</span>
-                      <span className="font-bold text-primary">{calculatePrice()} €</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setShowOrderSummary(false)}
-                    className="flex-1 py-3 px-6 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    Zurück
-                  </button>
-                  <button
-                    onClick={() => {
-                      // Here you would typically handle the order submission
-                      setShowOrderSummary(false);
-                    }}
-                    className="flex-1 bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary-light transition-colors"
-                  >
-                    Bestellung bestätigen
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
 
         {/* Configurator */}
         <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg p-8 mb-16 border border-gray-100">
@@ -461,36 +350,13 @@ export function RootServer() {
                       {selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
                     </span>
                   </li>
-                  <li className="flex justify-between">
-                    <span>Betriebssystem:</span>
-                    <div className="text-right">
-                      {config.operatingSystem ? (
-                        <span className="font-medium">
-                          {config.operatingSystem.name} {config.operatingSystem.version}
-                        </span>
-                      ) : (
-                        <button
-                          onClick={() => setShowOsModal(true)}
-                          className="text-primary hover:text-primary-dark font-medium"
-                        >
-                          Betriebssystem auswählen
-                        </button>
-                      )}
-                    </div>
-                  </li>
                 </ul>
                 <div className="text-3xl font-bold mb-4 text-primary">
                   {calculatePrice()} €<span className="text-sm font-normal text-gray-600">/Monat</span>
                 </div>
                 <button 
                   className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors"
-                  onClick={() => {
-                    if (!config.operatingSystem) {
-                      setShowOsModal(true);
-                    } else {
-                      setShowOrderSummary(true);
-                    }
-                  }}
+                  onClick={handleCustomOrder}
                 >
                   Jetzt bestellen
                 </button>

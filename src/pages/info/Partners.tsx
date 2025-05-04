@@ -88,33 +88,18 @@ export function Partners() {
   const heroFeatures = [
     {
       icon: Palette,
-      title: 'Personalisierte',
-      highlight: 'Designs',
+      title: 'Early Access',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     },
     {
       icon: Calendar,
-      title: 'Monatliche',
-      highlight: 'Auszahlungen',
+      title: 'Kostenlose Produkte',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     },
     {
       icon: Gift,
-      title: 'Kostenlose',
-      highlight: 'Produkte',
-    },
-    {
-      icon: Hourglass,
-      title: 'Early',
-      highlight: 'Access',
-    },
-    {
-      icon: BarChart2,
-      title: 'Unsere',
-      highlight: 'Werbung',
-    },
-    {
-      icon: Heart,
-      title: 'und vieles',
-      highlight: 'mehr...',
+      title: 'Und vieles mehr...',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     },
   ];
 
@@ -200,7 +185,7 @@ export function Partners() {
       </div>
 
       {/* Vorteile/Features Container */}
-      <div className="py-32 bg-white">
+      <div className="py-32 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-bold text-[#0B3D91] mb-6">
@@ -211,24 +196,28 @@ export function Partners() {
               Entdecke die exklusiven Vorteile, die wir unseren Partnern bieten.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {heroFeatures.map((feature, idx) => (
-              <div
+              <motion.div
                 key={idx}
-                className="group"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group h-full"
               >
-                <div className="bg-white p-8 rounded-lg border-2 border-gray-100 hover:border-[#00BCD4] transition-colors duration-300">
-                  <div className="mb-6">
-                    <feature.icon className="w-10 h-10 text-[#00BCD4]" />
+                <div className="p-8 h-full flex flex-col">
+                  <div className="bg-gradient-to-br from-[#0B3D91]/20 to-[#1E88E5]/5 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="h-10 w-10 text-[#0B3D91]" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">
                     {feature.title}
                   </h3>
-                  <p className="text-2xl font-bold text-[#0B3D91]">
-                    {feature.highlight}
+                  <p className="text-gray-600 leading-relaxed flex-grow">
+                    {feature.description}
                   </p>
+                  <div className="h-1 bg-gradient-to-r from-[#0B3D91]/50 to-[#1E88E5] w-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 mt-6" />
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

@@ -89,17 +89,17 @@ export function OrderPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-primary/5 to-background">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 max-w-[1920px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-7xl mx-auto"
         >
           <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">
             Bestellübersicht
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Order Summary */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Ihre Bestellung</h2>
@@ -122,41 +122,6 @@ export function OrderPage() {
                 ))}
               </ul>
 
-              {orderDetails.isKVM && (
-                <div className="mb-6">
-                  <h4 className="text-lg font-semibold mb-4 text-gray-800">Betriebssystem auswählen</h4>
-                  <div className="grid grid-cols-1 gap-3">
-                    {operatingSystems.map((os) => (
-                      <button
-                        key={os.id}
-                        onClick={() => setSelectedOS(os.id)}
-                        className={`p-4 rounded-xl border-2 transition-all ${
-                          selectedOS === os.id
-                            ? 'border-primary bg-primary/5'
-                            : 'border-gray-200 hover:border-primary/50'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={os.icon}
-                            alt={os.name}
-                            className="w-8 h-8 object-contain"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = '/images/os/default.svg';
-                            }}
-                          />
-                          <div className="text-left">
-                            <div className="font-medium text-gray-800">{os.name}</div>
-                            <div className="text-sm text-gray-500">{os.version}</div>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               <div className="border-t border-gray-200 pt-6 space-y-3">
                 <div className="flex justify-between text-gray-600">
                   <span>Zwischensumme:</span>
@@ -177,6 +142,84 @@ export function OrderPage() {
                 </div>
               </div>
             </div>
+
+            {/* Operating System Selection */}
+            {orderDetails.isKVM && (
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+                <h2 className="text-2xl font-bold mb-6 text-gray-800">Betriebssystem</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-medium mb-3 text-gray-800">Linux Distributionen</h3>
+                    <div className="grid grid-cols-1 gap-3">
+                      {operatingSystems
+                        .filter(os => os.name !== 'Windows Server')
+                        .map((os) => (
+                          <button
+                            key={os.id}
+                            onClick={() => setSelectedOS(os.id)}
+                            className={`p-4 rounded-xl border-2 transition-all ${
+                              selectedOS === os.id
+                                ? 'border-primary bg-primary/5'
+                                : 'border-gray-200 hover:border-primary/50'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={os.icon}
+                                alt={os.name}
+                                className="w-8 h-8 object-contain"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = '/images/os/default.svg';
+                                }}
+                              />
+                              <div className="text-left">
+                                <div className="font-medium text-gray-800">{os.name}</div>
+                                <div className="text-sm text-gray-500">{os.version}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-medium mb-3 text-gray-800">Windows Server</h3>
+                    <div className="grid grid-cols-1 gap-3">
+                      {operatingSystems
+                        .filter(os => os.name === 'Windows Server')
+                        .map((os) => (
+                          <button
+                            key={os.id}
+                            onClick={() => setSelectedOS(os.id)}
+                            className={`p-4 rounded-xl border-2 transition-all ${
+                              selectedOS === os.id
+                                ? 'border-primary bg-primary/5'
+                                : 'border-gray-200 hover:border-primary/50'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={os.icon}
+                                alt={os.name}
+                                className="w-8 h-8 object-contain"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = '/images/os/default.svg';
+                                }}
+                              />
+                              <div className="text-left">
+                                <div className="font-medium text-gray-800">{os.name}</div>
+                                <div className="text-sm text-gray-500">{os.version}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Voucher and Payment */}
             <div className="space-y-4">
