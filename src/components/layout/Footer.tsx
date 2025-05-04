@@ -11,9 +11,9 @@ export function Footer() {
   ];
 
   const products = [
-    { label: 'KVM Root Server', href: '/products/root-server' },
+    { label: 'KVM Server', href: '/products/root-server' },
     { label: 'Domains', href: '/products/domains' },
-    { label: 'GameServer', href: '/products/game-server' },
+    { label: 'Gameserver', href: '/products/game-server' },
     { label: 'Webspaces', href: '/products/webspaces' },
     { label: 'Teamspeak Server', href: '/products/teamspeak' },
     { label: 'Storageboxen', href: '/products/storage' },

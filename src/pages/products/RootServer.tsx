@@ -118,8 +118,8 @@ export function RootServer() {
 
   const faqs = [
     {
-      question: 'Was ist ein KVM Root Server?',
-      answer: 'Ein KVM Root Server ist ein virtueller Server mit garantierten Ressourcen und voller Root-Zugriff. Sie haben die komplette Kontrolle über Ihr System und können es nach Ihren Wünschen konfigurieren.'
+      question: 'Was ist ein KVM Server?',
+      answer: 'Ein KVM Server ist ein virtueller Server mit garantierten Ressourcen und voller Root-Zugriff. Sie haben die komplette Kontrolle über Ihr System und können es nach Ihren Wünschen konfigurieren.'
     },
     {
       question: 'Welche Betriebssysteme werden unterstützt?',
@@ -127,7 +127,7 @@ export function RootServer() {
     },
     {
       question: 'Wie schnell ist die Bereitstellung?',
-      answer: 'Die Bereitstellung Ihres KVM Root Servers erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.'
+      answer: 'Die Bereitstellung Ihres KVM Server erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.'
     },
     {
       question: 'Gibt es eine Mindestvertragslaufzeit?',
@@ -139,7 +139,7 @@ export function RootServer() {
     navigate('/order', {
       state: {
         orderDetails: {
-          productName: `KVM Root Server - ${pkg.name}`,
+          productName: `KVM Server - ${pkg.name}`,
           price: pkg.price,
           features: [
             { label: 'CPU', value: `${pkg.cpu} Kerne` },
@@ -158,7 +158,7 @@ export function RootServer() {
     navigate('/order', {
       state: {
         orderDetails: {
-          productName: 'KVM Root Server - Individuell',
+          productName: 'KVM Server - Individuell',
           price: parseFloat(calculatePrice()),
           features: [
             { label: 'CPU', value: `${config.cpu} Kerne` },
@@ -186,10 +186,10 @@ export function RootServer() {
             className="max-w-3xl text-white"
           >
             <h1 className="text-5xl font-display font-bold mb-6">
-              KVM Root Server
+              KVM Server
             </h1>
             <p className="text-xl mb-8 text-white/90">
-              Maximale Performance und volle Kontrolle: Unsere KVM Root Server bieten Ihnen die perfekte Basis für Ihre Projekte.
+              Maximale Performance und volle Kontrolle: Unsere KVM Server bieten Ihnen die perfekte Basis für Ihre Projekte.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               {features.map((feature, index) => (
@@ -265,7 +265,7 @@ export function RootServer() {
         <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg p-8 mb-16 border border-gray-100">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
-              <h2 className="text-2xl font-semibold mb-6">Server Konfigurator</h2>
+              <h2 className="text-2xl font-semibold mb-6">KVM Server Konfigurator</h2>
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">

@@ -68,7 +68,7 @@ export function Header() {
   const location = useLocation();
 
   const serverProducts = [
-    { label: 'KVM Root Server', href: '/products/root-server' },
+    { label: 'KVM Server', href: '/products/root-server' },
     { label: 'Dedicated Server', href: '/products/dedicated' },
     { label: 'Gameserver', href: '/products/game-server' },
     { label: 'Teamspeak Server', href: '/products/teamspeak' }
@@ -107,7 +107,7 @@ export function Header() {
     if (!path) return 'Startseite';
     
     const germanTitles: { [key: string]: string } = {
-      'root-server': 'KVM Root Server',
+      'root-server': 'KVM Server',
       'dedicated': 'Dedicated Server',
       'game-server': 'Gameserver',
       'teamspeak': 'TeamSpeak Server',
