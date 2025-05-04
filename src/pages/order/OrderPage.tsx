@@ -99,9 +99,9 @@ export function OrderPage() {
             Bestellübersicht
           </h1>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="min-h-screen flex flex-row justify-center items-center gap-2 w-full px-4">
             {/* Order Summary */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 mx-auto w-full max-w-md self-stretch flex flex-col">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Ihre Bestellung</h2>
               {orderDetails.image && (
                 <div className="relative overflow-hidden rounded-xl mb-6">
@@ -123,10 +123,6 @@ export function OrderPage() {
               </ul>
 
               <div className="border-t border-gray-200 pt-6 space-y-3">
-                <div className="flex justify-between text-gray-600">
-                  <span>Zwischensumme:</span>
-                  <span>{orderDetails.price.toFixed(2)} €</span>
-                </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>Rabatt ({discount}%):</span>
@@ -145,7 +141,7 @@ export function OrderPage() {
 
             {/* Operating System Selection */}
             {orderDetails.isKVM && (
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 mx-auto max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-gray-800">Betriebssystem</h2>
                 <div className="space-y-4">
                   <div>
@@ -222,7 +218,7 @@ export function OrderPage() {
             )}
 
             {/* Voucher and Payment */}
-            <div className="space-y-4">
+            <div className="space-y-4 mx-auto w-full max-w-md self-stretch flex flex-col">
               {/* Voucher Code */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
                 <h2 className="text-2xl font-bold mb-6 text-gray-800">Gutscheincode</h2>

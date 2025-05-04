@@ -181,7 +181,7 @@ export function GameServer() {
               >
                 ← Zurück zur Regionsauswahl
               </button>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 -mt-6">
                 <div className="space-y-6">
                   <h2 className="text-2xl font-semibold">Gameserver Konfigurator</h2>
                   
