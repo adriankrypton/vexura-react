@@ -136,37 +136,10 @@ export function Webspaces() {
             <h1 className="text-5xl font-display font-bold mb-6">
               Webhosting für Profis
             </h1>
-            <p className="text-xl mb-8 text-white/90">
+            <p className="text-xl text-white/90">
               Schnelles und sicheres Hosting für Ihre Webprojekte mit modernster Technologie
             </p>
-            <div className="flex flex-wrap gap-4">
-              <button className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-white/90 transition-colors">
-                Hosting vergleichen
-              </button>
-              <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors">
-                Features entdecken
-              </button>
-            </div>
           </motion.div>
-        </div>
-      </div>
-
-      {/* Features Grid */}
-      <div className="container mx-auto px-4 -mt-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
-            >
-              <feature.icon className="h-12 w-12 text-[#0B3D91] mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </motion.div>
-          ))}
         </div>
       </div>
 
