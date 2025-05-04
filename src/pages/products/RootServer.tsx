@@ -190,6 +190,12 @@ export function RootServer() {
           <h2 className="text-2xl font-semibold mb-6">Server Konfigurator</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-6">
+              <LocationSelector
+                selectedLocation={config.location}
+                onLocationSelect={(locationId) => setConfig({ ...config, location: locationId })}
+                className="mb-8"
+              />
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   CPU Kerne
@@ -248,12 +254,6 @@ export function RootServer() {
                   <span>1000 GB</span>
                 </div>
               </div>
-
-              <LocationSelector
-                selectedLocation={config.location}
-                onLocationSelect={(locationId) => setConfig({ ...config, location: locationId })}
-                className="mt-6"
-              />
             </div>
 
             <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">

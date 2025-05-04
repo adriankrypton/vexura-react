@@ -50,7 +50,9 @@ export function GameServer() {
       country: 'Deutschland',
       flag: '🇩🇪',
       status: 'available',
-      ping: '~10ms'
+      ping: '~10ms',
+      datacenter: 'NorthC Datacenter',
+      color: 'from-blue-600 to-blue-800'
     },
     {
       id: 'eygelshoven',
@@ -58,7 +60,9 @@ export function GameServer() {
       country: 'Niederlande',
       flag: '🇳🇱',
       status: 'available',
-      ping: '~15ms'
+      ping: '~15ms',
+      datacenter: 'SkyLink Datacenter',
+      color: 'from-red-600 to-red-800'
     }
   ];
 
@@ -159,35 +163,37 @@ export function GameServer() {
                 ← Zurück zur Spielauswahl
               </button>
               <h2 className="text-2xl font-semibold mb-6">Wähle deine Region</h2>
-              <p className="text-gray-600 mb-6">Wähle eine Region in der Nähe deiner Zielgruppe</p>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {regions.map((region) => (
-                  <motion.button
+                  <motion.div
                     key={region.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ y: -5 }}
+                    className={`relative overflow-hidden rounded-lg shadow-lg cursor-pointer group ${
+                      selectedRegion === region.id ? 'ring-2 ring-primary' : ''
+                    }`}
                     onClick={() => {
                       setSelectedRegion(region.id);
                       setStep('config');
                     }}
-                    className={`w-full p-6 rounded-lg border-2 transition-all ${
-                      selectedRegion === region.id
-                        ? 'border-primary bg-primary/5'
-                        : 'border-gray-200 hover:border-primary/50'
-                    }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <span className="text-2xl mr-3">{region.flag}</span>
-                        <div className="text-left">
-                          <h3 className="text-lg font-semibold">
-                            {region.name}, {region.country}
+                    <div className="relative h-48">
+                      <div className="absolute inset-0">
+                        <div className={`absolute inset-0 bg-gradient-to-br ${region.color}`} />
+                      </div>
+                      <div className="absolute inset-0 flex items-end p-6">
+                        <div className="text-white">
+                          <h3 className="text-xl font-bold">
+                            {region.name}
                           </h3>
-                          <p className="text-sm text-gray-600">
-                            Latenz: {region.ping}
+                          <p className="text-white/80 text-sm">
+                            {region.datacenter}
                           </p>
                         </div>
                       </div>
                     </div>
-                  </motion.button>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -208,38 +214,40 @@ export function GameServer() {
               >
                 ← Zurück zur Regionsauswahl
               </button>
-              <h2 className="text-2xl font-semibold mb-8">Server Konfiguration</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Server Name
-                    </label>
-                    <input
-                      type="text"
-                      value={serverName}
-                      onChange={(e) => setServerName(e.target.value)}
-                      placeholder="Mein Game Server"
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
-                    />
-                  </div>
+                <div>
+                  <h2 className="text-2xl font-semibold mb-6">Server Konfiguration</h2>
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Server Name
+                      </label>
+                      <input
+                        type="text"
+                        value={serverName}
+                        onChange={(e) => setServerName(e.target.value)}
+                        placeholder="Mein Game Server"
+                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Anzahl der Slots
-                    </label>
-                    <input
-                      type="range"
-                      min="5"
-                      max="100"
-                      value={slots}
-                      onChange={(e) => setSlots(parseInt(e.target.value))}
-                      className="w-full accent-primary"
-                    />
-                    <div className="flex justify-between text-sm text-gray-600 mt-2">
-                      <span>5 Slots</span>
-                      <span>{slots} Slots</span>
-                      <span>100 Slots</span>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Anzahl der Slots
+                      </label>
+                      <input
+                        type="range"
+                        min="5"
+                        max="100"
+                        value={slots}
+                        onChange={(e) => setSlots(parseInt(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                      <div className="flex justify-between text-sm text-gray-600 mt-2">
+                        <span>5 Slots</span>
+                        <span>{slots} Slots</span>
+                        <span>100 Slots</span>
+                      </div>
                     </div>
                   </div>
                 </div>
