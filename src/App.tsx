@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
@@ -8,6 +8,7 @@ import { Datacenter } from './pages/info/Datacenter';
 import { Payment } from './pages/info/Payment';
 import { Reselling } from './pages/info/Reselling';
 import { Partners } from './pages/info/Partners';
+import { Cancellation } from './pages/info/Cancellation';
 import { RootServer } from './pages/products/RootServer';
 import { Domains } from './pages/products/Domains';
 import { GameServer } from './pages/products/GameServer';
@@ -62,6 +63,7 @@ function App() {
             <Route path="/info/payment" element={<PageWrapper><Payment /></PageWrapper>} />
             <Route path="/info/reselling" element={<PageWrapper><Reselling /></PageWrapper>} />
             <Route path="/info/partners" element={<PageWrapper><Partners /></PageWrapper>} />
+            <Route path="/info/cancellation" element={<PageWrapper><Cancellation /></PageWrapper>} />
             
             {/* Product Pages */}
             <Route path="/products/root-server" element={<PageWrapper><RootServer /></PageWrapper>} />

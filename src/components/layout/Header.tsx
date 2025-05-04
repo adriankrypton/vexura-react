@@ -124,7 +124,8 @@ export function Header() {
       'infrastructure': 'Infrastruktur',
       'imprint': 'Impressum',
       'privacy': 'Datenschutz',
-      'terms': 'AGB'
+      'terms': 'AGB',
+      'cancellation': 'Widerrufsrecht'
     };
 
     return germanTitles[path] || path;
