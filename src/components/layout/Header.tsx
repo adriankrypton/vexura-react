@@ -70,7 +70,7 @@ export function Header() {
   const serverProducts = [
     { label: 'KVM Root Server', href: '/products/root-server' },
     { label: 'Dedicated Server', href: '/products/dedicated' },
-    { label: 'Gameservr', href: '/products/game-server' },
+    { label: 'Gameserver', href: '/products/game-server' },
     { label: 'Teamspeak Server', href: '/products/teamspeak' }
   ];
 
