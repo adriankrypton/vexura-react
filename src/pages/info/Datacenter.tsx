@@ -35,7 +35,7 @@ export function Datacenter() {
       name: "NorthC",
       location: "Nürnberg",
       country: "Deutschland",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80",
+      image: "/img/northnbg.jpg",
       certifications: ['ISO 27001', 'ISO 9001', 'PCI DSS'],
       specs: {
         power: [
@@ -68,7 +68,7 @@ export function Datacenter() {
       name: "SkyLink",
       location: "Eygelshoven",
       country: "Niederlande",
-      image: "https://images.unsplash.com/photo-1586772002130-b0f3daa6288e?auto=format&fit=crop&q=80",
+      image: "/img/skylink.png",
       certifications: ['ISO 27001', 'ISO 14001', 'ISO 50001'],
       specs: {
         power: [

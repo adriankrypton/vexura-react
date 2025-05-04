@@ -93,7 +93,6 @@ export function Header() {
     { label: 'Zahlungsmethoden', href: '/info/payment' },
     { label: 'Reselling', href: '/info/reselling' },
     { label: 'Partner', href: '/info/partners' },
-    { label: 'Widerrufsrecht', href: '/info/cancellation' }
   ];
 
   const legal = [
@@ -135,7 +134,7 @@ export function Header() {
   document.title = pageTitle;
 
   return (
-    <header className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
+    <header className="fixed w-full bg-white/80 backdrop-blur-md z-50">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <img src="/img/logo.png" alt="Vexura" className="h-8" />
@@ -172,7 +171,7 @@ export function Header() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="lg:hidden bg-white border-b border-gray-200"
+            className="lg:hidden bg-white"
           >
             <div className="container mx-auto px-4 py-8 space-y-8">
               <MobileNavLink href="/">Startseite</MobileNavLink>

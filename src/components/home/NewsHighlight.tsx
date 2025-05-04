@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { useState } from 'react';
 
 interface NewsItem {
@@ -49,26 +49,14 @@ export function NewsHighlight() {
     <section className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91]/5 via-white to-[#00BCD4]/5" />
       <div className="container mx-auto px-4 relative">
-        <div className="flex justify-between items-center mb-12">
-          <motion.h2
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl font-display font-bold"
-          >
-            Aktuelle News
-          </motion.h2>
-          <motion.a
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            href="/news"
-            className="flex items-center text-primary hover:text-primary-light transition-colors group"
-          >
-            Alle News
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </motion.a>
-        </div>
+        <motion.h2
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl font-display font-bold mb-12"
+        >
+          Aktuelle News
+        </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {news.map((item, index) => (

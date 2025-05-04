@@ -14,32 +14,32 @@ export function GameServer() {
   const [step, setStep] = useState<'game' | 'region' | 'config'>('game');
   const [selectedGame, setSelectedGame] = useState<string>('');
   const [selectedRegion, setSelectedRegion] = useState<string>('nuremberg');
-  const [slots, setSlots] = useState(32);
-  const [serverName, setServerName] = useState('');
+  const [memory, setMemory] = useState(4);
+  const [storage, setStorage] = useState(50);
 
   const games: Game[] = [
     {
       id: 'minecraft-java',
       name: 'Minecraft Java Edition',
-      image: 'https://assetsio.gnwcdn.com/ar1or8.jpg?width=1200&height=630&fit=crop&enable=upscale&auto=webp',
+      image: '/img/minecraftjava.jpg',
       price: 2.00
     },
     {
       id: 'minecraft-bedrock',
       name: 'Minecraft Bedrock Edition',
-      image: 'https://gagadget.com/media/post_big/apps.608.13510798887677013.5c7792f0-b887-4250-8c4e-4617af9c4509.jpeg',
+      image: '/img/mcbedrock.webp',
       price: 1.50
     },
     {
       id: 'csgo',
       name: 'Counter-Strike 2',
-      image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1745368595',
+      image: '/img/csgo2.webp',
       price: 2.00
     },
     {
       id: 'gta5',
       name: 'alt:V',
-      image: 'https://altv.mp/img/de/landing/og_image.jpg',
+      image: '/img/altv.jpg',
       price: 2.00
     }
   ];
@@ -63,7 +63,7 @@ export function GameServer() {
   ];
 
   const calculatePrice = () => {
-    const basePrice = slots * 0.08;
+    const basePrice = memory * 2 + storage * 0.1;
     const regionMultiplier = selectedRegion === 'eygelshoven' ? 0.95 : 1;
     return (basePrice * regionMultiplier).toFixed(2);
   };
@@ -162,36 +162,43 @@ export function GameServer() {
               </button>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Server Konfiguration</h2>
+                  <h2 className="text-2xl font-semibold">Server Konfigurator</h2>
+                  
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Server Name
+                      RAM (GB)
                     </label>
                     <input
-                      type="text"
-                      value={serverName}
-                      onChange={(e) => setServerName(e.target.value)}
-                      placeholder="Mein Game Server"
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
+                      type="range"
+                      min="2"
+                      max="32"
+                      value={memory}
+                      onChange={(e) => setMemory(parseInt(e.target.value))}
+                      className="w-full accent-primary"
                     />
+                    <div className="flex justify-between text-sm text-gray-600 mt-2">
+                      <span>2 GB</span>
+                      <span>{memory} GB</span>
+                      <span>32 GB</span>
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Anzahl der Slots
+                      Speicher (GB)
                     </label>
                     <input
                       type="range"
-                      min="5"
-                      max="100"
-                      value={slots}
-                      onChange={(e) => setSlots(parseInt(e.target.value))}
+                      min="20"
+                      max="500"
+                      value={storage}
+                      onChange={(e) => setStorage(parseInt(e.target.value))}
                       className="w-full accent-primary"
                     />
                     <div className="flex justify-between text-sm text-gray-600 mt-2">
-                      <span>5 Slots</span>
-                      <span>{slots} Slots</span>
-                      <span>100 Slots</span>
+                      <span>20 GB</span>
+                      <span>{storage} GB</span>
+                      <span>500 GB</span>
                     </div>
                   </div>
                 </div>
@@ -217,12 +224,12 @@ export function GameServer() {
                       </span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Server Name:</span>
-                      <span className="font-medium">{serverName || 'Nicht angegeben'}</span>
+                      <span>RAM:</span>
+                      <span className="font-medium">{memory} GB</span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Slots:</span>
-                      <span className="font-medium">{slots}</span>
+                      <span>Speicher:</span>
+                      <span className="font-medium">{storage} GB</span>
                     </li>
                   </ul>
                   <p className="text-gray-600 mb-4">Inklusive aller Features</p>

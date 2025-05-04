@@ -24,7 +24,8 @@ export function Footer() {
   const legal = [
     { label: 'Impressum', href: '/legal/imprint' },
     { label: 'Datenschutz', href: '/legal/privacy' },
-    { label: 'AGB', href: '/legal/terms' }
+    { label: 'Allgemeine Geschäftsbedingungen', href: '/legal/terms' },
+    { label: 'Widerrufsrecht', href: '/legal/cancellation' }
   ];
 
   return (

@@ -119,9 +119,9 @@ export function Storage() {
       {/* Storage Calculator */}
       <div className="container mx-auto px-4 -mt-12 relative z-10">
         <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
-          <h2 className="text-2xl font-semibold mb-6">Storage Konfigurator</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div>
+              <h2 className="text-2xl font-semibold mb-6">Storage Konfigurator</h2>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Speicherplatz
               </label>
@@ -141,7 +141,8 @@ export function Storage() {
               </div>
             </div>
             <div className="bg-gray-50 rounded-lg">
-              <div className="text-3xl font-bold p-6 pb-2">
+              <h2 className="text-2xl font-semibold p-6 pb-2">Bestellübersicht</h2>
+              <div className="text-3xl font-bold px-6 pb-2">
                 {calculatePrice()} €<span className="text-lg font-normal text-gray-600">/Monat</span>
               </div>
               <div className="space-y-4 px-6">
