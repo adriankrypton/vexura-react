@@ -103,7 +103,14 @@ export function Header() {
 
   // Update document title based on current route
   const currentPage = location.pathname.split('/').pop();
-  const pageTitle = currentPage ? `Vexure | ${currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}` : 'Vexure';
+  const formatPageTitle = (path: string) => {
+    if (!path) return 'Startseite';
+    return path
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+  const pageTitle = currentPage ? `Vexura | ${formatPageTitle(currentPage)}` : 'Vexura | Startseite';
   document.title = pageTitle;
 
   return (
