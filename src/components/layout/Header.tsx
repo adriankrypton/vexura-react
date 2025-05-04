@@ -127,8 +127,7 @@ export function Header() {
           <DropdownNavLink title="Webhosting" items={webhosting} />
           <DropdownNavLink title="Dienste" items={services} />
           <DropdownNavLink title="Lizenzen" items={licenses} />
-          <DropdownNavLink title="Info" items={infoPages} />
-          <DropdownNavLink title="Rechtliches" items={legal} />
+          <DropdownNavLink title="Informationen" items={infoPages} />
         </div>
 
         {/* Mobile Menu Button */}
@@ -194,7 +193,7 @@ export function Header() {
               </div>
 
               <div className="py-2">
-                <p className="font-semibold mb-2">Info</p>
+                <p className="font-semibold mb-2">Informationen</p>
                 {infoPages.map((item, index) => (
                   <MobileNavLink key={index} href={item.href}>
                     {item.label}
