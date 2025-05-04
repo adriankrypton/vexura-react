@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Users, Shield, Cpu, Server, Clock, Gauge } from 'lucide-react';
 import { LocationSelector } from '../../components/LocationSelector';
+import { useNavigate } from 'react-router-dom';
 
 interface Game {
   id: string;
@@ -11,6 +12,7 @@ interface Game {
 }
 
 export function GameServer() {
+  const navigate = useNavigate();
   const [step, setStep] = useState<'game' | 'region' | 'config'>('game');
   const [selectedGame, setSelectedGame] = useState<string>('');
   const [selectedRegion, setSelectedRegion] = useState<string>('nuremberg');
@@ -66,6 +68,25 @@ export function GameServer() {
     const basePrice = memory * 2 + storage * 0.1;
     const regionMultiplier = selectedRegion === 'eygelshoven' ? 0.95 : 1;
     return (basePrice * regionMultiplier).toFixed(2);
+  };
+
+  const handleOrder = () => {
+    const selectedGameDetails = games.find(g => g.id === selectedGame);
+    if (!selectedGameDetails) return;
+
+    const orderDetails = {
+      productName: `Game Server - ${selectedGameDetails.name}`,
+      price: parseFloat(calculatePrice()),
+      image: selectedGameDetails.image,
+      features: [
+        { label: 'Spiel', value: selectedGameDetails.name },
+        { label: 'RAM', value: `${memory} GB` },
+        { label: 'Speicher', value: `${storage} GB SSD` },
+        { label: 'Standort', value: selectedRegion === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' }
+      ]
+    };
+
+    navigate('/order', { state: { orderDetails } });
   };
 
   const renderStep = () => {
@@ -233,7 +254,10 @@ export function GameServer() {
                     </li>
                   </ul>
                   <p className="text-gray-600 mb-4">Inklusive aller Features</p>
-                  <button className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition-colors">
+                  <button 
+                    className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors"
+                    onClick={handleOrder}
+                  >
                     Jetzt bestellen
                   </button>
                 </div>

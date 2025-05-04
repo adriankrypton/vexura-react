@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { HardDrive, Shield, Gauge, Globe, Code, Database, Clock, Users, Server } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface WebspaceFeature {
   icon: any;
@@ -18,6 +19,7 @@ interface WebspacePlan {
 }
 
 export function Webspaces() {
+  const navigate = useNavigate();
   const features: WebspaceFeature[] = [
     {
       icon: Shield,
@@ -122,6 +124,21 @@ export function Webspaces() {
     }
   ];
 
+  const handleOrder = (plan: WebspacePlan) => {
+    const orderDetails = {
+      productName: `Webspace - ${plan.name}`,
+      price: plan.price,
+      features: [
+        { label: 'Webspace', value: plan.storage },
+        { label: 'Datenbanken', value: plan.databases },
+        { label: 'Subdomains', value: plan.domains },
+        { label: 'E-Mail-Adressen', value: 'Unbegrenzt' }
+      ]
+    };
+
+    navigate('/order', { state: { orderDetails } });
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -205,11 +222,14 @@ export function Webspaces() {
                 <td className="p-4"></td>
                 {plans.map((plan, index) => (
                   <td key={index} className="p-4 text-center">
-                    <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                      plan.recommended
-                        ? 'bg-[#0B3D91] text-white hover:bg-[#1E88E5]'
-                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                    }`}>
+                    <button 
+                      className={`w-full py-3 rounded-lg font-medium transition-colors ${
+                        plan.recommended
+                          ? 'bg-[#0B3D91] text-white hover:bg-[#1E88E5]'
+                          : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                      }`}
+                      onClick={() => handleOrder(plan)}
+                    >
                       Jetzt bestellen
                     </button>
                   </td>

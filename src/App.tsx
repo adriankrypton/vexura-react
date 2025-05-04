@@ -20,6 +20,7 @@ import { Licenses } from './pages/products/Licenses';
 import { Imprint } from './pages/legal/Imprint';
 import { Privacy } from './pages/legal/Privacy';
 import { Terms } from './pages/legal/Terms';
+import { OrderPage } from './pages/order/OrderPage';
 import { useEffect } from 'react';
 
 function ScrollToTop() {
@@ -74,6 +75,9 @@ function App() {
             <Route path="/products/storage" element={<PageWrapper><Storage /></PageWrapper>} />
             <Route path="/products/dedicated" element={<PageWrapper><DedicatedServer /></PageWrapper>} />
             <Route path="/products/licenses" element={<PageWrapper><Licenses /></PageWrapper>} />
+            
+            {/* Order Page */}
+            <Route path="/order" element={<PageWrapper><OrderPage /></PageWrapper>} />
             
             {/* Legal Pages */}
             <Route path="/legal/imprint" element={<PageWrapper><Imprint /></PageWrapper>} />

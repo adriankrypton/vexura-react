@@ -324,16 +324,7 @@ export function Datacenter() {
             </div>
           </div>
 
-          <div className="mt-12">
-            <h2 className="text-2xl font-semibold mb-4">Technische Details</h2>
-            <ul className="list-disc pl-6 space-y-2 text-gray-600">
-              <li>Mehrere redundante Stromversorgungen</li>
-              <li>Klimatisierte Serverräume mit präziser Temperaturkontrolle</li>
-              <li>Automatische Backup-Systeme</li>
-              <li>Modernste Firewall-Systeme</li>
-              <li>24/7 technischer Support</li>
-            </ul>
-          </div>
+         
         </div>
       )}
     </div>

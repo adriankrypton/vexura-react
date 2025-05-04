@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Server, Cpu, HardDrive, Map, Shield, Gauge, Globe, X } from 'lucide-react';
 import { LocationSelector } from '../../components/LocationSelector';
+import { useNavigate } from 'react-router-dom';
 
 interface Package {
   name: string;
@@ -37,6 +38,7 @@ export function RootServer() {
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [showOrderSummary, setShowOrderSummary] = useState(false);
   const [selectedOs, setSelectedOs] = useState<OperatingSystem | null>(null);
+  const navigate = useNavigate();
 
   const operatingSystems: OperatingSystem[] = [
     { name: 'Ubuntu', category: 'Linux', version: '22.04 LTS' },
@@ -137,6 +139,23 @@ export function RootServer() {
     }
   ];
 
+  const handleOrder = (pkg: Package) => {
+    const orderDetails = {
+      productName: `KVM Root Server - ${pkg.name}`,
+      price: pkg.price,
+      features: [
+        { label: 'CPU', value: `${pkg.cpu} Kerne` },
+        { label: 'RAM', value: `${pkg.ram} GB` },
+        { label: 'Speicher', value: `${pkg.storage} GB SSD` },
+        { label: 'Bandbreite', value: pkg.bandwidth },
+        { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' }
+      ],
+      isKVM: true
+    };
+
+    navigate('/order', { state: { orderDetails } });
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -218,10 +237,7 @@ export function RootServer() {
               </ul>
               <button 
                 className="w-full bg-primary text-white py-4 rounded-lg hover:bg-primary-light transition-colors text-lg font-semibold"
-                onClick={() => {
-                  setSelectedPackage(pkg);
-                  setShowOsModal(true);
-                }}
+                onClick={() => handleOrder(pkg)}
               >
                 Jetzt bestellen
               </button>

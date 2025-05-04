@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { HardDrive, Shield, Upload, Download, Lock, Share2, Clock, Gauge } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface StoragePlan {
   name: string;
@@ -12,6 +13,7 @@ interface StoragePlan {
 
 export function Storage() {
   const [storageSize, setStorageSize] = useState(100);
+  const navigate = useNavigate();
   
   const plans: StoragePlan[] = [
     {
@@ -95,6 +97,18 @@ export function Storage() {
     }
   };
 
+  const handleOrder = (plan?: StoragePlan) => {
+    const orderDetails = {
+      productName: plan ? `Storage - ${plan.name}` : 'Storage - Individuell',
+      price: plan ? plan.price : parseFloat(calculatePrice()),
+      features: [
+        { label: 'Speicherplatz', value: plan ? plan.space : `${storageSize} GB` }
+      ]
+    };
+
+    navigate('/order', { state: { orderDetails } });
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -152,7 +166,10 @@ export function Storage() {
                 </div>
               </div>
               <div className="p-6 pt-4">
-                <button className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary-light transition-colors">
+                <button 
+                  className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary-light transition-colors"
+                  onClick={() => handleOrder()}
+                >
                   Jetzt bestellen
                 </button>
               </div>
@@ -194,11 +211,14 @@ export function Storage() {
                   {plan.space} Speicher
                 </li>
               </ul>
-              <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                plan.recommended
-                  ? 'bg-primary text-white hover:bg-primary-light'
-                  : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-              }`}>
+              <button 
+                className={`w-full py-3 rounded-lg font-medium transition-colors ${
+                  plan.recommended
+                    ? 'bg-primary text-white hover:bg-primary-light'
+                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                }`}
+                onClick={() => handleOrder(plan)}
+              >
                 Jetzt bestellen
               </button>
             </motion.div>

@@ -76,7 +76,7 @@ export function Teamspeak() {
       {/* Configurator */}
       <div className="container mx-auto px-4 -mt-12 relative z-10">
         <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
-          <h2 className="text-2xl font-semibold mb-8">Server Konfigurator</h2>
+          <h2 className="text-2xl font-semibold mb-8">TeamSpeak Server Konfigurator</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
