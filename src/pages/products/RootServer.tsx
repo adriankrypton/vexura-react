@@ -159,10 +159,9 @@ export function RootServer() {
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
-        <div className="container mx-auto px-4 py-24 relative">
+        <div className="container mx-auto px-4 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

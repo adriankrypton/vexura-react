@@ -92,6 +92,53 @@ export function NewsHighlight() {
           ))}
         </div>
       </div>
+
+      {/* Modal Popup for News */}
+      {activeNews && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+          onClick={() => setActiveNews(null)}
+        >
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="relative">
+              <img src={activeNews.image} alt={activeNews.title} className="w-full h-64 object-cover rounded-t-xl" />
+              <button
+                onClick={() => setActiveNews(null)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 bg-white/80 rounded-full p-1"
+              >
+                <span className="sr-only">Schließen</span>
+                ×
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+                  {activeNews.category}
+                </span>
+                <div className="flex items-center">
+                  <Calendar className="h-4 w-4 mr-1" />
+                  {new Date(activeNews.date).toLocaleDateString('de-DE')}
+                </div>
+              </div>
+              <h2 className="text-2xl font-semibold mb-4">{activeNews.title}</h2>
+              <div className="prose max-w-none">
+                {activeNews.content.split('\n').map((paragraph, idx) => (
+                  <p key={idx} className="mb-4">{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 }

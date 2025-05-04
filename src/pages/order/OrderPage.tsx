@@ -19,13 +19,13 @@ interface OperatingSystem {
 }
 
 const operatingSystems: OperatingSystem[] = [
-  { id: 'ubuntu-22', name: 'Ubuntu', icon: '/images/os/ubuntu.svg', version: '22.04 LTS' },
-  { id: 'ubuntu-20', name: 'Ubuntu', icon: '/images/os/ubuntu.svg', version: '20.04 LTS' },
-  { id: 'debian-12', name: 'Debian', icon: '/images/os/debian.svg', version: '12' },
-  { id: 'debian-11', name: 'Debian', icon: '/images/os/debian.svg', version: '11' },
-  { id: 'centos-9', name: 'CentOS', icon: '/images/os/centos.svg', version: 'Stream 9' },
-  { id: 'windows-2022', name: 'Windows Server', icon: '/images/os/windowsserver.svg', version: '2022' },
-  { id: 'windows-2019', name: 'Windows Server', icon: '/images/os/windowsserver.svg', version: '2019' },
+  { id: 'ubuntu-22', name: 'Ubuntu', icon: '/img/os/ubuntu.svg', version: '22.04 LTS' },
+  { id: 'ubuntu-20', name: 'Ubuntu', icon: '/img/os/ubuntu.svg', version: '20.04 LTS' },
+  { id: 'debian-12', name: 'Debian', icon: '/img/os/debian.svg', version: '12' },
+  { id: 'debian-11', name: 'Debian', icon: '/img/os/debian.svg', version: '11' },
+  { id: 'centos-9', name: 'CentOS', icon: '/img/os/centos.svg', version: 'Stream 9' },
+  { id: 'windows-2022', name: 'Windows Server', icon: '/img/os/windows.svg', version: '2022' },
+  { id: 'windows-2019', name: 'Windows Server', icon: '/img/os/windows.svg', version: '2019' },
 ];
 
 export function OrderPage() {

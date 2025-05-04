@@ -76,57 +76,39 @@ export function Teamspeak() {
       {/* Configurator */}
       <div className="container mx-auto px-4 -mt-12 relative z-10">
         <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
-          <h2 className="text-2xl font-semibold mb-8">TeamSpeak Server Konfigurator</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Wie soll dein TeamSpeak Server heißen?
-                </label>
-                <input
-                  type="text"
-                  value={serverName}
-                  onChange={(e) => setServerName(e.target.value)}
-                  placeholder="Mein TeamSpeak Server"
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Anzahl der Slots
-                </label>
-                <input
-                  type="range"
-                  min="5"
-                  max="500"
-                  value={slots}
-                  onChange={(e) => setSlots(parseInt(e.target.value))}
-                  className="w-full accent-primary"
-                />
-                <div className="flex justify-between text-sm text-gray-600 mt-2">
-                  <span>5 Slots</span>
-                  <span>{slots} Slots</span>
-                  <span>500 Slots</span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div>
+              <h2 className="text-2xl font-semibold mb-6">TeamSpeak Konfigurator</h2>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Anzahl der Slots
+              </label>
+              <input
+                type="range"
+                min="5"
+                max="500"
+                value={slots}
+                onChange={(e) => setSlots(parseInt(e.target.value))}
+                className="w-full accent-primary"
+              />
+              <div className="flex justify-between text-sm text-gray-600 mt-2">
+                <span>5 Slots</span>
+                <span>{slots} Slots</span>
+                <span>500 Slots</span>
               </div>
             </div>
-
             <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
-              <h3 className="text-xl font-semibold mb-4">Deine Konfiguration</h3>
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-semibold">Deine Konfiguration</h3>
+                <div className="text-2xl font-bold">
+                  {calculatePrice()} €<span className="text-lg font-normal text-gray-600">/Monat</span>
+                </div>
+              </div>
               <ul className="space-y-3 mb-6">
-                <li className="flex justify-between">
-                  <span>Server Name:</span>
-                  <span className="font-medium">{serverName || 'Nicht angegeben'}</span>
-                </li>
                 <li className="flex justify-between">
                   <span>Slots:</span>
                   <span className="font-medium">{slots}</span>
                 </li>
               </ul>
-              <div className="text-3xl font-bold mb-4 text-primary">
-                {calculatePrice()} €<span className="text-sm font-normal text-gray-600">/Monat</span>
-              </div>
               <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors">
                 Jetzt bestellen
               </button>
