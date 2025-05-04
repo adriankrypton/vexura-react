@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Users, Shield, Cpu, Server, Clock, Gauge } from 'lucide-react';
+import { LocationSelector } from '../../components/LocationSelector';
 
 interface Game {
   id: string;
@@ -12,7 +13,7 @@ interface Game {
 export function GameServer() {
   const [step, setStep] = useState<'game' | 'region' | 'config'>('game');
   const [selectedGame, setSelectedGame] = useState<string>('');
-  const [selectedRegion, setSelectedRegion] = useState<string>('');
+  const [selectedRegion, setSelectedRegion] = useState<string>('nuremberg');
   const [slots, setSlots] = useState(32);
   const [serverName, setServerName] = useState('');
 
@@ -43,49 +44,21 @@ export function GameServer() {
     }
   ];
 
-  const regions = [
-    {
-      id: 'nuremberg',
-      name: 'Nürnberg',
-      country: 'Deutschland',
-      flag: '🇩🇪',
-      status: 'available',
-      ping: '~10ms',
-      datacenter: 'NorthC Datacenter',
-      color: 'from-blue-600 to-blue-800'
-    },
-    {
-      id: 'eygelshoven',
-      name: 'Eygelshoven',
-      country: 'Niederlande',
-      flag: '🇳🇱',
-      status: 'available',
-      ping: '~15ms',
-      datacenter: 'SkyLink Datacenter',
-      color: 'from-red-600 to-red-800'
-    }
-  ];
-
   const features = [
     {
       icon: Shield,
       title: 'DDoS Protection',
-      description: 'Automatischer Schutz vor Angriffen'
+      description: 'Automatischer Schutz vor DDoS-Angriffen und Game-Specific Protection für maximale Serververfügbarkeit'
     },
     {
       icon: Cpu,
       title: 'High Performance',
-      description: 'Beste Sprachqualität'
+      description: 'Optimierte Hardware und Netzwerkanbindung für beste Gaming-Performance und niedrige Latenz'
     },
     {
       icon: Server,
-      title: 'Eigene Domain',
-      description: 'Kostenlose .ts3.cloud Domain'
-    },
-    {
-      icon: Users,
-      title: 'Unbegrenzte Channels',
-      description: 'Keine Channel-Limitierung'
+      title: 'Instant Setup',
+      description: 'Server sofort nach Bestellung verfügbar mit automatischer Installation und Konfiguration'
     }
   ];
 
@@ -162,40 +135,13 @@ export function GameServer() {
               >
                 ← Zurück zur Spielauswahl
               </button>
-              <h2 className="text-2xl font-semibold mb-6">Wähle deine Region</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {regions.map((region) => (
-                  <motion.div
-                    key={region.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    whileHover={{ y: -5 }}
-                    className={`relative overflow-hidden rounded-lg shadow-lg cursor-pointer group ${
-                      selectedRegion === region.id ? 'ring-2 ring-primary' : ''
-                    }`}
-                    onClick={() => {
-                      setSelectedRegion(region.id);
-                      setStep('config');
-                    }}
-                  >
-                    <div className="relative h-48">
-                      <div className="absolute inset-0">
-                        <div className={`absolute inset-0 bg-gradient-to-br ${region.color}`} />
-                      </div>
-                      <div className="absolute inset-0 flex items-end p-6">
-                        <div className="text-white">
-                          <h3 className="text-xl font-bold">
-                            {region.name}
-                          </h3>
-                          <p className="text-white/80 text-sm">
-                            {region.datacenter}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              <LocationSelector
+                selectedLocation={selectedRegion}
+                onLocationSelect={(location) => {
+                  setSelectedRegion(location);
+                  setStep('config');
+                }}
+              />
             </motion.div>
           </div>
         );
@@ -215,45 +161,48 @@ export function GameServer() {
                 ← Zurück zur Regionsauswahl
               </button>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <h2 className="text-2xl font-semibold mb-6">Server Konfiguration</h2>
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Server Name
-                      </label>
-                      <input
-                        type="text"
-                        value={serverName}
-                        onChange={(e) => setServerName(e.target.value)}
-                        placeholder="Mein Game Server"
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
-                      />
-                    </div>
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-semibold">Server Konfiguration</h2>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Server Name
+                    </label>
+                    <input
+                      type="text"
+                      value={serverName}
+                      onChange={(e) => setServerName(e.target.value)}
+                      placeholder="Mein Game Server"
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none"
+                    />
+                  </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Anzahl der Slots
-                      </label>
-                      <input
-                        type="range"
-                        min="5"
-                        max="100"
-                        value={slots}
-                        onChange={(e) => setSlots(parseInt(e.target.value))}
-                        className="w-full accent-primary"
-                      />
-                      <div className="flex justify-between text-sm text-gray-600 mt-2">
-                        <span>5 Slots</span>
-                        <span>{slots} Slots</span>
-                        <span>100 Slots</span>
-                      </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Anzahl der Slots
+                    </label>
+                    <input
+                      type="range"
+                      min="5"
+                      max="100"
+                      value={slots}
+                      onChange={(e) => setSlots(parseInt(e.target.value))}
+                      className="w-full accent-primary"
+                    />
+                    <div className="flex justify-between text-sm text-gray-600 mt-2">
+                      <span>5 Slots</span>
+                      <span>{slots} Slots</span>
+                      <span>100 Slots</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
-                  <h3 className="text-xl font-semibold mb-4">Deine Konfiguration</h3>
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-semibold">Deine Konfiguration</h3>
+                    <div className="text-2xl font-bold">
+                      {calculatePrice()} €<span className="text-lg font-normal text-gray-600">/Monat</span>
+                    </div>
+                  </div>
                   <ul className="space-y-3 mb-6">
                     <li className="flex justify-between">
                       <span>Spiel:</span>
@@ -264,7 +213,7 @@ export function GameServer() {
                     <li className="flex justify-between">
                       <span>Region:</span>
                       <span className="font-medium">
-                        {regions.find(r => r.id === selectedRegion)?.name}
+                        {selectedRegion === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
                       </span>
                     </li>
                     <li className="flex justify-between">
@@ -276,10 +225,8 @@ export function GameServer() {
                       <span className="font-medium">{slots}</span>
                     </li>
                   </ul>
-                  <div className="text-3xl font-bold mb-4 text-primary">
-                    {calculatePrice()} €<span className="text-sm font-normal text-gray-600">/Monat</span>
-                  </div>
-                  <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors">
+                  <p className="text-gray-600 mb-4">Inklusive aller Features</p>
+                  <button className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition-colors">
                     Jetzt bestellen
                   </button>
                 </div>
@@ -319,18 +266,23 @@ export function GameServer() {
           <h2 className="text-3xl font-display font-bold text-center mb-12">
             Inklusive Features
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-md"
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group h-full"
               >
-                <feature.icon className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <div className="p-8 h-full flex flex-col">
+                  <div className="bg-gradient-to-br from-primary/20 to-primary/5 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="h-10 w-10 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed flex-grow">{feature.description}</p>
+                  <div className="h-1 bg-gradient-to-r from-primary/50 to-primary w-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 mt-6" />
+                </div>
               </motion.div>
             ))}
           </div>

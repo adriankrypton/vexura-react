@@ -16,51 +16,58 @@ interface ConfiguratorState {
   cpu: number;
   ram: number;
   storage: number;
-  location: string;
 }
 
 export function RootServer() {
+  const [selectedLocation, setSelectedLocation] = useState<string>('nuremberg');
   const [config, setConfig] = useState<ConfiguratorState>({
     cpu: 2,
     ram: 4,
     storage: 50,
-    location: 'nuremberg'
   });
 
-  const packages: Package[] = [
-    {
-      name: 'Starter',
-      price: 9.99,
-      cpu: 2,
-      ram: 4,
-      storage: 50,
-      bandwidth: '1 Gbit/s'
-    },
-    {
-      name: 'Professional',
-      price: 19.99,
-      cpu: 4,
-      ram: 8,
-      storage: 100,
-      bandwidth: '1 Gbit/s'
-    },
-    {
-      name: 'Business',
-      price: 39.99,
-      cpu: 8,
-      ram: 16,
-      storage: 200,
-      bandwidth: '1 Gbit/s'
-    },
-    {
-      name: 'Enterprise',
-      price: 79.99,
-      cpu: 16,
-      ram: 32,
-      storage: 400,
-      bandwidth: '1 Gbit/s'
-    }
-  ];
+  const getPackages = (location: string): Package[] => {
+    const basePackages: Package[] = [
+      {
+        name: 'Starter',
+        price: 9.99,
+        cpu: 2,
+        ram: 4,
+        storage: 50,
+        bandwidth: '1 Gbit/s'
+      },
+      {
+        name: 'Professional',
+        price: 19.99,
+        cpu: 4,
+        ram: 8,
+        storage: 100,
+        bandwidth: '1 Gbit/s'
+      },
+      {
+        name: 'Business',
+        price: 39.99,
+        cpu: 8,
+        ram: 16,
+        storage: 200,
+        bandwidth: '1 Gbit/s'
+      },
+      {
+        name: 'Enterprise',
+        price: 79.99,
+        cpu: 16,
+        ram: 32,
+        storage: 400,
+        bandwidth: '1 Gbit/s'
+      }
+    ];
+
+    // Apply location-based price adjustment
+    return basePackages.map(pkg => ({
+      ...pkg,
+      price: location === 'eygelshoven' ? pkg.price * 0.95 : pkg.price
+    }));
+  };
 
   const features = [
     {
@@ -81,8 +88,7 @@ export function RootServer() {
   ];
 
   const calculatePrice = () => {
-    // Location-based price adjustment
-    const locationMultiplier = config.location === 'eygelshoven' ? 0.95 : 1;
+    const locationMultiplier = selectedLocation === 'eygelshoven' ? 0.95 : 1;
     return (
       (config.cpu * 5 +
       config.ram * 2 +
@@ -148,37 +154,47 @@ export function RootServer() {
       </div>
 
       <div className="container mx-auto px-4 py-12">
+        {/* Location Selection */}
+        <div className="mb-12">
+          <div className="w-full">
+            <LocationSelector
+              selectedLocation={selectedLocation}
+              onLocationSelect={setSelectedLocation}
+            />
+          </div>
+        </div>
+
         {/* Packages */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {packages.map((pkg, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {getPackages(selectedLocation).map((pkg, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:border-primary/20 hover:shadow-xl transition-all"
+              className="bg-white rounded-xl shadow-lg p-8 border border-gray-200 hover:border-primary/20 hover:shadow-xl transition-all"
             >
-              <h3 className="text-xl font-semibold mb-4">{pkg.name}</h3>
-              <p className="text-3xl font-bold mb-6 text-primary">{pkg.price} €<span className="text-sm font-normal text-gray-600">/Monat</span></p>
-              <ul className="space-y-3 mb-6">
+              <h3 className="text-2xl font-semibold mb-4">{pkg.name}</h3>
+              <p className="text-4xl font-bold mb-8 text-primary">{pkg.price.toFixed(2)} €<span className="text-base font-normal text-gray-600">/Monat</span></p>
+              <ul className="space-y-4 mb-8">
                 <li className="flex items-center">
-                  <Cpu className="h-5 w-5 text-primary mr-2" />
-                  {pkg.cpu} Kerne
+                  <Cpu className="h-6 w-6 text-primary mr-3" />
+                  <span className="text-lg">{pkg.cpu} Kerne</span>
                 </li>
                 <li className="flex items-center">
-                  <Server className="h-5 w-5 text-primary mr-2" />
-                  {pkg.ram} GB RAM
+                  <Server className="h-6 w-6 text-primary mr-3" />
+                  <span className="text-lg">{pkg.ram} GB RAM</span>
                 </li>
                 <li className="flex items-center">
-                  <HardDrive className="h-5 w-5 text-primary mr-2" />
-                  {pkg.storage} GB SSD
+                  <HardDrive className="h-6 w-6 text-primary mr-3" />
+                  <span className="text-lg">{pkg.storage} GB SSD</span>
                 </li>
                 <li className="flex items-center">
-                  <Map className="h-5 w-5 text-primary mr-2" />
-                  {pkg.bandwidth}
+                  <Map className="h-6 w-6 text-primary mr-3" />
+                  <span className="text-lg">{pkg.bandwidth}</span>
                 </li>
               </ul>
-              <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors">
+              <button className="w-full bg-primary text-white py-4 rounded-lg hover:bg-primary-light transition-colors text-lg font-semibold">
                 Jetzt bestellen
               </button>
             </motion.div>
@@ -190,12 +206,6 @@ export function RootServer() {
           <h2 className="text-2xl font-semibold mb-6">Server Konfigurator</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-6">
-              <LocationSelector
-                selectedLocation={config.location}
-                onLocationSelect={(locationId) => setConfig({ ...config, location: locationId })}
-                className="mb-8"
-              />
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   CPU Kerne
@@ -274,7 +284,7 @@ export function RootServer() {
                 <li className="flex justify-between">
                   <span>Standort:</span>
                   <span className="font-medium">
-                    {config.location === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
+                    {selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
                   </span>
                 </li>
               </ul>

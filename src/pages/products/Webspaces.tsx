@@ -175,78 +175,123 @@ export function Webspaces() {
         <h2 className="text-3xl font-display font-bold text-center mb-12">
           Wählen Sie Ihr Hosting-Paket
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`relative bg-white rounded-xl shadow-lg p-8 border-2 ${
-                plan.recommended
-                  ? 'border-[#0B3D91]'
-                  : 'border-gray-100'
-              }`}
-            >
-              {plan.recommended && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0B3D91] text-white px-4 py-1 rounded-full text-sm font-medium">
-                  Empfohlen
-                </div>
-              )}
-              <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
-              <div className="text-3xl font-bold mb-6">
-                {plan.price} €<span className="text-lg font-normal text-gray-600">/Monat</span>
-              </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center">
-                  <Server className="h-5 w-5 text-[#0B3D91] mr-2" />
-                  {plan.storage} SSD Speicher
-                </li>
-                <li className="flex items-center">
-                  <Globe className="h-5 w-5 text-[#0B3D91] mr-2" />
-                  {plan.domains}
-                </li>
-                <li className="flex items-center">
-                  <Database className="h-5 w-5 text-[#0B3D91] mr-2" />
-                  {plan.databases}
-                </li>
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center">
-                    <div className="h-5 w-5 text-[#0B3D91] mr-2">✓</div>
-                    {feature}
-                  </li>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="p-4 text-left">Features</th>
+                {plans.map((plan, index) => (
+                  <th key={index} className={`p-4 text-center ${plan.recommended ? 'bg-[#0B3D91] text-white' : ''}`}>
+                    <div className="font-semibold text-lg">{plan.name}</div>
+                    <div className="text-2xl font-bold mt-2">
+                      {plan.price} €<span className="text-sm font-normal">/Monat</span>
+                    </div>
+                    {plan.recommended && (
+                      <div className="mt-2 text-sm bg-white/20 px-3 py-1 rounded-full inline-block">
+                        Empfohlen
+                      </div>
+                    )}
+                  </th>
                 ))}
-              </ul>
-              <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                plan.recommended
-                  ? 'bg-[#0B3D91] text-white hover:bg-[#1E88E5]'
-                  : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-              }`}>
-                Jetzt bestellen
-              </button>
-            </motion.div>
-          ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b">
+                <td className="p-4 font-medium">SSD Speicher</td>
+                {plans.map((plan, index) => (
+                  <td key={index} className="p-4 text-center">{plan.storage}</td>
+                ))}
+              </tr>
+              <tr className="border-b">
+                <td className="p-4 font-medium">Domains</td>
+                {plans.map((plan, index) => (
+                  <td key={index} className="p-4 text-center">{plan.domains}</td>
+                ))}
+              </tr>
+              <tr className="border-b">
+                <td className="p-4 font-medium">Datenbanken</td>
+                {plans.map((plan, index) => (
+                  <td key={index} className="p-4 text-center">{plan.databases}</td>
+                ))}
+              </tr>
+              {['SSL-Zertifikate', 'PHP 8.x', 'MySQL 8.0', 'FTP-Zugang', 'Priority Support', 'Backups', 'SSH-Zugang', 'Redis Cache', 'Node.js Support'].map((feature) => (
+                <tr key={feature} className="border-b">
+                  <td className="p-4 font-medium">{feature}</td>
+                  {plans.map((plan, index) => (
+                    <td key={index} className="p-4 text-center">
+                      {plan.features.includes(feature) ? (
+                        <div className="text-[#0B3D91]">✓</div>
+                      ) : (
+                        <div className="text-gray-300">×</div>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+              <tr>
+                <td className="p-4"></td>
+                {plans.map((plan, index) => (
+                  <td key={index} className="p-4 text-center">
+                    <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
+                      plan.recommended
+                        ? 'bg-[#0B3D91] text-white hover:bg-[#1E88E5]'
+                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                    }`}>
+                      Jetzt bestellen
+                    </button>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
       {/* Technologies */}
-      <div className="bg-gray-50 py-16">
+      <div className="bg-gradient-to-b from-gray-50 to-white py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
-            Unterstützte Technologien
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-            {['PHP', 'MySQL', 'Node.js', 'Python', 'Ruby', 'WordPress'].map((tech, index) => (
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-display font-bold mb-4">
+              Unterstützte Technologien
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Wir unterstützen alle gängigen Web-Technologien für Ihre Projekte. 
+              Von klassischen PHP-Anwendungen bis hin zu modernen Node.js-Projekten.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+            {[
+              { name: 'PHP', icon: '⚡', description: 'PHP 7.4 - 8.3' },
+              { name: 'MySQL', icon: '🗄️', description: 'MySQL 8.0' },
+              { name: 'Node.js', icon: '🟢', description: 'LTS Version' },
+              { name: 'Python', icon: '🐍', description: 'Python 3.x' },
+              { name: 'Ruby', icon: '💎', description: 'Ruby 3.x' },
+              { name: 'WordPress', icon: '📝', description: 'Auto-Updates' }
+            ].map((tech, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-md text-center"
+                className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 text-center"
               >
-                <p className="font-semibold">{tech}</p>
+                <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform">
+                  {tech.icon}
+                </div>
+                <h3 className="font-semibold text-lg mb-2">{tech.name}</h3>
+                <p className="text-sm text-gray-600">{tech.description}</p>
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-4 py-2">
+              <span className="text-[#0B3D91]">⚡</span>
+              <span className="text-sm text-gray-700">
+                Alle Technologien werden regelmäßig auf die neuesten Versionen aktualisiert
+              </span>
+            </div>
           </div>
         </div>
       </div>

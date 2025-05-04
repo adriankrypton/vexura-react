@@ -6,7 +6,6 @@ interface StoragePlan {
   name: string;
   price: number;
   space: string;
-  transfer: string;
   features: string[];
   recommended?: boolean;
 }
@@ -19,14 +18,12 @@ export function Storage() {
       name: 'Basic',
       price: 4.99,
       space: '100 GB',
-      transfer: '1 TB',
       features: ['Backup System', 'Web Interface', 'FTP Zugang']
     },
     {
       name: 'Professional',
       price: 9.99,
       space: '500 GB',
-      transfer: '5 TB',
       features: ['Backup System', 'Web Interface', 'FTP Zugang', 'Snapshots', 'API Zugriff'],
       recommended: true
     },
@@ -34,7 +31,6 @@ export function Storage() {
       name: 'Enterprise',
       price: 19.99,
       space: '2 TB',
-      transfer: '20 TB',
       features: ['Backup System', 'Web Interface', 'FTP Zugang', 'Snapshots', 'API Zugriff', 'Dedizierte IP']
     }
   ];
@@ -78,11 +74,25 @@ export function Storage() {
     {
       question: 'Wie funktioniert die Abrechnung?',
       answer: 'Sie zahlen nur für den tatsächlich genutzten Speicherplatz. Die Abrechnung erfolgt monatlich.'
+    },
+    {
+      question: 'Welche Features sind in den Paketen enthalten?',
+      answer: 'Alle Pakete enthalten Backup-System, Web Interface und FTP-Zugang. Das Professional Paket bietet zusätzlich Snapshots und API-Zugriff. Das Enterprise Paket enthält alle Features plus eine dedizierte IP.'
+    },
+    {
+      question: 'Lorem ipsum dolor sit amet?',
+      answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
   ];
 
   const calculatePrice = () => {
-    return (storageSize * 0.05).toFixed(2);
+    if (storageSize <= 100) {
+      return '4.99';
+    } else if (storageSize <= 500) {
+      return '9.99';
+    } else {
+      return '19.99';
+    }
   };
 
   return (
@@ -130,14 +140,21 @@ export function Storage() {
                 <span>2 TB</span>
               </div>
             </div>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="text-3xl font-bold mb-2">
+            <div className="bg-gray-50 rounded-lg">
+              <div className="text-3xl font-bold p-6 pb-2">
                 {calculatePrice()} €<span className="text-lg font-normal text-gray-600">/Monat</span>
               </div>
-              <p className="text-gray-600">Inklusive aller Features</p>
-              <button className="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition-colors">
-                Jetzt bestellen
-              </button>
+              <div className="space-y-4 px-6">
+                <div className="flex items-center">
+                  <HardDrive className="h-5 w-5 text-primary mr-2" />
+                  {storageSize} GB Speicher
+                </div>
+              </div>
+              <div className="p-6 pt-4">
+                <button className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary-light transition-colors">
+                  Jetzt bestellen
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -175,16 +192,6 @@ export function Storage() {
                   <HardDrive className="h-5 w-5 text-primary mr-2" />
                   {plan.space} Speicher
                 </li>
-                <li className="flex items-center">
-                  <Upload className="h-5 w-5 text-primary mr-2" />
-                  {plan.transfer} Transfer
-                </li>
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center">
-                    <div className="h-5 w-5 text-primary mr-2">✓</div>
-                    {feature}
-                  </li>
-                ))}
               </ul>
               <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
                 plan.recommended
@@ -198,51 +205,55 @@ export function Storage() {
         </div>
       </div>
 
-      {/* Features */}
-      <div className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
-            Unsere Storage-Features
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-md"
-              >
-                <feature.icon className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Usage Examples */}
       <div className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-display font-bold text-center mb-12">
           Anwendungsmöglichkeiten
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <Lock className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Backup</h3>
-            <p className="text-gray-600">Sichere Backups deiner wichtigen Daten mit automatischer Versionierung.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <Share2 className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">File Sharing</h3>
-            <p className="text-gray-600">Teile große Dateien einfach und sicher mit anderen.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <Download className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Cloud Storage</h3>
-            <p className="text-gray-600">Greife von überall auf deine Daten zu.</p>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6">
+              <Lock className="h-12 w-12 text-primary" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-3">Backup</h3>
+              <p className="text-gray-600">Sichere Backups deiner wichtigen Daten mit automatischer Versionierung.</p>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6">
+              <Share2 className="h-12 w-12 text-primary" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-3">File Sharing</h3>
+              <p className="text-gray-600">Teile große Dateien einfach und sicher mit anderen.</p>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6">
+              <Download className="h-12 w-12 text-primary" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-3">Cloud Storage</h3>
+              <p className="text-gray-600">Greife von überall auf deine Daten zu.</p>
+            </div>
+          </motion.div>
         </div>
       </div>
 
