@@ -153,61 +153,73 @@ export function Header() {
             exit={{ opacity: 0, y: -10 }}
             className="lg:hidden bg-white border-b border-gray-200"
           >
-            <div className="container mx-auto px-4 py-4 space-y-4">
+            <div className="container mx-auto px-4 py-8 space-y-8">
               <MobileNavLink href="/">Startseite</MobileNavLink>
               
-              <div className="py-2">
-                <p className="font-semibold mb-2">Server</p>
-                {serverProducts.map((item, index) => (
-                  <MobileNavLink key={index} href={item.href}>
-                    {item.label}
-                  </MobileNavLink>
-                ))}
+              <div className="py-4">
+                <p className="font-semibold mb-4">Server</p>
+                <div className="space-y-3">
+                  {serverProducts.map((item, index) => (
+                    <MobileNavLink key={index} href={item.href}>
+                      {item.label}
+                    </MobileNavLink>
+                  ))}
+                </div>
               </div>
 
-              <div className="py-2">
-                <p className="font-semibold mb-2">Webhosting</p>
-                {webhosting.map((item, index) => (
-                  <MobileNavLink key={index} href={item.href}>
-                    {item.label}
-                  </MobileNavLink>
-                ))}
+              <div className="py-4">
+                <p className="font-semibold mb-4">Webhosting</p>
+                <div className="space-y-3">
+                  {webhosting.map((item, index) => (
+                    <MobileNavLink key={index} href={item.href}>
+                      {item.label}
+                    </MobileNavLink>
+                  ))}
+                </div>
               </div>
 
-              <div className="py-2">
-                <p className="font-semibold mb-2">Dienste</p>
-                {services.map((item, index) => (
-                  <MobileNavLink key={index} href={item.href}>
-                    {item.label}
-                  </MobileNavLink>
-                ))}
+              <div className="py-4">
+                <p className="font-semibold mb-4">Dienste</p>
+                <div className="space-y-3">
+                  {services.map((item, index) => (
+                    <MobileNavLink key={index} href={item.href}>
+                      {item.label}
+                    </MobileNavLink>
+                  ))}
+                </div>
               </div>
 
-              <div className="py-2">
-                <p className="font-semibold mb-2">Lizenzen</p>
-                {licenses.map((item, index) => (
-                  <MobileNavLink key={index} href={item.href}>
-                    {item.label}
-                  </MobileNavLink>
-                ))}
+              <div className="py-4">
+                <p className="font-semibold mb-4">Lizenzen</p>
+                <div className="space-y-3">
+                  {licenses.map((item, index) => (
+                    <MobileNavLink key={index} href={item.href}>
+                      {item.label}
+                    </MobileNavLink>
+                  ))}
+                </div>
               </div>
 
-              <div className="py-2">
-                <p className="font-semibold mb-2">Informationen</p>
-                {infoPages.map((item, index) => (
-                  <MobileNavLink key={index} href={item.href}>
-                    {item.label}
-                  </MobileNavLink>
-                ))}
+              <div className="py-4">
+                <p className="font-semibold mb-4">Informationen</p>
+                <div className="space-y-3">
+                  {infoPages.map((item, index) => (
+                    <MobileNavLink key={index} href={item.href}>
+                      {item.label}
+                    </MobileNavLink>
+                  ))}
+                </div>
               </div>
 
-              <div className="py-2">
-                <p className="font-semibold mb-2">Rechtliches</p>
-                {legal.map((item, index) => (
-                  <MobileNavLink key={index} href={item.href}>
-                    {item.label}
-                  </MobileNavLink>
-                ))}
+              <div className="py-4">
+                <p className="font-semibold mb-4">Rechtliches</p>
+                <div className="space-y-3">
+                  {legal.map((item, index) => (
+                    <MobileNavLink key={index} href={item.href}>
+                      {item.label}
+                    </MobileNavLink>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
