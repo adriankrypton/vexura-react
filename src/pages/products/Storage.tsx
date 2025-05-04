@@ -133,7 +133,7 @@ export function Storage() {
       {/* Storage Calculator */}
       <div className="container mx-auto px-4 -mt-12 relative z-10">
         <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
               <h2 className="text-2xl font-semibold mb-6">Storage Konfigurator</h2>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -154,20 +154,33 @@ export function Storage() {
                 <span>2 TB</span>
               </div>
             </div>
-            <div className="bg-gray-50 rounded-lg">
-              <h2 className="text-2xl font-semibold p-6 pb-2">Bestellübersicht</h2>
-              <div className="text-3xl font-bold px-6 pb-2">
-                {calculatePrice()} €<span className="text-lg font-normal text-gray-600">/Monat</span>
-              </div>
-              <div className="space-y-4 px-6">
-                <div className="flex items-center">
-                  <HardDrive className="h-5 w-5 text-primary mr-2" />
-                  {storageSize} GB Speicher
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-6">Ihre Konfiguration</h2>
+              <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex justify-between">
+                    <span>Speicherplatz:</span>
+                    <span className="font-medium">{storageSize} GB</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Backup System:</span>
+                    <span className="font-medium">Inklusive</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Web Interface:</span>
+                    <span className="font-medium">Inklusive</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>FTP Zugang:</span>
+                    <span className="font-medium">Inklusive</span>
+                  </li>
+                </ul>
+                <div className="text-3xl font-bold mb-4 text-primary">
+                  {calculatePrice()} €<span className="text-sm font-normal text-gray-600">/Monat</span>
                 </div>
-              </div>
-              <div className="p-6 pt-4">
                 <button 
-                  className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary-light transition-colors"
+                  className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors"
                   onClick={() => handleOrder()}
                 >
                   Jetzt bestellen

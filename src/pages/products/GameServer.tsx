@@ -181,7 +181,7 @@ export function GameServer() {
               >
                 ← Zurück zur Regionsauswahl
               </button>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 -mt-6">
                 <div className="space-y-6">
                   <h2 className="text-2xl font-semibold">Server Konfigurator</h2>
                   
@@ -233,23 +233,23 @@ export function GameServer() {
                   </div>
                   <ul className="space-y-3 mb-6">
                     <li className="flex justify-between">
-                      <span>Spiel:</span>
+                      <span className="text-gray-600">Spiel:</span>
                       <span className="font-medium">
                         {games.find(g => g.id === selectedGame)?.name}
                       </span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Region:</span>
+                      <span className="text-gray-600">Region:</span>
                       <span className="font-medium">
                         {selectedRegion === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
                       </span>
                     </li>
                     <li className="flex justify-between">
-                      <span>RAM:</span>
+                      <span className="text-gray-600">RAM:</span>
                       <span className="font-medium">{memory} GB</span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Speicher:</span>
+                      <span className="text-gray-600">Speicher:</span>
                       <span className="font-medium">{storage} GB</span>
                     </li>
                   </ul>

@@ -119,7 +119,7 @@ export function Partners() {
   ];
 
   return (
-    <div className="bg-[#1a1d2e] min-h-screen">
+    <div className="bg-white min-h-screen">
       {/* Hero Section */}
       <div className="relative w-full min-h-[600px] flex items-center justify-center">
         <img
@@ -127,18 +127,18 @@ export function Partners() {
           alt="Background"
           className="absolute inset-0 w-full h-full object-cover object-center z-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#232a4d]/90 via-[#232a4d]/80 to-[#1a1d2e]/95 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B3D91]/90 via-[#1E88E5]/80 to-[#0B3D91]/95 z-10" />
         <div className="relative z-20 container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between py-20">
           {/* Left: Text */}
           <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Deine Vorteile als <span className="text-[#8f94fb]">Partner</span>
+              Deine Vorteile als <span className="text-[#00BCD4]">Partner</span>
             </h1>
             <p className="text-white/90 text-lg mb-8 max-w-2xl">
               Wir setzen auf die Zusammenarbeit mit kreativen und ambitionierten Partnern – besonders aus der Gaming-Community. Unser Anspruch ist es, vielversprechende Projekte und talentierte Content-Creator gezielt zu fördern, sei es durch die Bereitstellung von Produkten, Tools oder anderen Ressourcen. Gemeinsam möchten wir neue Maßstäbe setzen und Ideen realisieren, die sowohl die Projektbeteiligten als auch die Community inspirieren und weiterbringen.<br /><br />
               Indem wir ein Netzwerk aus engagierten Köpfen aufbauen und vielfältige, spannende Initiativen unterstützen, entstehen wertvolle Synergien. Diese Partnerschaften eröffnen nicht nur neue Chancen, sondern schaffen auch eine solide Basis für langfristigen, gemeinsamen Erfolg.
             </p>
-            <button className="bg-[#8f94fb] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#4e54c8] transition-colors">
+            <button className="bg-[#00BCD4] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#1E88E5] transition-colors">
               Jetzt bewerben
             </button>
           </div>
@@ -146,9 +146,9 @@ export function Partners() {
       </div>
 
       {/* Partner Showcase */}
-      <div className="py-24 relative bg-[#e6edff]">
+      <div className="py-24 relative bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center text-[#232a4d] mb-12">
+          <h2 className="text-3xl font-display font-bold text-center text-[#0B3D91] mb-12">
             Unsere Partner
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -158,10 +158,10 @@ export function Partners() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="relative bg-[#232a4d] rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[340px] border border-[#232a4d] hover:border-[#8f94fb] transition-colors"
+                className="relative bg-white rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[340px] border border-gray-100 hover:border-[#00BCD4] transition-colors"
               >
                 <div className="absolute -top-16 left-1/2 -translate-x-1/2">
-                  <div className="w-32 h-32 rounded-full border-4 border-[#1a1d2e] shadow-lg bg-gradient-to-r from-[#8f94fb] to-[#4e54c8] flex items-center justify-center overflow-hidden">
+                  <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] flex items-center justify-center overflow-hidden">
                     <img
                       src={partner.logo}
                       alt={partner.name}
@@ -170,8 +170,8 @@ export function Partners() {
                   </div>
                 </div>
                 <div className="mt-20">
-                  <h3 className="text-xl font-bold mb-1 text-[#8f94fb]">{partner.name}</h3>
-                  <p className="text-gray-200 mb-4 text-base">{partner.description}</p>
+                  <h3 className="text-xl font-bold mb-1 text-[#0B3D91]">{partner.name}</h3>
+                  <p className="text-gray-600 mb-4 text-base">{partner.description}</p>
                 </div>
                 {partner.socialMedia && (
                   <div className="flex gap-4 mt-auto pt-4">
@@ -184,7 +184,7 @@ export function Partners() {
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-400 hover:text-[#8f94fb] transition-colors p-2 rounded-full"
+                          className="text-gray-400 hover:text-[#00BCD4] transition-colors p-2 rounded-full"
                           aria-label={key}
                         >
                           <Icon className="w-6 h-6" />
@@ -202,19 +202,19 @@ export function Partners() {
       {/* Vorteile/Features Container */}
       <div className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center text-[#232a4d] mb-12">
+          <h2 className="text-3xl font-display font-bold text-center text-[#0B3D91] mb-12">
             Deine Vorteile
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {heroFeatures.map((feature, idx) => (
               <div
                 key={idx}
-                className="bg-[#232a4d] bg-opacity-90 rounded-xl flex flex-col items-center justify-center p-8 shadow-md"
+                className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl flex flex-col items-center justify-center p-8 shadow-md"
               >
-                <feature.icon className="w-12 h-12 text-[#8f94fb] mb-4" />
+                <feature.icon className="w-12 h-12 text-white mb-4" />
                 <div className="text-center">
                   <div className="text-white font-medium text-lg">
-                    {feature.title} <span className="text-[#8f94fb] font-semibold">{feature.highlight}</span>
+                    {feature.title} <span className="text-[#00BCD4] font-semibold">{feature.highlight}</span>
                   </div>
                 </div>
               </div>
