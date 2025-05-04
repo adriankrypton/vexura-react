@@ -62,82 +62,41 @@ export function LocationSelector({ selectedLocation, onLocationSelect, className
   ];
 
   return (
-    <div className={`bg-white rounded-xl shadow-lg p-6 ${className}`}>
-      <h3 className="text-xl font-semibold mb-6">Standort wählen</h3>
+    <div className={`space-y-6 ${className}`}>
+      <h2 className="text-2xl font-semibold mb-6">Wähle deine Region</h2>
+      <p className="text-gray-600 mb-6">Wähle eine Region in der Nähe deiner Zielgruppe</p>
       
-      {/* Map View (Desktop) */}
-      <div className="hidden md:block relative w-full h-[400px] bg-gray-100 rounded-xl mb-8">
-        <div className="absolute inset-0">
-          {locations.map((location) => (
-            <motion.button
-              key={location.id}
-              className={`absolute transform -translate-x-1/2 -translate-y-1/2 group ${
-                selectedLocation === location.id ? 'scale-110' : 'scale-100'
-              }`}
-              style={{
-                top: `${((54 - location.lat) / (54 - 46)) * 100}%`,
-                left: `${((location.lng - 2) / (15 - 2)) * 100}%`
-              }}
-              onClick={() => onLocationSelect(location.id)}
-              whileHover={{ scale: 1.1 }}
-            >
-              <div className={`p-2 rounded-full ${
-                selectedLocation === location.id
-                  ? 'bg-primary text-white'
-                  : 'bg-white text-primary hover:bg-primary/10'
-              } shadow-lg transition-colors`}>
-                <MapPin className="h-6 w-6" />
-              </div>
-              
-              {/* Tooltip */}
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="bg-white px-3 py-2 rounded-lg shadow-lg whitespace-nowrap">
-                  <div className="font-semibold">
-                    {location.name}, {location.country}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {location.datacenter}
-                  </div>
-                </div>
-              </div>
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* List View (Mobile & Desktop) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {locations.map((location) => (
-          <motion.button
+          <motion.div
             key={location.id}
-            className={`text-left p-4 rounded-lg border-2 transition-all ${
-              selectedLocation === location.id
-                ? 'border-primary bg-primary/5'
-                : 'border-gray-200 hover:border-primary/50'
-            }`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -5 }}
             onClick={() => onLocationSelect(location.id)}
-            whileHover={{ scale: 1.02 }}
+            className={`relative overflow-hidden rounded-lg shadow-lg cursor-pointer group ${
+              selectedLocation === location.id ? 'ring-2 ring-primary' : ''
+            }`}
           >
-            <div className="flex items-start gap-3">
-              <div className={`p-2 rounded-full ${
-                selectedLocation === location.id
-                  ? 'bg-primary text-white'
-                  : 'bg-primary/10 text-primary'
-              }`}>
-                <MapPin className="h-5 w-5" />
+            <div className="relative h-48">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-600">
+                <div className="absolute inset-0 opacity-20 bg-[url('https://flagcdn.com/w2560/${location.countryCode.toLowerCase()}.png')] bg-center bg-cover" />
               </div>
-              <div>
-                <div className="font-semibold">
+              <div className="absolute top-2 left-2">
+                <div className="bg-white/90 text-primary px-2 py-1 rounded text-sm font-medium">
+                  {location.connectivity}
+                </div>
+              </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                <h3 className="text-2xl font-bold text-center mb-2">
                   {location.name}, {location.country}
-                </div>
-                <div className="text-sm text-gray-600 mb-2">
-                  {location.datacenter}
-                </div>
-                <div className="flex flex-wrap gap-2">
+                </h3>
+                <p className="text-lg text-center text-white/90">{location.datacenter}</p>
+                <div className="flex flex-wrap gap-2 justify-center mt-4">
                   {location.certifications.map((cert, index) => (
                     <span
                       key={index}
-                      className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary"
+                      className="text-xs px-2 py-1 rounded-full bg-white/20 text-white"
                     >
                       {cert}
                     </span>
@@ -145,7 +104,7 @@ export function LocationSelector({ selectedLocation, onLocationSelect, className
                 </div>
               </div>
             </div>
-          </motion.button>
+          </motion.div>
         ))}
       </div>
     </div>
