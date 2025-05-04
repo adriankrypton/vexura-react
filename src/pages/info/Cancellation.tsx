@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { PageHeader } from '../../components/ui/PageHeader';
 
 export function Cancellation() {
@@ -15,34 +14,29 @@ export function Cancellation() {
           
           <h3>Widerrufsrecht</h3>
           <p>
-            Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. 
-            Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsabschlusses.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </p>
           
           <p>
-            Um Ihr Widerrufsrecht auszuüben, müssen Sie uns mittels einer eindeutigen Erklärung 
-            (z.B. ein mit der Post versandter Brief, Telefax oder E-Mail) über Ihren Entschluss, 
-            diesen Vertrag zu widerrufen, informieren.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </p>
 
           <h3>Folgen des Widerrufs</h3>
           <p>
-            Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen 
-            erhalten haben, einschließlich der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, 
-            die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene, 
-            günstigste Standardlieferung gewählt haben), unverzüglich und spätestens binnen vierzehn 
-            Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags 
-            bei uns eingegangen ist.
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
           </p>
 
           <h3>Ausnahmen vom Widerrufsrecht</h3>
           <p>
-            Das Widerrufsrecht erlischt bei einem Vertrag über die Lieferung von digitalen Inhalten, 
-            wenn wir mit der Ausführung des Vertrags begonnen haben, nachdem Sie:
+            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur 
+            magni dolores eos qui ratione voluptatem sequi nesciunt:
           </p>
           <ul>
-            <li>ausdrücklich zugestimmt haben, dass wir mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist beginnen, und</li>
-            <li>Ihre Kenntnis davon bestätigt haben, dass Sie durch Ihre Zustimmung mit Beginn der Ausführung des Vertrags Ihr Widerrufsrecht verlieren.</li>
+            <li>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</li>
+            <li>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit</li>
           </ul>
 
           <h3>Muster-Widerrufsformular</h3>
@@ -51,9 +45,10 @@ export function Cancellation() {
           </p>
           <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 my-4">
             <p>An</p>
-            <p>Vexura</p>
-            <p>[Adresse]</p>
-            <p>[E-Mail]</p>
+            <p>Vexura GmbH</p>
+            <p>Musterstraße 123</p>
+            <p>12345 Musterstadt</p>
+            <p>E-Mail: support@vexura.de</p>
             <br />
             <p>
               Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf 
