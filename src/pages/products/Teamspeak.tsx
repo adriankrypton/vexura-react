@@ -5,7 +5,6 @@ import { Users, Shield, Cpu, Server } from 'lucide-react';
 export function Teamspeak() {
   const [slots, setSlots] = useState(32);
   const [serverName, setServerName] = useState('');
-  const [selectedRegion, setSelectedRegion] = useState('nuremberg');
 
   const calculatePrice = () => {
     return (slots * 0.08).toFixed(2); // 8 Cent pro Slot
@@ -84,7 +83,7 @@ export function Teamspeak() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div>
               <h2 className="text-2xl font-semibold mb-6">TeamSpeak Konfigurator</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 -mt-6">
+              <div className="w-full">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Anzahl der Slots
@@ -117,14 +116,7 @@ export function Teamspeak() {
                   <span className="text-gray-600">Slots:</span>
                   <span className="font-medium">{slots} Slots</span>
                 </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-600">Region:</span>
-                  <span className="font-medium">
-                    {selectedRegion === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
-                  </span>
-                </li>
               </ul>
-              <p className="text-gray-600 mb-4">Inklusive aller Features</p>
               <button 
                 className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors"
                 onClick={handleOrder}

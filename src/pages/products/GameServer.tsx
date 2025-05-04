@@ -75,7 +75,7 @@ export function GameServer() {
     if (!selectedGameDetails) return;
 
     const orderDetails = {
-      productName: `Game Server - ${selectedGameDetails.name}`,
+      productName: `Gameserver  - ${selectedGameDetails.name}`,
       price: parseFloat(calculatePrice()),
       image: selectedGameDetails.image,
       features: [
@@ -181,9 +181,9 @@ export function GameServer() {
               >
                 ← Zurück zur Regionsauswahl
               </button>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 -mt-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Server Konfigurator</h2>
+                  <h2 className="text-2xl font-semibold">Gameserver Konfigurator</h2>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -253,7 +253,6 @@ export function GameServer() {
                       <span className="font-medium">{storage} GB</span>
                     </li>
                   </ul>
-                  <p className="text-gray-600 mb-4">Inklusive aller Features</p>
                   <button 
                     className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors"
                     onClick={handleOrder}
@@ -280,7 +279,7 @@ export function GameServer() {
             className="max-w-3xl text-white"
           >
             <h1 className="text-5xl font-display font-bold mb-6">
-              Game Server
+              Gameserver
             </h1>
             <p className="text-xl mb-8 text-white/90">
               Hochperformante Server für dein optimales Gaming-Erlebnis. Starte in wenigen Minuten durch!

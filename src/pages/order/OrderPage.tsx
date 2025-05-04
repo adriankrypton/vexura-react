@@ -172,11 +172,14 @@ export function OrderPage() {
                   <span>Gesamtsumme:</span>
                   <span>{finalPrice.toFixed(2)} €</span>
                 </div>
+                <div className="text-sm text-gray-500 text-right">
+                  Alle Preise inklusive 19% MwSt.
+                </div>
               </div>
             </div>
 
             {/* Voucher and Payment */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               {/* Voucher Code */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
                 <h2 className="text-2xl font-bold mb-6 text-gray-800">Gutscheincode</h2>

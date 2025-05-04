@@ -158,7 +158,7 @@ export function Partners() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="relative bg-white rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[340px] border border-gray-100 hover:border-[#00BCD4] transition-colors"
+                className="relative bg-white rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[340px] border border-gray-100 hover:border-[#0B3D91] transition-colors"
               >
                 <div className="absolute -top-16 left-1/2 -translate-x-1/2">
                   <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] flex items-center justify-center overflow-hidden">
@@ -200,22 +200,33 @@ export function Partners() {
       </div>
 
       {/* Vorteile/Features Container */}
-      <div className="py-20 bg-white">
+      <div className="py-32 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center text-[#0B3D91] mb-12">
-            Deine Vorteile
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-bold text-[#0B3D91] mb-6">
+              Deine Vorteile
+            </h2>
+            <div className="w-24 h-1 bg-[#00BCD4] mx-auto mb-8"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+              Entdecke die exklusiven Vorteile, die wir unseren Partnern bieten.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
             {heroFeatures.map((feature, idx) => (
               <div
                 key={idx}
-                className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl flex flex-col items-center justify-center p-8 shadow-md"
+                className="group"
               >
-                <feature.icon className="w-12 h-12 text-white mb-4" />
-                <div className="text-center">
-                  <div className="text-white font-medium text-lg">
-                    {feature.title} <span className="text-[#00BCD4] font-semibold">{feature.highlight}</span>
+                <div className="bg-white p-8 rounded-lg border-2 border-gray-100 hover:border-[#00BCD4] transition-colors duration-300">
+                  <div className="mb-6">
+                    <feature.icon className="w-10 h-10 text-[#00BCD4]" />
                   </div>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-2xl font-bold text-[#0B3D91]">
+                    {feature.highlight}
+                  </p>
                 </div>
               </div>
             ))}

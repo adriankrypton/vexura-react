@@ -70,7 +70,7 @@ export function Header() {
   const serverProducts = [
     { label: 'KVM Root Server', href: '/products/root-server' },
     { label: 'Dedicated Server', href: '/products/dedicated' },
-    { label: 'Game Server', href: '/products/game-server' },
+    { label: 'Gameservr', href: '/products/game-server' },
     { label: 'Teamspeak Server', href: '/products/teamspeak' }
   ];
 
@@ -109,7 +109,7 @@ export function Header() {
     const germanTitles: { [key: string]: string } = {
       'root-server': 'KVM Root Server',
       'dedicated': 'Dedicated Server',
-      'game-server': 'Game Server',
+      'game-server': 'Gameserver',
       'teamspeak': 'TeamSpeak Server',
       'webspaces': 'Webhosting',
       'domains': 'Domains',
