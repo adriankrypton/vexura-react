@@ -21,6 +21,7 @@ import { Imprint } from './pages/legal/Imprint';
 import { Privacy } from './pages/legal/Privacy';
 import { Terms } from './pages/legal/Terms';
 import { OrderPage } from './pages/order/OrderPage';
+import { OSSelectPage } from './pages/order/OSSelectPage';
 import { useEffect } from 'react';
 
 function ScrollToTop() {
@@ -78,6 +79,7 @@ function App() {
             
             {/* Order Page */}
             <Route path="/order" element={<PageWrapper><OrderPage /></PageWrapper>} />
+            <Route path="/order/os-select" element={<PageWrapper><OSSelectPage /></PageWrapper>} />
             
             {/* Legal Pages */}
             <Route path="/legal/imprint" element={<PageWrapper><Imprint /></PageWrapper>} />

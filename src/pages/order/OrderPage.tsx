@@ -9,6 +9,7 @@ interface OrderDetails {
   features: { label: string; value: string }[];
   image?: string;
   isKVM?: boolean;
+  selectedOS?: string;
 }
 
 interface OperatingSystem {
@@ -36,7 +37,6 @@ export function OrderPage() {
   const [discount, setDiscount] = useState(0);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [withdrawalAccepted, setWithdrawalAccepted] = useState(false);
-  const [selectedOS, setSelectedOS] = useState<string>('');
 
   // Get order details from location state
   const orderDetails = location.state?.orderDetails as OrderDetails;
@@ -75,33 +75,34 @@ export function OrderPage() {
       return;
     }
 
-    if (orderDetails.isKVM && !selectedOS) {
-      alert('Bitte wählen Sie ein Betriebssystem aus.');
-      return;
-    }
-
     // Here you would typically proceed with payment
     console.log('Proceeding to payment with order details:', {
       ...orderDetails,
-      selectedOS: selectedOS ? operatingSystems.find(os => os.id === selectedOS) : null
     });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-primary/5 to-background">
+    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-primary/5 to-background" style={{ paddingTop: '41px', paddingBottom: '41px' }}>
       <div className="container mx-auto px-4 py-16 max-w-[1920px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-7xl mx-auto"
         >
+          <a
+            href="#"
+            onClick={e => { e.preventDefault(); navigate(-1); }}
+            className="absolute left-0 top-0 mt-8 ml-8 text-primary hover:underline text-base font-medium z-20"
+          >
+            &larr; Zurück zum Produkt
+          </a>
           <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">
             Bestellübersicht
           </h1>
 
-          <div className="min-h-screen flex flex-row justify-center items-center gap-2 w-full px-4">
+          <div className="min-h-screen flex flex-row justify-center items-stretch gap-2 w-full px-4">
             {/* Order Summary */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 mx-auto w-full max-w-md self-stretch flex flex-col">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 flex-1 min-w-[350px] self-stretch flex flex-col h-full">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Ihre Bestellung</h2>
               {orderDetails.image && (
                 <div className="relative overflow-hidden rounded-xl mb-6">
@@ -115,11 +116,28 @@ export function OrderPage() {
               <h3 className="text-xl font-semibold mb-4 text-gray-800">{orderDetails.productName}</h3>
               <ul className="space-y-4 mb-6">
                 {orderDetails.features.map((feature, index) => (
-                  <li key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                    <span className="text-gray-600">{feature.label}:</span>
+                  <li key={index} className={`flex justify-between items-center p-3 bg-gray-50 rounded-lg ${feature.label === 'Betriebssystem' ? 'border-l-4 border-primary bg-primary/10 font-semibold' : ''}`}>
+                    <span className="text-gray-600 flex items-center gap-2">
+                      {feature.label === 'Betriebssystem' && (
+                        <img src="/img/os/ubuntu.svg" alt="OS" className="w-5 h-5" />
+                      )}
+                      {feature.label}:
+                    </span>
                     <span className="font-medium text-gray-800">{feature.value}</span>
                   </li>
                 ))}
+                {orderDetails.selectedOS && (
+                  <li className="flex justify-between items-center p-3 bg-gray-50 rounded-lg border-l-4 border-primary bg-primary/10 font-semibold">
+                    <span className="text-gray-600 flex items-center gap-2">
+                      <img src={operatingSystems.find(os => os.id === orderDetails.selectedOS)?.icon || '/img/os/ubuntu.svg'} alt="OS" className="w-5 h-5" />
+                      Betriebssystem:
+                    </span>
+                    <span className="font-medium text-gray-800">
+                      {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.name || orderDetails.selectedOS}
+                      {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version ? ` ${operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version}` : ''}
+                    </span>
+                  </li>
+                )}
               </ul>
 
               <div className="border-t border-gray-200 pt-6 space-y-3">
@@ -139,86 +157,8 @@ export function OrderPage() {
               </div>
             </div>
 
-            {/* Operating System Selection */}
-            {orderDetails.isKVM && (
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 mx-auto max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800">Betriebssystem</h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-medium mb-3 text-gray-800">Linux Distributionen</h3>
-                    <div className="grid grid-cols-1 gap-3">
-                      {operatingSystems
-                        .filter(os => os.name !== 'Windows Server')
-                        .map((os) => (
-                          <button
-                            key={os.id}
-                            onClick={() => setSelectedOS(os.id)}
-                            className={`p-4 rounded-xl border-2 transition-all ${
-                              selectedOS === os.id
-                                ? 'border-primary bg-primary/5'
-                                : 'border-gray-200 hover:border-primary/50'
-                            }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <img
-                                src={os.icon}
-                                alt={os.name}
-                                className="w-8 h-8 object-contain"
-                                onError={(e) => {
-                                  const target = e.target as HTMLImageElement;
-                                  target.src = '/images/os/default.svg';
-                                }}
-                              />
-                              <div className="text-left">
-                                <div className="font-medium text-gray-800">{os.name}</div>
-                                <div className="text-sm text-gray-500">{os.version}</div>
-                              </div>
-                            </div>
-                          </button>
-                        ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-medium mb-3 text-gray-800">Windows Server</h3>
-                    <div className="grid grid-cols-1 gap-3">
-                      {operatingSystems
-                        .filter(os => os.name === 'Windows Server')
-                        .map((os) => (
-                          <button
-                            key={os.id}
-                            onClick={() => setSelectedOS(os.id)}
-                            className={`p-4 rounded-xl border-2 transition-all ${
-                              selectedOS === os.id
-                                ? 'border-primary bg-primary/5'
-                                : 'border-gray-200 hover:border-primary/50'
-                            }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <img
-                                src={os.icon}
-                                alt={os.name}
-                                className="w-8 h-8 object-contain"
-                                onError={(e) => {
-                                  const target = e.target as HTMLImageElement;
-                                  target.src = '/images/os/default.svg';
-                                }}
-                              />
-                              <div className="text-left">
-                                <div className="font-medium text-gray-800">{os.name}</div>
-                                <div className="text-sm text-gray-500">{os.version}</div>
-                              </div>
-                            </div>
-                          </button>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* Voucher and Payment */}
-            <div className="space-y-4 mx-auto w-full max-w-md self-stretch flex flex-col">
+            <div className="space-y-4 flex-1 min-w-[350px] self-stretch flex flex-col h-full">
               {/* Voucher Code */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
                 <h2 className="text-2xl font-bold mb-6 text-gray-800">Gutscheincode</h2>
@@ -290,15 +230,22 @@ export function OrderPage() {
 
                 <button
                   onClick={handlePayment}
-                  disabled={!termsAccepted || !withdrawalAccepted || (orderDetails.isKVM && !selectedOS)}
+                  disabled={!termsAccepted || !withdrawalAccepted}
                   className={`w-full py-4 rounded-xl text-lg font-bold transition-all duration-300 transform hover:-translate-y-1 ${
-                    termsAccepted && withdrawalAccepted && (!orderDetails.isKVM || selectedOS)
+                    termsAccepted && withdrawalAccepted
                       ? 'bg-gradient-to-r from-primary to-primary-light text-white hover:shadow-xl'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
                   Zur Zahlung ({finalPrice.toFixed(2)} €)
                 </button>
+                <a
+                  href="/products/root-server"
+                  onClick={e => { e.preventDefault(); navigate('/products/root-server'); }}
+                  className="mt-4 block text-primary hover:underline text-base font-medium text-center"
+                >
+                  &larr; Doch nochmal umschauen
+                </a>
               </div>
             </div>
           </div>

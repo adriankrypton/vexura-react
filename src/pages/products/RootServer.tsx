@@ -136,7 +136,7 @@ export function RootServer() {
   ];
 
   const handleOrder = (pkg: Package) => {
-    navigate('/order', {
+    navigate('/order/os-select', {
       state: {
         orderDetails: {
           productName: `KVM Server - ${pkg.name}`,
@@ -146,29 +146,30 @@ export function RootServer() {
             { label: 'RAM', value: `${pkg.ram} GB` },
             { label: 'Speicher', value: `${pkg.storage} GB SSD` },
             { label: 'Bandbreite', value: pkg.bandwidth },
-            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' }
+            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' },
           ],
-          isKVM: true
-        }
-      }
+          isKVM: true,
+        },
+      },
     });
   };
 
   const handleCustomOrder = () => {
-    navigate('/order', {
+    navigate('/order/os-select', {
       state: {
         orderDetails: {
-          productName: 'KVM Server - Individuell',
-          price: parseFloat(calculatePrice()),
+          productName: 'KVM Root Server (Konfigurator)',
+          price: calculatePrice(),
           features: [
             { label: 'CPU', value: `${config.cpu} Kerne` },
             { label: 'RAM', value: `${config.ram} GB` },
             { label: 'Speicher', value: `${config.storage} GB SSD` },
-            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' }
+            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' },
           ],
-          isKVM: true
-        }
-      }
+          isKVM: true,
+          image: undefined,
+        },
+      },
     });
   };
 
