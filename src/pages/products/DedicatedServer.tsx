@@ -2,52 +2,110 @@ import { motion } from 'framer-motion';
 import { Server, Cpu, HardDrive, Map, Shield, Gauge, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { LocationSelector } from '../../components/LocationSelector';
+import { useNavigate } from 'react-router-dom';
 
+// Interface für Dedicated Server-Pakete
 interface Package {
-  name: string;
-  price: number;
-  cpu: string;
-  cores: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
-  recommended?: boolean;
+  name: string;        // Name des Pakets (z.B. "Starter", "Professional")
+  price: number;       // Monatlicher Preis in Euro
+  cpu: string;         // CPU-Modell (z.B. "Intel Xeon E-2236")
+  cores: number;       // Anzahl der CPU-Kerne
+  ram: number;         // RAM in GB
+  storage: string;     // Speicherkonfiguration (z.B. "2x 1TB NVMe")
+  bandwidth: string;   // Bandbreite (z.B. "1 Gbit/s")
+}
+
+// Interface für den Konfigurator-Zustand
+interface ConfiguratorState {
+  cpu: string;         // Ausgewähltes CPU-Modell
+  ram: number;         // Ausgewähltes RAM
+  storage: string;     // Ausgewählte Speicherkonfiguration
+  operatingSystem: OperatingSystem | null; // Ausgewähltes Betriebssystem
+}
+
+// Interface für Betriebssysteme
+interface OperatingSystem {
+  name: string;        // Name des Betriebssystems (z.B. "Ubuntu")
+  category: 'Linux' | 'Windows'; // Kategorie des Betriebssystems
+  version: string;     // Version des Betriebssystems
 }
 
 export function DedicatedServer() {
-  const [selectedLocation, setSelectedLocation] = useState('nuremberg');
+  // Navigation-Hook für die Weiterleitung
+  const navigate = useNavigate();
+  
+  // Zustand für den ausgewählten Standort
+  const [selectedLocation, setSelectedLocation] = useState<string>('nuremberg');
+  
+  // Zustand für die Server-Konfiguration
+  const [config, setConfig] = useState<ConfiguratorState>({
+    cpu: 'Intel Xeon E-2236',
+    ram: 32,
+    storage: '2x 1TB NVMe',
+    operatingSystem: null,
+  });
 
-  const packages: Package[] = [
-    {
-      name: 'Enterprise S',
-      price: 129.99,
-      cpu: 'AMD EPYC 7443P',
-      cores: '24 Kerne',
-      ram: '64 GB DDR4 ECC',
-      storage: '2x 1TB NVMe SSD',
-      bandwidth: '1 Gbit/s'
-    },
-    {
-      name: 'Enterprise M',
-      price: 199.99,
-      cpu: 'AMD EPYC 7543P',
-      cores: '32 Kerne',
-      ram: '128 GB DDR4 ECC',
-      storage: '2x 2TB NVMe SSD',
-      bandwidth: '1 Gbit/s',
-      recommended: true
-    },
-    {
-      name: 'Enterprise L',
-      price: 299.99,
-      cpu: 'AMD EPYC 7643',
-      cores: '48 Kerne',
-      ram: '256 GB DDR4 ECC',
-      storage: '2x 4TB NVMe SSD',
-      bandwidth: '2 Gbit/s'
-    }
+  // Liste der verfügbaren Betriebssysteme
+  const operatingSystems: OperatingSystem[] = [
+    { name: 'Ubuntu', category: 'Linux', version: '22.04 LTS' },
+    { name: 'Ubuntu', category: 'Linux', version: '20.04 LTS' },
+    { name: 'Debian', category: 'Linux', version: '12' },
+    { name: 'Debian', category: 'Linux', version: '11' },
+    { name: 'CentOS', category: 'Linux', version: 'Stream 9' },
+    { name: 'Windows Server', category: 'Windows', version: '2022' },
+    { name: 'Windows Server', category: 'Windows', version: '2019' },
   ];
 
+  // Funktion zur Berechnung der Paketpreise basierend auf dem Standort
+  const getPackages = (location: string): Package[] => {
+    // Basis-Pakete mit Standardpreisen
+    const basePackages: Package[] = [
+      {
+        name: 'Starter',
+        price: 99.99,
+        cpu: 'Intel Xeon E-2236',
+        cores: 6,
+        ram: 32,
+        storage: '2x 1TB NVMe',
+        bandwidth: '1 Gbit/s'
+      },
+      {
+        name: 'Professional',
+        price: 199.99,
+        cpu: 'Intel Xeon E-2288G',
+        cores: 8,
+        ram: 64,
+        storage: '2x 2TB NVMe',
+        bandwidth: '1 Gbit/s'
+      },
+      {
+        name: 'Business',
+        price: 399.99,
+        cpu: 'Intel Xeon Silver 4310',
+        cores: 12,
+        ram: 128,
+        storage: '4x 2TB NVMe',
+        bandwidth: '1 Gbit/s'
+      },
+      {
+        name: 'Enterprise',
+        price: 799.99,
+        cpu: 'Intel Xeon Gold 6330',
+        cores: 28,
+        ram: 256,
+        storage: '4x 4TB NVMe',
+        bandwidth: '1 Gbit/s'
+      }
+    ];
+
+    // Anpassung der Preise basierend auf dem Standort
+    return basePackages.map(pkg => ({
+      ...pkg,
+      price: location === 'eygelshoven' ? pkg.price * 0.95 : pkg.price
+    }));
+  };
+
+  // Liste der Hauptfunktionen des Dedicated Servers
   const features = [
     {
       icon: Shield,
@@ -57,7 +115,7 @@ export function DedicatedServer() {
     {
       icon: Gauge,
       title: 'High Performance',
-      description: 'SSD Speicher & High-End Hardware'
+      description: 'Enterprise Hardware & NVMe Speicher'
     },
     {
       icon: Globe,
@@ -66,28 +124,78 @@ export function DedicatedServer() {
     }
   ];
 
+  // Funktion zur Berechnung des Preises für die individuelle Konfiguration
+  const calculatePrice = () => {
+    const locationMultiplier = selectedLocation === 'eygelshoven' ? 0.95 : 1;
+    return (
+      (config.ram * 2 +
+      (config.storage.includes('NVMe') ? 50 : 30)) * locationMultiplier
+    ).toFixed(2);
+  };
+
+  // Häufig gestellte Fragen
   const faqs = [
     {
       question: 'Was ist ein Dedicated Server?',
-      answer: 'Ein Dedicated Server ist ein physischer Server, der exklusiv für Sie bereitgestellt wird. Sie haben die komplette Kontrolle und volle Ressourcen zur Verfügung.'
+      answer: 'Ein Dedicated Server ist ein physischer Server, der exklusiv für Sie bereitgestellt wird. Sie haben die volle Kontrolle über die Hardware und können diese nach Ihren Wünschen nutzen.'
     },
     {
-      question: 'Welche Betriebssysteme werden unterstützt?',
-      answer: 'Wir unterstützen alle gängigen Linux-Distributionen (Ubuntu, Debian, CentOS, etc.) sowie Windows Server. Sie können das Betriebssystem jederzeit neu installieren.'
+      question: 'Welche Hardware ist verfügbar?',
+      answer: 'Wir bieten verschiedene CPU-Modelle von Intel Xeon, unterschiedliche RAM-Konfigurationen und schnelle NVMe-Speicher an. Die genauen Spezifikationen finden Sie in unserem Konfigurator.'
     },
     {
       question: 'Wie schnell ist die Bereitstellung?',
-      answer: 'Die Bereitstellung Ihres Dedicated Servers erfolgt in der Regel innerhalb von 24 Stunden nach Zahlungseingang.'
+      answer: 'Die Bereitstellung Ihres Dedicated Servers erfolgt innerhalb von 24 Stunden nach Zahlungseingang. Express-Bereitstellung ist gegen Aufpreis möglich.'
     },
     {
       question: 'Gibt es eine Mindestvertragslaufzeit?',
-      answer: 'Nein, unsere Server können monatlich gekündigt werden. Wir bieten auch Rabatte bei längerer Vertragsbindung an.'
+      answer: 'Ja, für Dedicated Server beträgt die Mindestvertragslaufzeit 3 Monate. Wir bieten auch Rabatte bei längerer Vertragsbindung an.'
     }
   ];
 
+  // Funktion zum Bestellen eines vorkonfigurierten Pakets
+  const handleOrder = (pkg: Package) => {
+    navigate('/order/os-select', {
+      state: {
+        orderDetails: {
+          productName: `Dedicated Server - ${pkg.name}`,
+          price: pkg.price,
+          features: [
+            { label: 'CPU', value: `${pkg.cpu} (${pkg.cores} Kerne)` },
+            { label: 'RAM', value: `${pkg.ram} GB` },
+            { label: 'Speicher', value: pkg.storage },
+            { label: 'Bandbreite', value: pkg.bandwidth },
+            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' },
+          ],
+          isDedicated: true,
+        },
+      },
+    });
+  };
+
+  // Funktion zum Bestellen einer individuellen Konfiguration
+  const handleCustomOrder = () => {
+    navigate('/order/os-select', {
+      state: {
+        orderDetails: {
+          productName: 'Dedicated Server (Konfigurator)',
+          price: calculatePrice(),
+          features: [
+            { label: 'CPU', value: config.cpu },
+            { label: 'RAM', value: `${config.ram} GB` },
+            { label: 'Speicher', value: config.storage },
+            { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' },
+          ],
+          isDedicated: true,
+          image: undefined,
+        },
+      },
+    });
+  };
+
   return (
     <div>
-      {/* Hero Section */}
+      {/* Hero-Sektion mit Hauptüberschrift und Features */}
       <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-4 relative">
@@ -131,19 +239,19 @@ export function DedicatedServer() {
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Packages */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {packages.map((pkg, index) => (
+        {/* Vorkonfigurierte Pakete */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
+          {getPackages(selectedLocation).map((pkg, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               className={`relative bg-white rounded-xl shadow-lg p-8 border-2 ${
-                pkg.recommended ? 'border-primary' : 'border-gray-100'
+                pkg.name === 'Enterprise' ? 'border-primary' : 'border-gray-100'
               }`}
             >
-              {pkg.recommended && (
+              {pkg.name === 'Enterprise' && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">
                   Empfohlen
                 </div>
@@ -175,17 +283,22 @@ export function DedicatedServer() {
                 </li>
               </ul>
               <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                pkg.recommended
+                pkg.name === 'Enterprise'
                   ? 'bg-primary text-white hover:bg-primary-light'
                   : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-              }`}>
+              }`} onClick={() => handleOrder(pkg)}>
                 Server konfigurieren
               </button>
             </motion.div>
           ))}
         </div>
 
-        {/* FAQ Section */}
+        {/* Individueller Konfigurator */}
+        <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 border border-gray-200 mb-12 md:mb-16">
+          {/* ... existing code ... */}
+        </div>
+
+        {/* FAQ-Sektion */}
         <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
           <h2 className="text-2xl font-semibold mb-6 text-center">Häufig gestellte Fragen</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

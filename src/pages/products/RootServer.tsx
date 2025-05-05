@@ -4,31 +4,39 @@ import { Server, Cpu, HardDrive, Map, Shield, Gauge, Globe } from 'lucide-react'
 import { LocationSelector } from '../../components/LocationSelector';
 import { useNavigate } from 'react-router-dom';
 
+// Interface für Server-Pakete
 interface Package {
-  name: string;
-  price: number;
-  cpu: number;
-  ram: number;
-  storage: number;
-  bandwidth: string;
+  name: string;        // Name des Pakets (z.B. "Starter", "Professional")
+  price: number;       // Monatlicher Preis in Euro
+  cpu: number;         // Anzahl der CPU-Kerne
+  ram: number;         // RAM in GB
+  storage: number;     // Speicherplatz in GB
+  bandwidth: string;   // Bandbreite (z.B. "1 Gbit/s")
 }
 
+// Interface für den Konfigurator-Zustand
 interface ConfiguratorState {
-  cpu: number;
-  ram: number;
-  storage: number;
-  operatingSystem: OperatingSystem | null;
+  cpu: number;         // Ausgewählte CPU-Kerne
+  ram: number;         // Ausgewähltes RAM
+  storage: number;     // Ausgewählter Speicher
+  operatingSystem: OperatingSystem | null; // Ausgewähltes Betriebssystem
 }
 
+// Interface für Betriebssysteme
 interface OperatingSystem {
-  name: string;
-  category: 'Linux' | 'Windows';
-  version: string;
+  name: string;        // Name des Betriebssystems (z.B. "Ubuntu")
+  category: 'Linux' | 'Windows'; // Kategorie des Betriebssystems
+  version: string;     // Version des Betriebssystems
 }
 
 export function RootServer() {
+  // Navigation-Hook für die Weiterleitung
   const navigate = useNavigate();
+  
+  // Zustand für den ausgewählten Standort
   const [selectedLocation, setSelectedLocation] = useState<string>('nuremberg');
+  
+  // Zustand für die Server-Konfiguration
   const [config, setConfig] = useState<ConfiguratorState>({
     cpu: 2,
     ram: 4,
@@ -36,6 +44,7 @@ export function RootServer() {
     operatingSystem: null,
   });
 
+  // Liste der verfügbaren Betriebssysteme
   const operatingSystems: OperatingSystem[] = [
     { name: 'Ubuntu', category: 'Linux', version: '22.04 LTS' },
     { name: 'Ubuntu', category: 'Linux', version: '20.04 LTS' },
@@ -46,7 +55,9 @@ export function RootServer() {
     { name: 'Windows Server', category: 'Windows', version: '2019' },
   ];
 
+  // Funktion zur Berechnung der Paketpreise basierend auf dem Standort
   const getPackages = (location: string): Package[] => {
+    // Basis-Pakete mit Standardpreisen
     const basePackages: Package[] = [
       {
         name: 'Starter',
@@ -82,13 +93,14 @@ export function RootServer() {
       }
     ];
 
-    // Apply location-based price adjustment
+    // Anpassung der Preise basierend auf den Standorten
     return basePackages.map(pkg => ({
       ...pkg,
       price: location === 'eygelshoven' ? pkg.price * 0.95 : pkg.price
     }));
   };
 
+  // Hauptfunktionen des KVM Servers
   const features = [
     {
       icon: Shield,
@@ -107,6 +119,7 @@ export function RootServer() {
     }
   ];
 
+  // Funktion zur Berechnung des Preises für die individuelle Konfiguration
   const calculatePrice = () => {
     const locationMultiplier = selectedLocation === 'eygelshoven' ? 0.95 : 1;
     return (
@@ -116,6 +129,7 @@ export function RootServer() {
     ).toFixed(2);
   };
 
+  // Häufig gesellte Fragen
   const faqs = [
     {
       question: 'Was ist ein KVM Server?',
@@ -135,6 +149,7 @@ export function RootServer() {
     }
   ];
 
+  // Funktion zum Bestellen eines vorkonfigurierten Pakets
   const handleOrder = (pkg: Package) => {
     navigate('/order/os-select', {
       state: {
@@ -154,6 +169,7 @@ export function RootServer() {
     });
   };
 
+  // Funktion zum Bestellen einer individuellen Konfiguration
   const handleCustomOrder = () => {
     navigate('/order/os-select', {
       state: {
@@ -175,7 +191,7 @@ export function RootServer() {
 
   return (
     <div>
-      {/* Hero Section */}
+      {/* Hero-Sektion mit Hauptüberschrift und Features */}
       <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
@@ -212,7 +228,7 @@ export function RootServer() {
       </div>
 
       <div className="container mx-auto px-2 md:px-4 py-8 md:py-12">
-        {/* Location Selection */}
+        {/* Standortauswahl */}
         <div className="mb-8 md:mb-12">
           <div className="w-full">
             <LocationSelector
@@ -222,7 +238,7 @@ export function RootServer() {
           </div>
         </div>
 
-        {/* Packages */}
+        {/* Pakete */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
           {getPackages(selectedLocation).map((pkg, index) => (
             <motion.div
@@ -262,7 +278,7 @@ export function RootServer() {
           ))}
         </div>
 
-        {/* Custom Configurator */}
+        {/* Individueller Konfigurator */}
         <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 border border-gray-200 mb-12 md:mb-16">
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 md:mb-8">Individuelle Konfiguration</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -335,7 +351,7 @@ export function RootServer() {
           </div>
         </div>
 
-        {/* FAQs */}
+        {/* FAQ-Sektion */}
         <div className="space-y-4 md:space-y-6">
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 md:mb-8">Häufig gestellte Fragen</h2>
           {faqs.map((faq, index) => (
