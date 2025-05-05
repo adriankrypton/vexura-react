@@ -322,12 +322,6 @@ export function RootServer() {
                       <span>800 GB</span>
                     </div>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Betriebssystem
-                    </label>
-                  </div>
                 </div>
               </div>
 
@@ -346,12 +340,6 @@ export function RootServer() {
                     <li className="flex justify-between">
                       <span>Speicher:</span>
                       <span className="font-medium">{config.storage} GB SSD</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Betriebssystem:</span>
-                      <span className="font-medium">
-                        {config.operatingSystem ? `${config.operatingSystem.name} ${config.operatingSystem.version}` : 'Nicht ausgewählt'}
-                      </span>
                     </li>
                     <li className="flex justify-between">
                       <span>Standort:</span>
