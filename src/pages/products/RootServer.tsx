@@ -27,6 +27,7 @@ interface OperatingSystem {
   name: string;        // Name des Betriebssystems (z.B. "Ubuntu")
   category: 'Linux' | 'Windows'; // Kategorie des Betriebssystems
   version: string;     // Version des Betriebssystems
+  icon: string;         // Pfad zur Icon-Datei des Betriebssystems
 }
 
 export function RootServer() {
@@ -46,13 +47,13 @@ export function RootServer() {
 
   // Liste der verfügbaren Betriebssysteme
   const operatingSystems: OperatingSystem[] = [
-    { name: 'Ubuntu', category: 'Linux', version: '22.04 LTS' },
-    { name: 'Ubuntu', category: 'Linux', version: '20.04 LTS' },
-    { name: 'Debian', category: 'Linux', version: '12' },
-    { name: 'Debian', category: 'Linux', version: '11' },
-    { name: 'CentOS', category: 'Linux', version: 'Stream 9' },
-    { name: 'Windows Server', category: 'Windows', version: '2022' },
-    { name: 'Windows Server', category: 'Windows', version: '2019' },
+    { name: 'Ubuntu', category: 'Linux', version: '22.04 LTS', icon: '/images/os/ubuntu.svg' },
+    { name: 'Ubuntu', category: 'Linux', version: '20.04 LTS', icon: '/images/os/ubuntu.svg' },
+    { name: 'Debian', category: 'Linux', version: '12', icon: '/images/os/debian.svg' },
+    { name: 'Debian', category: 'Linux', version: '11', icon: '/images/os/debian.svg' },
+    { name: 'CentOS', category: 'Linux', version: 'Stream 9', icon: '/images/os/centos.svg' },
+    { name: 'Windows Server', category: 'Windows', version: '2022', icon: '/images/os/windows.svg' },
+    { name: 'Windows Server', category: 'Windows', version: '2019', icon: '/images/os/windows.svg' },
   ];
 
   // Funktion zur Berechnung der Paketpreise basierend auf dem Standort
@@ -128,26 +129,6 @@ export function RootServer() {
       config.storage * 0.1) * locationMultiplier
     ).toFixed(2);
   };
-
-  // Häufig gesellte Fragen
-  const faqs = [
-    {
-      question: 'Was ist ein KVM Server?',
-      answer: 'Ein KVM Server ist ein virtueller Server mit garantierten Ressourcen und voller Root-Zugriff. Sie haben die komplette Kontrolle über Ihr System und können es nach Ihren Wünschen konfigurieren.'
-    },
-    {
-      question: 'Welche Betriebssysteme werden unterstützt?',
-      answer: 'Wir unterstützen alle gängigen Linux-Distributionen (Ubuntu, Debian, CentOS, etc.) sowie Windows Server. Sie können das Betriebssystem jederzeit neu installieren.'
-    },
-    {
-      question: 'Wie schnell ist die Bereitstellung?',
-      answer: 'Die Bereitstellung Ihres KVM Server erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.'
-    },
-    {
-      question: 'Gibt es eine Mindestvertragslaufzeit?',
-      answer: 'Nein, unsere Server können monatlich gekündigt werden. Wir bieten auch Rabatte bei längerer Vertragsbindung an.'
-    }
-  ];
 
   // Funktion zum Bestellen eines vorkonfigurierten Pakets
   const handleOrder = (pkg: Package) => {
@@ -279,87 +260,146 @@ export function RootServer() {
         </div>
 
         {/* Individueller Konfigurator */}
-        <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 border border-gray-200 mb-12 md:mb-16">
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 md:mb-8">Individuelle Konfiguration</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <div>
-              <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">CPU Kerne</label>
-              <select
-                value={config.cpu}
-                onChange={(e) => setConfig({ ...config, cpu: Number(e.target.value) })}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm md:text-base"
-              >
-                {[2, 4, 8, 16, 32].map((value) => (
-                  <option key={value} value={value}>{value}</option>
-                ))}
-              </select>
+        <div className="container mx-auto px-4 -mt-12 relative z-10">
+          <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <h2 className="text-2xl font-semibold mb-6">Server Konfigurator</h2>
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      CPU Kerne
+                    </label>
+                    <input
+                      type="range"
+                      min="2"
+                      max="32"
+                      value={config.cpu}
+                      onChange={(e) => setConfig({ ...config, cpu: parseInt(e.target.value) })}
+                      className="w-full accent-primary"
+                    />
+                    <div className="flex justify-between text-sm text-gray-600 mt-2">
+                      <span>2 Kerne</span>
+                      <span>{config.cpu} Kerne</span>
+                      <span>32 Kerne</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      RAM (GB)
+                    </label>
+                    <input
+                      type="range"
+                      min="4"
+                      max="64"
+                      value={config.ram}
+                      onChange={(e) => setConfig({ ...config, ram: parseInt(e.target.value) })}
+                      className="w-full accent-primary"
+                    />
+                    <div className="flex justify-between text-sm text-gray-600 mt-2">
+                      <span>4 GB</span>
+                      <span>{config.ram} GB</span>
+                      <span>64 GB</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Speicher (GB)
+                    </label>
+                    <input
+                      type="range"
+                      min="50"
+                      max="800"
+                      value={config.storage}
+                      onChange={(e) => setConfig({ ...config, storage: parseInt(e.target.value) })}
+                      className="w-full accent-primary"
+                    />
+                    <div className="flex justify-between text-sm text-gray-600 mt-2">
+                      <span>50 GB</span>
+                      <span>{config.storage} GB</span>
+                      <span>800 GB</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Betriebssystem
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-semibold mb-6">Ihre Konfiguration</h2>
+                <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex justify-between">
+                      <span>CPU:</span>
+                      <span className="font-medium">{config.cpu} Kerne</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>RAM:</span>
+                      <span className="font-medium">{config.ram} GB</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Speicher:</span>
+                      <span className="font-medium">{config.storage} GB SSD</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Betriebssystem:</span>
+                      <span className="font-medium">
+                        {config.operatingSystem ? `${config.operatingSystem.name} ${config.operatingSystem.version}` : 'Nicht ausgewählt'}
+                      </span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Standort:</span>
+                      <span className="font-medium">
+                        {selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
+                      </span>
+                    </li>
+                  </ul>
+                  <div className="text-3xl font-bold mb-4 text-primary">
+                    {calculatePrice()} €<span className="text-sm font-normal text-gray-600">/Monat</span>
+                  </div>
+                  <button 
+                    className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors"
+                    onClick={handleCustomOrder}
+                  >
+                    Betriebssystem auswählen →
+                  </button>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">RAM (GB)</label>
-              <select
-                value={config.ram}
-                onChange={(e) => setConfig({ ...config, ram: Number(e.target.value) })}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm md:text-base"
-              >
-                {[4, 8, 16, 32, 64].map((value) => (
-                  <option key={value} value={value}>{value}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">Speicher (GB)</label>
-              <select
-                value={config.storage}
-                onChange={(e) => setConfig({ ...config, storage: Number(e.target.value) })}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm md:text-base"
-              >
-                {[50, 100, 200, 400, 800].map((value) => (
-                  <option key={value} value={value}>{value}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">Betriebssystem</label>
-              <select
-                value={config.operatingSystem?.name || ''}
-                onChange={(e) => {
-                  const os = operatingSystems.find(os => os.name === e.target.value);
-                  setConfig({ ...config, operatingSystem: os || null });
-                }}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm md:text-base"
-              >
-                <option value="">Bitte wählen</option>
-                {operatingSystems.map((os) => (
-                  <option key={`${os.name}-${os.version}`} value={os.name}>
-                    {os.name} {os.version}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="mt-6 md:mt-8 flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-4 md:mb-0">
-              <p className="text-sm md:text-base text-gray-600">Monatlicher Preis:</p>
-              <p className="text-2xl md:text-3xl font-bold text-primary">{calculatePrice()} €</p>
-            </div>
-            <button
-              onClick={handleCustomOrder}
-              className="w-full md:w-auto bg-gradient-to-r from-primary to-primary-light text-white py-2 md:py-3 px-4 md:px-6 rounded-lg font-semibold text-sm md:text-base"
-            >
-              Konfiguration bestellen
-            </button>
           </div>
         </div>
 
-        {/* FAQ-Sektion */}
-        <div className="space-y-4 md:space-y-6">
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 md:mb-8">Häufig gestellte Fragen</h2>
-          {faqs.map((faq, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg p-4 md:p-6 border border-gray-200">
-              <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">{faq.question}</h3>
-              <p className="text-sm md:text-base text-gray-600">{faq.answer}</p>
+        {/* FAQ Section */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+            <h2 className="text-3xl font-display font-bold text-center mb-12">
+              Häufig gestellte Fragen
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Was ist ein KVM Server?</h3>
+                <p className="text-white/90">Ein KVM Server ist ein virtueller Server mit garantierten Ressourcen und voller Root-Zugriff. Sie haben die komplette Kontrolle über Ihr System und können es nach Ihren Wünschen konfigurieren.</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Welche Betriebssysteme werden unterstützt?</h3>
+                <p className="text-white/90">Wir unterstützen alle gängigen Linux-Distributionen (Ubuntu, Debian, CentOS, etc.) sowie Windows Server. Sie können das Betriebssystem jederzeit neu installieren.</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Wie schnell ist die Bereitstellung?</h3>
+                <p className="text-white/90">Die Bereitstellung Ihres KVM Server erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Gibt es eine Mindestvertragslaufzeit?</h3>
+                <p className="text-white/90">Nein, unsere Server können monatlich gekündigt werden. Wir bieten auch Rabatte bei längerer Vertragsbindung an.</p>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>

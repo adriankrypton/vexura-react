@@ -35,17 +35,15 @@ export function GameServer() {
     slots: 10,
     ram: 4,
     storage: 50,
-    game: 'minecraft',
+    game: '',  // Start with no game selected
   });
 
   // Liste der unterstützten Spiele
   const games = [
-    { id: 'minecraft', name: 'Minecraft', icon: '🎮' },
-    { id: 'cs2', name: 'Counter-Strike 2', icon: '🔫' },
-    { id: 'rust', name: 'Rust', icon: '🏗️' },
-    { id: 'ark', name: 'ARK: Survival Evolved', icon: '🦖' },
-    { id: 'valheim', name: 'Valheim', icon: '⚔️' },
-    { id: 'gmod', name: 'Garry\'s Mod', icon: '🔧' },
+    { id: 'minecraftjava', name: 'Minecraft Java', icon: '🎮', previewImage: '/img/mcbedrock.webp' },
+    { id: 'mcbedrock', name: 'Minecraft Bedrock', icon: '🎮', previewImage: '/img/minecraftjava.webp' },
+    { id: 'csgo2', name: 'Counter-Strike 2', icon: '🔫', previewImage: '/img/csgo2.webp' },
+    { id: 'altv', name: 'Alt:V', icon: '🚗', previewImage: '/img/altv.jpg' }
   ];
 
   // Funktion zur Berechnung der Paketpreise basierend auf dem Standort
@@ -53,39 +51,12 @@ export function GameServer() {
     // Basis-Pakete mit Standardpreisen
     const basePackages: Package[] = [
       {
-        name: 'Starter',
-        price: 9.99,
+        name: 'Standard',
+        price: 1.00,
         slots: 10,
         ram: 4,
         storage: 50,
         cpu: 2,
-        bandwidth: '1 Gbit/s'
-      },
-      {
-        name: 'Professional',
-        price: 19.99,
-        slots: 20,
-        ram: 8,
-        storage: 100,
-        cpu: 4,
-        bandwidth: '1 Gbit/s'
-      },
-      {
-        name: 'Business',
-        price: 39.99,
-        slots: 40,
-        ram: 16,
-        storage: 200,
-        cpu: 8,
-        bandwidth: '1 Gbit/s'
-      },
-      {
-        name: 'Enterprise',
-        price: 79.99,
-        slots: 80,
-        ram: 32,
-        storage: 400,
-        cpu: 16,
         bandwidth: '1 Gbit/s'
       }
     ];
@@ -127,34 +98,24 @@ export function GameServer() {
     ).toFixed(2);
   };
 
-  // Häufig gestellte Fragen
-  const faqs = [
-    {
-      question: 'Welche Spiele werden unterstützt?',
-      answer: 'Wir unterstützen alle gängigen Spiele wie Minecraft, CS2, Rust, ARK, Valheim und viele mehr. Die vollständige Liste finden Sie in unserem Konfigurator.'
-    },
-    {
-      question: 'Kann ich Mods installieren?',
-      answer: 'Ja, Sie haben vollen Zugriff auf Ihren Server und können Mods, Plugins und andere Erweiterungen nach Belieben installieren.'
-    },
-    {
-      question: 'Wie schnell ist die Bereitstellung?',
-      answer: 'Die Bereitstellung Ihres Game Servers erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.'
-    },
-    {
-      question: 'Gibt es eine Mindestvertragslaufzeit?',
-      answer: 'Nein, unsere Server können monatlich gekündigt werden. Wir bieten auch Rabatte bei längerer Vertragsbindung an.'
-    }
-  ];
-
   // Funktion zum Bestellen eines vorkonfigurierten Pakets
-  const handleOrder = (pkg: Package) => {
-    navigate('/order/game-select', {
+  const handleOrder = (pkg: Package, selectedGame: string) => {
+    if (!selectedGame) {
+      alert('Bitte wähle zuerst ein Spiel aus');
+      return;
+    }
+    if (!selectedLocation) {
+      alert('Bitte wähle zuerst einen Standort aus');
+      return;
+    }
+    
+    navigate('/order', {
       state: {
         orderDetails: {
-          productName: `Game Server - ${pkg.name}`,
+          productName: `Game Server - ${games.find(g => g.id === selectedGame)?.name}`,
           price: pkg.price,
           features: [
+            { label: 'Spiel', value: games.find(g => g.id === selectedGame)?.name || '' },
             { label: 'Slots', value: `${pkg.slots} Spieler` },
             { label: 'RAM', value: `${pkg.ram} GB` },
             { label: 'Speicher', value: `${pkg.storage} GB SSD` },
@@ -170,10 +131,19 @@ export function GameServer() {
 
   // Funktion zum Bestellen einer individuellen Konfiguration
   const handleCustomOrder = () => {
-    navigate('/order/game-select', {
+    if (!config.game) {
+      alert('Bitte wähle zuerst ein Spiel aus');
+      return;
+    }
+    if (!selectedLocation) {
+      alert('Bitte wähle zuerst einen Standort aus');
+      return;
+    }
+    
+    navigate('/order', {
       state: {
         orderDetails: {
-          productName: 'Game Server (Konfigurator)',
+          productName: `Game Server - ${games.find(g => g.id === config.game)?.name}`,
           price: calculatePrice(),
           features: [
             { label: 'Spiel', value: games.find(g => g.id === config.game)?.name || '' },
@@ -191,19 +161,21 @@ export function GameServer() {
 
   return (
     <div>
-      {/* Hero mit Hauptüberschrift und Features */}
+      {/* Hero-Sektion mit Hauptüberschrift und Features */}
       <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
-        <div className="container mx-auto px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
+        <div className="container mx-auto px-2 md:px-4 py-12 md:py-24 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="max-w-3xl text-white"
           >
-            <h1 className="text-5xl font-display font-bold mb-6">
+            <h1 className="text-3xl md:text-5xl font-display font-bold mb-4 md:mb-6">
               Gameserver
             </h1>
-            <p className="text-xl mb-8 text-white/90">
+            <p className="text-base md:text-xl mb-6 md:mb-8 text-white/90">
               Hochperformante Server für dein optimales Gaming-Erlebnis. Starte in wenigen Minuten durch!
             </p>
           </motion.div>
@@ -211,44 +183,36 @@ export function GameServer() {
       </div>
 
       <div className="container mx-auto px-2 md:px-4 py-8 md:py-12">
-        {/* Standortauswahl */}
-        <div className="mb-8 md:mb-12">
-          <LocationSelector
-            selectedLocation={selectedLocation}
-            onLocationSelect={(location) => {
-              setSelectedLocation(location);
-            }}
-          />
-        </div>
-
-        {/*  Pakete */}
+        {/* Spiele */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
-          {getPackages(selectedLocation).map((pkg) => (
+          {games.map((game) => (
             <motion.div
-              key={pkg.name}
+              key={game.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ y: -5 }}
-              className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-              onClick={() => handleOrder(pkg)}
+              className={`relative overflow-hidden rounded-xl shadow-lg cursor-pointer group ${
+                config.game === game.id ? 'ring-2 ring-primary' : ''
+              }`}
+              onClick={() => setConfig({ ...config, game: game.id })}
             >
               <div className="relative h-48">
                 <div className="absolute inset-0">
                   <img 
-                    src="/img/gameserver.jpg" 
-                    alt={pkg.name}
+                    src={game.previewImage} 
+                    alt={game.name}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <div className="absolute top-2 left-2">
                   <div className="bg-white/90 text-primary px-2 py-1 rounded text-sm font-medium">
-                    bereits ab {pkg.price.toFixed(2)} €
+                    bereits ab {getPackages(selectedLocation)[0].price.toFixed(2)} €
                   </div>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <h3 className="text-white text-xl font-bold text-center px-4">
-                    {pkg.name}
+                    {game.name}
                   </h3>
                 </div>
               </div>
@@ -256,8 +220,20 @@ export function GameServer() {
           ))}
         </div>
 
+        {/* Standortauswahl */}
+        <div className="mb-8 md:mb-12">
+          <div className="w-full">
+            <LocationSelector
+              selectedLocation={selectedLocation}
+              onLocationSelect={(location) => {
+                setSelectedLocation(location);
+              }}
+            />
+          </div>
+        </div>
+
         {/* Konfigurator */}
-        <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 border border-gray-200 mb-12 md:mb-16">
+        <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 border border-gray-200">
           <h2 className="text-2xl font-semibold mb-6">Gameserver Konfigurator</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 -mt-6">
             <div className="space-y-6">
@@ -311,13 +287,13 @@ export function GameServer() {
                 <li className="flex justify-between">
                   <span className="text-gray-600">Spiel:</span>
                   <span className="font-medium">
-                    {games.find(g => g.id === config.game)?.name}
+                    {games.find(g => g.id === config.game)?.name || 'Nicht ausgewählt'}
                   </span>
                 </li>
                 <li className="flex justify-between">
                   <span className="text-gray-600">Region:</span>
                   <span className="font-medium">
-                    {selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
+                    {selectedLocation ? (selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven') : 'Nicht ausgewählt'}
                   </span>
                 </li>
                 <li className="flex justify-between">
@@ -330,51 +306,44 @@ export function GameServer() {
                 </li>
               </ul>
               <button 
-                className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-light transition-colors"
+                className={`w-full py-3 rounded-lg transition-colors ${
+                  config.game && selectedLocation
+                    ? 'bg-primary text-white hover:bg-primary-light'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
                 onClick={handleCustomOrder}
+                disabled={!config.game || !selectedLocation}
               >
-                Jetzt bestellen
+                {config.game && selectedLocation ? 'Jetzt bestellen' : 'Bitte wähle ein Spiel und einen Standort aus'}
               </button>
             </div>
           </div>
         </div>
 
-        {/* FAQ-Sektion */}
-        <div className="space-y-4 md:space-y-6">
-          {faqs.map((faq, index) => (
-            <div key={index}>
-              <h3 className="text-xl font-semibold mb-2">{faq.question}</h3>
-              <p>{faq.answer}</p>
+        {/* FAQ Section */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+            <h2 className="text-3xl font-display font-bold text-center mb-12">
+              Häufig gestellte Fragen
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Welche Spiele werden unterstützt?</h3>
+                <p className="text-white/90">Wir unterstützen alle gängigen Spiele wie Minecraft, CS2, Rust, ARK, Valheim und viele mehr. Die vollständige Liste finden Sie in unserem Konfigurator.</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Kann ich Mods installieren?</h3>
+                <p className="text-white/90">Ja, Sie haben vollen Zugriff auf Ihren Server und können Mods, Plugins und andere Erweiterungen nach Belieben installieren.</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Wie schnell ist die Bereitstellung?</h3>
+                <p className="text-white/90">Die Bereitstellung Ihres Game Servers erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2">Gibt es eine Mindestvertragslaufzeit?</h3>
+                <p className="text-white/90">Nein, unsere Server können monatlich gekündigt werden. Wir bieten auch Rabatte bei längerer Vertragsbindung an.</p>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Features */}
-      <div className="bg-gray-50 py-16 mt-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
-            Inklusive Features
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group h-full"
-              >
-                <div className="p-8 h-full flex flex-col">
-                  <div className="bg-gradient-to-br from-primary/20 to-primary/5 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="h-10 w-10 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed flex-grow">{feature.description}</p>
-                  <div className="h-1 bg-gradient-to-r from-primary/50 to-primary w-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 mt-6" />
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </div>

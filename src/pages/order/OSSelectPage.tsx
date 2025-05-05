@@ -99,7 +99,7 @@ export function OSSelectPage() {
           {operatingSystems.map((os) => (
             <button
               key={os.id}
-              onClick={() => handleSelect(os.id)}
+              onClick={() => setSelectedOS(os.id)}
               className={`p-4 rounded-xl border-2 transition-all flex items-center gap-3 w-full ${
                 selectedOS === os.id
                   ? 'border-primary bg-primary/5'
@@ -121,6 +121,20 @@ export function OSSelectPage() {
               </div>
             </button>
           ))}
+        </div>
+
+        <div className="mt-8 flex justify-end">
+          <button
+            onClick={() => handleSelect(selectedOS)}
+            disabled={!selectedOS}
+            className={`px-6 py-3 rounded-lg transition-colors ${
+              selectedOS
+                ? 'bg-primary text-white hover:bg-primary-light'
+                : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            }`}
+          >
+            Zur Bestellübersicht →
+          </button>
         </div>
       </div>
     </div>

@@ -131,16 +131,31 @@ export function OrderPage() {
                     <span className="font-medium text-gray-800 text-xs sm:text-base">{feature.value}</span>
                   </li>
                 ))}
+                <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <span className="text-gray-600 text-xs sm:text-base">
+                    Inklusive IPs:
+                  </span>
+                  <span className="font-medium text-gray-800 text-xs sm:text-base">
+                    Jeweils eine IPv4 sowie IPv6
+                  </span>
+                </li>
                 {orderDetails.selectedOS && (
                   <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-gray-50 rounded-lg border-l-4 border-primary bg-primary/10 font-semibold">
                     <span className="text-gray-600 flex items-center gap-2 text-xs sm:text-base">
-                      <img src={operatingSystems.find(os => os.id === orderDetails.selectedOS)?.icon || '/img/os/ubuntu.svg'} alt="OS" className="w-3 h-3 sm:w-5 sm:h-5" />
                       Betriebssystem:
                     </span>
-                    <span className="font-medium text-gray-800 text-xs sm:text-base">
-                      {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.name || orderDetails.selectedOS}
-                      {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version ? ` ${operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version}` : ''}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium text-gray-800 text-xs sm:text-base">
+                        {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.name || orderDetails.selectedOS}
+                        {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version ? ` ${operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version}` : ''}
+                      </span>
+                      <button
+                        onClick={() => navigate('/order/os-select', { state: { orderDetails: { ...orderDetails, selectedOS: undefined } } })}
+                        className="text-primary hover:text-primary-light text-xs sm:text-sm font-medium transition-colors"
+                      >
+                        Ändern
+                      </button>
+                    </div>
                   </li>
                 )}
                 {orderDetails.additionalIPv4 && orderDetails.additionalIPv4 > 0 && (
