@@ -10,6 +10,9 @@ interface OrderDetails {
   image?: string;
   isKVM?: boolean;
   selectedOS?: string;
+  isDedicated?: boolean;
+  additionalIPv4?: number;
+  additionalIPv6?: boolean;
 }
 
 interface OperatingSystem {
@@ -67,7 +70,9 @@ export function OrderPage() {
     setDiscount(5); // 5% discount
   };
 
-  const finalPrice = orderDetails.price * (1 - discount / 100);
+  const ipv4Price = 2.99; // Price per additional IPv4
+  const finalPrice = orderDetails.price * (1 - discount / 100) + 
+    (orderDetails.additionalIPv4 || 0) * ipv4Price;
 
   const handlePayment = () => {
     if (!termsAccepted || !withdrawalAccepted) {
@@ -138,6 +143,26 @@ export function OrderPage() {
                     </span>
                   </li>
                 )}
+                {orderDetails.additionalIPv4 && orderDetails.additionalIPv4 > 0 && (
+                  <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                    <span className="text-gray-600 text-xs sm:text-base">
+                      Zusätzliche IPv4-Adressen:
+                    </span>
+                    <span className="font-medium text-gray-800 text-xs sm:text-base">
+                      {orderDetails.additionalIPv4} IP{orderDetails.additionalIPv4 !== 1 ? 's' : ''}
+                    </span>
+                  </li>
+                )}
+                {orderDetails.additionalIPv6 && (
+                  <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                    <span className="text-gray-600 text-xs sm:text-base">
+                      Zusätzliche IPv6-Adresse:
+                    </span>
+                    <span className="font-medium text-gray-800 text-xs sm:text-base">
+                      Inklusive
+                    </span>
+                  </li>
+                )}
               </ul>
 
               <div className="border-t border-gray-200 pt-3 sm:pt-6 space-y-2 sm:space-y-3">
@@ -145,6 +170,12 @@ export function OrderPage() {
                   <div className="flex justify-between text-green-600 text-xs sm:text-base">
                     <span>Rabatt ({discount}%):</span>
                     <span>-{(orderDetails.price * discount / 100).toFixed(2)} €</span>
+                  </div>
+                )}
+                {orderDetails.additionalIPv4 && orderDetails.additionalIPv4 > 0 && (
+                  <div className="flex justify-between text-gray-600 text-xs sm:text-base">
+                    <span>Zusätzliche IPv4-Adressen ({orderDetails.additionalIPv4}):</span>
+                    <span>+{(orderDetails.additionalIPv4 * ipv4Price).toFixed(2)} €</span>
                   </div>
                 )}
                 <div className="flex justify-between font-bold text-base sm:text-xl text-gray-800 pt-2">
