@@ -49,10 +49,10 @@ export function HomePage() {
       <HeroSection />
 
       {/* Stats Section */}
-      <section className="py-12 md:py-20 relative overflow-hidden">
+      <section className="py-8 md:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-50" />
         <div className="container mx-auto px-2 md:px-4 relative">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
@@ -63,13 +63,13 @@ export function HomePage() {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent-turquoise/5 rounded-xl transform transition-transform group-hover:scale-105" />
-                <div className="relative bg-white p-4 md:p-6 rounded-xl shadow-lg">
-                  <div className="p-2 md:p-3 bg-gradient-to-br from-primary to-primary-light rounded-lg w-fit mb-3 md:mb-4">
-                    <stat.icon className="h-5 w-5 md:h-6 md:w-6 text-white" />
+                <div className="relative bg-white p-3 md:p-6 rounded-xl shadow-lg">
+                  <div className="p-2 md:p-3 bg-gradient-to-br from-primary to-primary-light rounded-lg w-fit mb-2 md:mb-4">
+                    <stat.icon className="h-4 w-4 md:h-6 md:w-6 text-white" />
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1 md:mb-2">{stat.value}</h3>
-                  <p className="text-base md:text-lg font-semibold text-gray-800 mb-1">{stat.label}</p>
-                  <p className="text-sm md:text-base text-gray-600">{stat.description}</p>
+                  <h3 className="text-xl md:text-3xl font-bold text-gray-900 mb-1 md:mb-2">{stat.value}</h3>
+                  <p className="text-sm md:text-lg font-semibold text-gray-800 mb-1">{stat.label}</p>
+                  <p className="text-xs md:text-base text-gray-600">{stat.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -82,7 +82,7 @@ export function HomePage() {
       <NewsHighlight />
 
       {/* Features Section */}
-      <section className="py-12 md:py-20 relative overflow-hidden">
+      <section className="py-8 md:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91] via-[#1E88E5] to-[#00BCD4]" />
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
         <div className="container mx-auto px-2 md:px-4 relative">
@@ -90,17 +90,17 @@ export function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-8 md:mb-16"
+            className="text-center mb-6 md:mb-16"
           >
-            <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-4 md:mb-6">
+            <h2 className="text-xl md:text-4xl font-display font-bold text-white mb-3 md:mb-6">
               Warum Vexura?
             </h2>
-            <p className="text-base md:text-xl text-white/90 max-w-3xl mx-auto">
+            <p className="text-sm md:text-xl text-white/90 max-w-3xl mx-auto">
               Wir kombinieren modernste Technologie mit jahrelanger Expertise
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -108,11 +108,11 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white/10 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-white/20"
+                className="bg-white/10 backdrop-blur-sm p-3 md:p-6 rounded-xl border border-white/20"
               >
-                <feature.icon className="h-8 w-8 md:h-12 md:w-12 text-white mb-3 md:mb-4" />
-                <h3 className="text-lg md:text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                <p className="text-sm md:text-base text-white/80">{feature.description}</p>
+                <feature.icon className="h-6 w-6 md:h-12 md:w-12 text-white mb-2 md:mb-4" />
+                <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">{feature.title}</h3>
+                <p className="text-xs md:text-base text-white/80">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -120,7 +120,7 @@ export function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-20 relative overflow-hidden">
+      <section className="py-8 md:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-50" />
         <div className="container mx-auto px-2 md:px-4 relative">
           <motion.div
@@ -129,20 +129,20 @@ export function HomePage() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 md:mb-6">
+            <h2 className="text-xl md:text-4xl font-display font-bold mb-3 md:mb-6">
               Bereit für professionelles Hosting?
             </h2>
-            <p className="text-base md:text-xl mb-6 md:mb-8 text-gray-600 max-w-2xl mx-auto">
+            <p className="text-sm md:text-xl mb-4 md:mb-8 text-gray-600 max-w-2xl mx-auto">
               Starten Sie noch heute mit Vexura und erleben Sie modernste
               Hosting-Technologie kombiniert mit erstklassigem Support.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-primary to-primary-light text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold inline-flex items-center group text-sm md:text-base"
+              className="bg-gradient-to-r from-primary to-primary-light text-white px-4 md:px-8 py-2 md:py-4 rounded-lg font-semibold inline-flex items-center group text-sm md:text-base"
             >
               Server konfigurieren
-              <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 h-3 w-3 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </motion.div>
         </div>
