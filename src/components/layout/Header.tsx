@@ -19,10 +19,11 @@ function NavLink({ href, children }: NavLinkProps) {
   );
 }
 
-function MobileNavLink({ href, children }: NavLinkProps) {
+function MobileNavLink({ href, children, onClick }: NavLinkProps & { onClick?: () => void }) {
   return (
     <Link
       to={href}
+      onClick={onClick}
       className="block text-gray-600 hover:text-primary transition-colors font-medium py-2"
     >
       {children}
@@ -171,74 +172,83 @@ export function Header() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="lg:hidden bg-white"
+            className="lg:hidden fixed inset-0 z-40"
           >
-            <div className="container mx-auto px-4 py-8 space-y-8">
-              <MobileNavLink href="/">Startseite</MobileNavLink>
-              
-              <div className="py-4">
-                <p className="font-semibold mb-4">Server</p>
-                <div className="space-y-3">
-                  {serverProducts.map((item, index) => (
-                    <MobileNavLink key={index} href={item.href}>
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
+            {/* Overlay */}
+            <div 
+              className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            
+            {/* Mobile Menu */}
+            <div className="absolute top-16 left-0 right-0 bg-white h-[calc(100vh-4rem)] overflow-y-auto">
+              <div className="container mx-auto px-4 py-8 space-y-6">
+                <MobileNavLink href="/" onClick={() => setIsMenuOpen(false)}>Startseite</MobileNavLink>
+                
+                <div className="py-3">
+                  <p className="font-semibold mb-3 text-sm">Server</p>
+                  <div className="space-y-2">
+                    {serverProducts.map((item, index) => (
+                      <MobileNavLink key={index} href={item.href} onClick={() => setIsMenuOpen(false)}>
+                        {item.label}
+                      </MobileNavLink>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="py-4">
-                <p className="font-semibold mb-4">Webhosting</p>
-                <div className="space-y-3">
-                  {webhosting.map((item, index) => (
-                    <MobileNavLink key={index} href={item.href}>
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
+                <div className="py-3">
+                  <p className="font-semibold mb-3 text-sm">Webhosting</p>
+                  <div className="space-y-2">
+                    {webhosting.map((item, index) => (
+                      <MobileNavLink key={index} href={item.href} onClick={() => setIsMenuOpen(false)}>
+                        {item.label}
+                      </MobileNavLink>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="py-4">
-                <p className="font-semibold mb-4">Dienste</p>
-                <div className="space-y-3">
-                  {services.map((item, index) => (
-                    <MobileNavLink key={index} href={item.href}>
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
+                <div className="py-3">
+                  <p className="font-semibold mb-3 text-sm">Dienste</p>
+                  <div className="space-y-2">
+                    {services.map((item, index) => (
+                      <MobileNavLink key={index} href={item.href} onClick={() => setIsMenuOpen(false)}>
+                        {item.label}
+                      </MobileNavLink>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="py-4">
-                <p className="font-semibold mb-4">Lizenzen</p>
-                <div className="space-y-3">
-                  {licenses.map((item, index) => (
-                    <MobileNavLink key={index} href={item.href}>
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
+                <div className="py-3">
+                  <p className="font-semibold mb-3 text-sm">Lizenzen</p>
+                  <div className="space-y-2">
+                    {licenses.map((item, index) => (
+                      <MobileNavLink key={index} href={item.href} onClick={() => setIsMenuOpen(false)}>
+                        {item.label}
+                      </MobileNavLink>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="py-4">
-                <p className="font-semibold mb-4">Informationen</p>
-                <div className="space-y-3">
-                  {infoPages.map((item, index) => (
-                    <MobileNavLink key={index} href={item.href}>
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
+                <div className="py-3">
+                  <p className="font-semibold mb-3 text-sm">Informationen</p>
+                  <div className="space-y-2">
+                    {infoPages.map((item, index) => (
+                      <MobileNavLink key={index} href={item.href} onClick={() => setIsMenuOpen(false)}>
+                        {item.label}
+                      </MobileNavLink>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="py-4">
-                <p className="font-semibold mb-4">Rechtliches</p>
-                <div className="space-y-3">
-                  {legal.map((item, index) => (
-                    <MobileNavLink key={index} href={item.href}>
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
+                <div className="py-3">
+                  <p className="font-semibold mb-3 text-sm">Rechtliches</p>
+                  <div className="space-y-2">
+                    {legal.map((item, index) => (
+                      <MobileNavLink key={index} href={item.href} onClick={() => setIsMenuOpen(false)}>
+                        {item.label}
+                      </MobileNavLink>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

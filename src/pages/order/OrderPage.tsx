@@ -83,7 +83,7 @@ export function OrderPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-primary/5 to-background" style={{ paddingTop: '41px', paddingBottom: '41px' }}>
-      <div className="container mx-auto px-4 py-16 max-w-[1920px]">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-16 max-w-[1920px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,47 +92,47 @@ export function OrderPage() {
           <a
             href="#"
             onClick={e => { e.preventDefault(); navigate(-1); }}
-            className="absolute left-0 top-0 mt-8 ml-8 text-primary hover:underline text-base font-medium z-20"
+            className="block sm:absolute left-0 top-0 mt-2 sm:mt-8 ml-2 sm:ml-8 text-primary hover:underline text-xs sm:text-base font-medium z-20 mb-2 sm:mb-0"
           >
             &larr; Zurück zum Produkt
           </a>
-          <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">
+          <h1 className="text-xl sm:text-4xl font-bold mb-4 sm:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">
             Bestellübersicht
           </h1>
 
-          <div className="min-h-screen flex flex-row justify-center items-stretch gap-2 w-full px-4">
+          <div className="flex flex-col sm:flex-row justify-center items-stretch gap-3 sm:gap-8 w-full px-0 sm:px-4">
             {/* Order Summary */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 flex-1 min-w-[350px] self-stretch flex flex-col h-full">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">Ihre Bestellung</h2>
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-3 sm:p-8 border border-white/20 flex-1 min-w-0 sm:min-w-[350px] self-stretch flex flex-col h-full">
+              <h2 className="text-lg sm:text-2xl font-bold mb-3 sm:mb-6 text-gray-800">Ihre Bestellung</h2>
               {orderDetails.image && (
-                <div className="relative overflow-hidden rounded-xl mb-6">
+                <div className="relative overflow-hidden rounded-xl mb-3 sm:mb-6">
                   <img
                     src={orderDetails.image}
                     alt={orderDetails.productName}
-                    className="w-full h-56 object-cover transform hover:scale-105 transition-transform duration-300"
+                    className="w-full h-32 sm:h-56 object-cover transform hover:scale-105 transition-transform duration-300"
                   />
                 </div>
               )}
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">{orderDetails.productName}</h3>
-              <ul className="space-y-4 mb-6">
+              <h3 className="text-base sm:text-xl font-semibold mb-2 sm:mb-4 text-gray-800">{orderDetails.productName}</h3>
+              <ul className="space-y-2 sm:space-y-4 mb-3 sm:mb-6">
                 {orderDetails.features.map((feature, index) => (
-                  <li key={index} className={`flex justify-between items-center p-3 bg-gray-50 rounded-lg ${feature.label === 'Betriebssystem' ? 'border-l-4 border-primary bg-primary/10 font-semibold' : ''}`}>
-                    <span className="text-gray-600 flex items-center gap-2">
+                  <li key={index} className={`flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-gray-50 rounded-lg ${feature.label === 'Betriebssystem' ? 'border-l-4 border-primary bg-primary/10 font-semibold' : ''}`}>
+                    <span className="text-gray-600 flex items-center gap-2 text-xs sm:text-base">
                       {feature.label === 'Betriebssystem' && (
-                        <img src="/img/os/ubuntu.svg" alt="OS" className="w-5 h-5" />
+                        <img src="/img/os/ubuntu.svg" alt="OS" className="w-3 h-3 sm:w-5 sm:h-5" />
                       )}
                       {feature.label}:
                     </span>
-                    <span className="font-medium text-gray-800">{feature.value}</span>
+                    <span className="font-medium text-gray-800 text-xs sm:text-base">{feature.value}</span>
                   </li>
                 ))}
                 {orderDetails.selectedOS && (
-                  <li className="flex justify-between items-center p-3 bg-gray-50 rounded-lg border-l-4 border-primary bg-primary/10 font-semibold">
-                    <span className="text-gray-600 flex items-center gap-2">
-                      <img src={operatingSystems.find(os => os.id === orderDetails.selectedOS)?.icon || '/img/os/ubuntu.svg'} alt="OS" className="w-5 h-5" />
+                  <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-gray-50 rounded-lg border-l-4 border-primary bg-primary/10 font-semibold">
+                    <span className="text-gray-600 flex items-center gap-2 text-xs sm:text-base">
+                      <img src={operatingSystems.find(os => os.id === orderDetails.selectedOS)?.icon || '/img/os/ubuntu.svg'} alt="OS" className="w-3 h-3 sm:w-5 sm:h-5" />
                       Betriebssystem:
                     </span>
-                    <span className="font-medium text-gray-800">
+                    <span className="font-medium text-gray-800 text-xs sm:text-base">
                       {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.name || orderDetails.selectedOS}
                       {operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version ? ` ${operatingSystems.find(os => os.id === orderDetails.selectedOS)?.version}` : ''}
                     </span>
@@ -140,56 +140,56 @@ export function OrderPage() {
                 )}
               </ul>
 
-              <div className="border-t border-gray-200 pt-6 space-y-3">
+              <div className="border-t border-gray-200 pt-3 sm:pt-6 space-y-2 sm:space-y-3">
                 {discount > 0 && (
-                  <div className="flex justify-between text-green-600">
+                  <div className="flex justify-between text-green-600 text-xs sm:text-base">
                     <span>Rabatt ({discount}%):</span>
                     <span>-{(orderDetails.price * discount / 100).toFixed(2)} €</span>
                   </div>
                 )}
-                <div className="flex justify-between font-bold text-xl text-gray-800 pt-2">
+                <div className="flex justify-between font-bold text-base sm:text-xl text-gray-800 pt-2">
                   <span>Gesamtsumme:</span>
                   <span>{finalPrice.toFixed(2)} €</span>
                 </div>
-                <div className="text-sm text-gray-500 text-right">
+                <div className="text-[10px] sm:text-sm text-gray-500 text-right">
                   Alle Preise inklusive 19% MwSt.
                 </div>
               </div>
             </div>
 
             {/* Voucher and Payment */}
-            <div className="space-y-4 flex-1 min-w-[350px] self-stretch flex flex-col h-full">
+            <div className="space-y-3 sm:space-y-4 flex-1 min-w-0 sm:min-w-[350px] self-stretch flex flex-col h-full">
               {/* Voucher Code */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800">Gutscheincode</h2>
-                <form onSubmit={handleVoucherSubmit} className="space-y-4">
-                  <div className="flex gap-3">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-3 sm:p-8 border border-white/20">
+                <h2 className="text-lg sm:text-2xl font-bold mb-3 sm:mb-6 text-gray-800">Gutscheincode</h2>
+                <form onSubmit={handleVoucherSubmit} className="space-y-3 sm:space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <input
                       type="text"
                       value={voucherCode}
                       onChange={(e) => setVoucherCode(e.target.value)}
                       placeholder="Gutscheincode eingeben"
-                      className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary bg-white/50"
+                      className="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary bg-white/50 text-xs sm:text-base"
                     />
                     <button
                       type="submit"
-                      className="bg-primary text-white px-6 py-3 rounded-xl hover:bg-primary-light transition-all shadow-lg hover:shadow-xl"
+                      className="bg-primary text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:bg-primary-light transition-all shadow-lg hover:shadow-xl text-xs sm:text-base"
                     >
                       Einlösen
                     </button>
                   </div>
                   {isVoucherValid !== null && (
-                    <div className={`flex items-center gap-2 p-3 rounded-lg ${
+                    <div className={`flex items-center gap-2 p-2 sm:p-3 rounded-lg text-xs sm:text-base ${
                       isVoucherValid ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'
                     }`}>
                       {isVoucherValid ? (
                         <>
-                          <Check className="h-5 w-5" />
+                          <Check className="h-3 w-3 sm:h-5 sm:w-5" />
                           <span>Gutscheincode erfolgreich eingelöst!</span>
                         </>
                       ) : (
                         <>
-                          <X className="h-5 w-5" />
+                          <X className="h-3 w-3 sm:h-5 sm:w-5" />
                           <span>Ungültiger Gutscheincode</span>
                         </>
                       )}
@@ -199,29 +199,29 @@ export function OrderPage() {
               </div>
 
               {/* Payment Button */}
-              <div className="space-y-4">
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                  <div className="space-y-3">
-                    <label className="flex items-start gap-3 cursor-pointer">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2 sm:p-4 border border-white/20">
+                  <div className="space-y-2 sm:space-y-3">
+                    <label className="flex items-start gap-2 sm:gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={termsAccepted}
                         onChange={(e) => setTermsAccepted(e.target.checked)}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                        className="mt-1 h-3 w-3 sm:h-4 sm:w-4 rounded border-gray-300 text-primary focus:ring-primary"
                       />
-                      <span className="text-sm text-gray-600">
+                      <span className="text-[10px] sm:text-sm text-gray-600">
                         Ich habe die <a href="/agb" className="text-primary hover:underline">allgemeinen Geschäftsbedingungen</a> und <a href="/datenschutz" className="text-primary hover:underline">Datenschutzerklärung</a> gelesen und akzeptiere diese.
                       </span>
                     </label>
                     
-                    <label className="flex items-start gap-3 cursor-pointer">
+                    <label className="flex items-start gap-2 sm:gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={withdrawalAccepted}
                         onChange={(e) => setWithdrawalAccepted(e.target.checked)}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                        className="mt-1 h-3 w-3 sm:h-4 sm:w-4 rounded border-gray-300 text-primary focus:ring-primary"
                       />
-                      <span className="text-sm text-gray-600">
+                      <span className="text-[10px] sm:text-sm text-gray-600">
                         Ich wünsche die vollständige Ausführung der Dienstleistung vor Fristablauf des Widerrufsrechts gemäß Fernabsatzgesetz. Die automatische Einrichtung und Erbringung der Dienstleistung führt zum Erlöschen des Widerrufsrechts.
                       </span>
                     </label>
@@ -231,7 +231,7 @@ export function OrderPage() {
                 <button
                   onClick={handlePayment}
                   disabled={!termsAccepted || !withdrawalAccepted}
-                  className={`w-full py-4 rounded-xl text-lg font-bold transition-all duration-300 transform hover:-translate-y-1 ${
+                  className={`w-full py-2 sm:py-4 rounded-xl text-sm sm:text-lg font-bold transition-all duration-300 transform hover:-translate-y-1 ${
                     termsAccepted && withdrawalAccepted
                       ? 'bg-gradient-to-r from-primary to-primary-light text-white hover:shadow-xl'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
@@ -242,7 +242,7 @@ export function OrderPage() {
                 <a
                   href="/products/root-server"
                   onClick={e => { e.preventDefault(); navigate('/products/root-server'); }}
-                  className="mt-4 block text-primary hover:underline text-base font-medium text-center"
+                  className="mt-3 sm:mt-4 block text-primary hover:underline text-xs sm:text-base font-medium text-center"
                 >
                   &larr; Doch nochmal umschauen
                 </a>
