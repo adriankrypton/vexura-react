@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { Globe, Search, ShieldCheck, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { Globe, Search, ShieldCheck, ArrowRight, Check, X, Loader2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface DomainPrice {
   tld: string;
@@ -11,6 +11,8 @@ interface DomainPrice {
 export function Domains() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchActive, setSearchActive] = useState(false);
+  const [availabilityStatus, setAvailabilityStatus] = useState<Record<string, 'loading' | 'available' | 'unavailable'>>({});
+  const [isChecking, setIsChecking] = useState(false);
 
   const domainPrices: DomainPrice[] = [
     { tld: '.de', price: 0.99, special: true },
@@ -30,7 +32,7 @@ export function Domains() {
   const features = [
     {
       icon: Globe,
-      title: 'DNS Management',
+      title: 'DNS-Verwaltung',
       description: 'Volle Kontrolle über DNS-Einträge'
     },
     {
@@ -40,7 +42,7 @@ export function Domains() {
     },
     {
       icon: Search,
-      title: 'Whois Privacy',
+      title: 'Whois-Datenschutz',
       description: 'Schutz persönlicher Daten'
     }
   ];
@@ -63,6 +65,39 @@ export function Domains() {
       answer: 'Ja, für alle Domains bieten wir kostenlose Let\'s Encrypt SSL-Zertifikate an.'
     }
   ];
+
+  // Simulate domain availability check
+  const checkDomainAvailability = async (domain: string) => {
+    setIsChecking(true);
+    setAvailabilityStatus(prev => ({ ...prev, [domain]: 'loading' }));
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const isAvailable = Math.random() > 0.5;
+    setAvailabilityStatus(prev => ({
+      ...prev,
+      [domain]: isAvailable ? 'available' : 'unavailable'
+    }));
+    setIsChecking(false);
+  };
+
+  // Check availability when search becomes active
+  useEffect(() => {
+    if (searchActive && searchQuery) {
+      const searchTld = domainPrices.find(domain => 
+        searchQuery.toLowerCase().endsWith(domain.tld.toLowerCase())
+      );
+      
+      if (searchTld) {
+        checkDomainAvailability(searchQuery);
+      } else {
+        domainPrices.slice(0, 5).forEach(domain => {
+          checkDomainAvailability(`${searchQuery}${domain.tld}`);
+        });
+      }
+    }
+  }, [searchActive, searchQuery]);
 
   return (
     <div>
@@ -111,26 +146,62 @@ export function Domains() {
           <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
             <h2 className="text-2xl font-semibold mb-6">Suchergebnisse für "{searchQuery}"</h2>
             <div className="space-y-4">
-              {domainPrices.slice(0, 5).map((domain, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:border-primary/20 transition-colors"
-                >
-                  <div className="flex items-center">
-                    <Globe className="h-5 w-5 text-primary mr-3" />
-                    <span className="font-medium">{searchQuery}{domain.tld}</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <span className="font-semibold">{domain.price} €/Jahr</span>
-                    <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-light transition-colors">
-                      Registrieren
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
+              {(() => {
+                const searchTld = domainPrices.find(domain => 
+                  searchQuery.toLowerCase().endsWith(domain.tld.toLowerCase())
+                );
+
+                const domainsToShow = searchTld 
+                  ? [searchTld]
+                  : domainPrices.slice(0, 5);
+
+                return domainsToShow.map((domain, index) => {
+                  const fullDomain = searchTld ? searchQuery : `${searchQuery}${domain.tld}`;
+                  const status = availabilityStatus[fullDomain];
+
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center justify-between p-4 border rounded-lg hover:border-primary/20 transition-colors"
+                    >
+                      <div className="flex items-center">
+                        <Globe className="h-5 w-5 text-primary mr-3" />
+                        <span className="font-medium">{fullDomain}</span>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <span className="font-semibold">{domain.price} €/Jahr</span>
+                        <div className="flex items-center space-x-2">
+                          {status === 'loading' ? (
+                            <div className="flex items-center text-gray-600">
+                              <Loader2 className="h-5 w-5 mr-1 animate-spin" />
+                              <span className="text-sm">Prüfe Verfügbarkeit...</span>
+                            </div>
+                          ) : status === 'available' ? (
+                            <div className="flex items-center text-green-600">
+                              <Check className="h-5 w-5 mr-1" />
+                              <span className="text-sm">Verfügbar</span>
+                            </div>
+                          ) : status === 'unavailable' ? (
+                            <div className="flex items-center text-red-600">
+                              <X className="h-5 w-5 mr-1" />
+                              <span className="text-sm">Nicht verfügbar</span>
+                            </div>
+                          ) : null}
+                          <button 
+                            className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={status === 'loading' || status === 'unavailable'}
+                          >
+                            Registrieren
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                });
+              })()}
             </div>
           </div>
         </div>

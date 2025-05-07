@@ -13,12 +13,12 @@ export function Teamspeak() {
   const features = [
     {
       icon: Shield,
-      title: 'DDoS Protection',
+      title: 'DDoS-Schutz',
       description: 'Automatischer Schutz vor Angriffen'
     },
     {
       icon: Cpu,
-      title: 'High Performance',
+      title: 'Hohe Leistung',
       description: 'Beste Sprachqualität'
     },
     {
@@ -28,8 +28,8 @@ export function Teamspeak() {
     },
     {
       icon: Users,
-      title: 'Unbegrenzte Channels',
-      description: 'Keine Channel-Limitierung'
+      title: 'Unbegrenzte Kanäle',
+      description: 'Keine Kanal-Limitierung'
     }
   ];
 

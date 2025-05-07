@@ -82,8 +82,8 @@ export function Storage() {
       answer: 'Alle Pakete enthalten Backup-System, Web Interface und FTP-Zugang. Das Professional Paket bietet zusätzlich Snapshots und API-Zugriff. Das Enterprise Paket enthält alle Features plus eine dedizierte IP.'
     },
     {
-      question: 'Lorem ipsum dolor sit amet?',
-      answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      question: 'Kann ich mein Speichervolumen jederzeit ändern?',
+      answer: 'Ja, Sie können Ihr Speichervolumen jederzeit erhöhen oder verringern. Die Änderung wird sofort wirksam und die Abrechnung wird entsprechend angepasst.'
     }
   ];
 
@@ -99,7 +99,7 @@ export function Storage() {
 
   const handleOrder = (plan?: StoragePlan) => {
     const orderDetails = {
-      productName: plan ? `Storage - ${plan.name}` : 'Storage - Individuell',
+      productName: plan ? `Speicher - ${plan.name}` : 'Speicher - Individuell',
       price: plan ? plan.price : parseFloat(calculatePrice()),
       features: [
         { label: 'Speicherplatz', value: plan ? plan.space : `${storageSize} GB` }
