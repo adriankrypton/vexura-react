@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-[#0B3D91] via-[#1E88E5] to-[#00BCD4]">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-[#0B3D91] via-[#1E88E5] to-[#00BCD4] pb-16 sm:pb-0">
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-30">
           {/* Animated Background Elements */}
@@ -58,7 +58,7 @@ export function HeroSection() {
             </Link>
             <Link
               to="/info/datacenter"
-              className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center"
+              className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center group"
             >
               Infrastruktur entdecken
               <ArrowRight className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
