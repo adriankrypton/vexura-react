@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Globe, Search, ShieldCheck, ArrowRight, Check, X, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface DomainPrice {
   tld: string;
@@ -9,6 +10,7 @@ interface DomainPrice {
 }
 
 export function Domains() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchActive, setSearchActive] = useState(false);
   const [availabilityStatus, setAvailabilityStatus] = useState<Record<string, 'loading' | 'available' | 'unavailable'>>({});
@@ -98,6 +100,21 @@ export function Domains() {
       }
     }
   }, [searchActive, searchQuery]);
+
+  const handleOrder = (domain: string, price: number) => {
+    const orderDetails = {
+      productName: `Domain - ${domain}`,
+      price: price,
+      features: [
+        { label: 'Domain', value: domain },
+        { label: 'DNS-Verwaltung', value: 'Inklusive' },
+        { label: 'DNSSEC', value: 'Inklusive' },
+        { label: 'Whois-Datenschutz', value: 'Inklusive' }
+      ]
+    };
+
+    navigate('/order', { state: { orderDetails } });
+  };
 
   return (
     <div>
@@ -193,6 +210,7 @@ export function Domains() {
                           <button 
                             className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={status === 'loading' || status === 'unavailable'}
+                            onClick={() => handleOrder(fullDomain, domain.price)}
                           >
                             Registrieren
                           </button>

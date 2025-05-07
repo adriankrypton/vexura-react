@@ -102,7 +102,12 @@ export function Storage() {
       productName: plan ? `Speicher - ${plan.name}` : 'Speicher - Individuell',
       price: plan ? plan.price : parseFloat(calculatePrice()),
       features: [
-        { label: 'Speicherplatz', value: plan ? plan.space : `${storageSize} GB` }
+        { label: 'Speicherplatz', value: plan ? plan.space : `${storageSize} GB` },
+        { label: 'Backup-System', value: 'Inklusive' },
+        { label: 'Web Interface', value: 'Inklusive' },
+        { label: 'FTP Zugang', value: 'Inklusive' },
+        { label: 'AES-256 Verschlüsselung', value: 'Inklusive' },
+        { label: '99.9% Uptime', value: 'Garantiert' }
       ]
     };
 

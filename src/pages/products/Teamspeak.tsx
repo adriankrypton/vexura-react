@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Users, Shield, Cpu, Server } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function Teamspeak() {
+  const navigate = useNavigate();
   const [slots, setSlots] = useState(32);
   const [serverName, setServerName] = useState('');
 
@@ -53,7 +55,18 @@ export function Teamspeak() {
   ];
 
   const handleOrder = () => {
-    // Implement the order handling logic here
+    const orderDetails = {
+      productName: 'TeamSpeak Server',
+      price: parseFloat(calculatePrice()),
+      features: [
+        { label: 'Slots', value: `${slots} Slots` },
+        { label: 'DDoS-Schutz', value: 'Inklusive' },
+        { label: 'Eigene Domain', value: '.ts3.cloud' },
+        { label: 'Unbegrenzte Kanäle', value: 'Inklusive' }
+      ]
+    };
+
+    navigate('/order', { state: { orderDetails } });
   };
 
   return (
