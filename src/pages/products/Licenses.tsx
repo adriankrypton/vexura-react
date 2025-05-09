@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Shield, Server, Globe, Check } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LicensePlan {
   name: string;
@@ -11,6 +12,7 @@ interface LicensePlan {
 }
 
 export function Licenses() {
+  const navigate = useNavigate();
   const [licenseType, setLicenseType] = useState<'vps' | 'dedicated'>('vps');
 
   const features = [
@@ -121,6 +123,21 @@ export function Licenses() {
     }
   ];
 
+  const handleOrder = (plan: LicensePlan) => {
+    const orderDetails = {
+      productName: `${plan.name} (${plan.type})`,
+      price: plan.price,
+      features: plan.features.map(feature => ({
+        label: 'Feature',
+        value: feature
+      })),
+      type: 'license',
+      licenseType: plan.type.toLowerCase()
+    };
+
+    navigate('/order', { state: { orderDetails } });
+  };
+
   return (
     <div className="bg-white dark:bg-gray-900 min-h-screen">
       {/* Hero Section */}
@@ -217,11 +234,13 @@ export function Licenses() {
                   </li>
                 ))}
               </ul>
-              <button className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                plan.recommended
-                  ? 'bg-[#0B3D91] dark:bg-primary-light text-white hover:bg-[#1E88E5] dark:hover:bg-primary'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-              }`}>
+              <button 
+                onClick={() => handleOrder(plan)}
+                className={`w-full py-3 rounded-lg font-medium transition-colors ${
+                  plan.recommended
+                    ? 'bg-[#0B3D91] dark:bg-primary-light text-white hover:bg-[#1E88E5] dark:hover:bg-primary'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                }`}>
                 Jetzt bestellen
               </button>
             </motion.div>
