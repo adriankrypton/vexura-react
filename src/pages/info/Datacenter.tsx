@@ -123,10 +123,10 @@ export function Datacenter() {
   ];
 
   return (
-    <div>
+    <div className="bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
-        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 py-24">
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px] dark:bg-grid-white/[0.05]" />
         <div className="container mx-auto px-4 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -150,7 +150,7 @@ export function Datacenter() {
                 onClick={() => setView('datacenter')}
                 className={`px-4 py-2 rounded-md transition-colors ${
                   view === 'datacenter'
-                    ? 'bg-white text-primary'
+                    ? 'bg-white text-primary dark:bg-gray-800 dark:text-primary-light'
                     : 'text-white hover:bg-white/10'
                 }`}
               >
@@ -160,7 +160,7 @@ export function Datacenter() {
                 onClick={() => setView('infrastructure')}
                 className={`px-4 py-2 rounded-md transition-colors ${
                   view === 'infrastructure'
-                    ? 'bg-white text-primary'
+                    ? 'bg-white text-primary dark:bg-gray-800 dark:text-primary-light'
                     : 'text-white hover:bg-white/10'
                 }`}
               >
@@ -181,7 +181,7 @@ export function Datacenter() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
-                className="bg-white rounded-xl shadow-xl overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700"
               >
                 {/* Datacenter Header with Image */}
                 <div className="relative h-64">
@@ -199,7 +199,7 @@ export function Datacenter() {
                     {dc.certifications.map((cert, i) => (
                       <span
                         key={i}
-                        className="bg-white/90 text-primary px-3 py-1 rounded-full text-sm font-medium"
+                        className="bg-white/90 dark:bg-gray-800/90 text-primary dark:text-primary-light px-3 py-1 rounded-full text-sm font-medium"
                       >
                         {cert}
                       </span>
@@ -211,14 +211,14 @@ export function Datacenter() {
                 <div className="p-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div>
-                      <h3 className="font-semibold mb-4 flex items-center text-lg">
-                        <Zap className="h-6 w-6 text-primary mr-2" />
+                      <h3 className="font-semibold mb-4 flex items-center text-lg text-gray-900 dark:text-white">
+                        <Zap className="h-6 w-6 text-primary dark:text-primary-light mr-2" />
                         Stromversorgung
                       </h3>
                       <ul className="space-y-3">
                         {dc.specs.power.map((item, i) => (
-                          <li key={i} className="flex items-center text-gray-700">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          <li key={i} className="flex items-center text-gray-700 dark:text-gray-300">
+                            <span className="w-1.5 h-1.5 bg-primary dark:bg-primary-light rounded-full mr-2" />
                             {item}
                           </li>
                         ))}
@@ -226,14 +226,14 @@ export function Datacenter() {
                     </div>
 
                     <div>
-                      <h3 className="font-semibold mb-4 flex items-center text-lg">
-                        <ThermometerSnowflake className="h-6 w-6 text-primary mr-2" />
+                      <h3 className="font-semibold mb-4 flex items-center text-lg text-gray-900 dark:text-white">
+                        <ThermometerSnowflake className="h-6 w-6 text-primary dark:text-primary-light mr-2" />
                         Klimatisierung
                       </h3>
                       <ul className="space-y-3">
                         {dc.specs.cooling.map((item, i) => (
-                          <li key={i} className="flex items-center text-gray-700">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          <li key={i} className="flex items-center text-gray-700 dark:text-gray-300">
+                            <span className="w-1.5 h-1.5 bg-primary dark:bg-primary-light rounded-full mr-2" />
                             {item}
                           </li>
                         ))}
@@ -241,14 +241,14 @@ export function Datacenter() {
                     </div>
 
                     <div>
-                      <h3 className="font-semibold mb-4 flex items-center text-lg">
-                        <Shield className="h-6 w-6 text-primary mr-2" />
+                      <h3 className="font-semibold mb-4 flex items-center text-lg text-gray-900 dark:text-white">
+                        <Shield className="h-6 w-6 text-primary dark:text-primary-light mr-2" />
                         Sicherheit
                       </h3>
                       <ul className="space-y-3">
                         {dc.specs.security.map((item, i) => (
-                          <li key={i} className="flex items-center text-gray-700">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          <li key={i} className="flex items-center text-gray-700 dark:text-gray-300">
+                            <span className="w-1.5 h-1.5 bg-primary dark:bg-primary-light rounded-full mr-2" />
                             {item}
                           </li>
                         ))}
@@ -256,14 +256,14 @@ export function Datacenter() {
                     </div>
 
                     <div>
-                      <h3 className="font-semibold mb-4 flex items-center text-lg">
-                        <Wifi className="h-6 w-6 text-primary mr-2" />
+                      <h3 className="font-semibold mb-4 flex items-center text-lg text-gray-900 dark:text-white">
+                        <Wifi className="h-6 w-6 text-primary dark:text-primary-light mr-2" />
                         Netzwerk
                       </h3>
                       <ul className="space-y-3">
                         {dc.specs.network.map((item, i) => (
-                          <li key={i} className="flex items-center text-gray-700">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                          <li key={i} className="flex items-center text-gray-700 dark:text-gray-300">
+                            <span className="w-1.5 h-1.5 bg-primary dark:bg-primary-light rounded-full mr-2" />
                             {item}
                           </li>
                         ))}
@@ -285,46 +285,44 @@ export function Datacenter() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-lg"
+                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
               >
-                <feature.icon className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <feature.icon className="h-12 w-12 text-primary dark:text-primary-light mb-4" />
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
               </motion.div>
             ))}
           </div>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-              <h3 className="text-xl font-semibold mb-4">Netzwerk</h3>
-              <p className="text-gray-600">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
+              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Netzwerk</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Redundante Netzwerkanbindung mit mehreren 100 GBit/s Uplinks und DDoS-Schutz.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-              <h3 className="text-xl font-semibold mb-4">Hardware</h3>
-              <p className="text-gray-600">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
+              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Hardware</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Modernste Server-Hardware von führenden Herstellern für maximale Zuverlässigkeit.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-              <h3 className="text-xl font-semibold mb-4">Sicherheit</h3>
-              <p className="text-gray-600">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
+              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Sicherheit</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 24/7 Überwachung und mehrstufige Sicherheitssysteme zum Schutz Ihrer Daten.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-              <h3 className="text-xl font-semibold mb-4">Verfügbarkeit</h3>
-              <p className="text-gray-600">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
+              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Verfügbarkeit</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 99,9% garantierte Verfügbarkeit durch redundante Systeme und USV-Anlagen.
               </p>
             </div>
           </div>
-
-         
         </div>
       )}
     </div>
