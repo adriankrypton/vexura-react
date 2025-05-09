@@ -79,10 +79,10 @@ export function Payment() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
-        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 py-24">
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px] dark:bg-grid-white/[0.05]" />
         <div className="container mx-auto px-4 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -116,10 +116,10 @@ export function Payment() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-display font-bold mb-4">
+          <h2 className="text-3xl font-display font-bold mb-4 text-gray-900 dark:text-white">
             Ihre Sicherheit hat höchste Priorität
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 dark:text-gray-300">
             Modernste Sicherheitstechnologien für Ihre Zahlungen
           </p>
         </motion.div>
@@ -132,7 +132,7 @@ export function Payment() {
       </div>
 
       {/* Process Steps */}
-      <div className="bg-white py-24">
+      <div className="bg-white dark:bg-gray-800 py-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -140,10 +140,10 @@ export function Payment() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-display font-bold mb-4">
+            <h2 className="text-3xl font-display font-bold mb-4 text-gray-900 dark:text-white">
               So einfach funktioniert's
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               In wenigen Schritten zu Ihrem neuen Hosting-Produkt
             </p>
           </motion.div>
@@ -172,13 +172,13 @@ export function Payment() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="relative bg-gray-50 rounded-xl p-6"
+                className="relative bg-gray-50 dark:bg-gray-700 rounded-xl p-6 border border-gray-200 dark:border-gray-600"
               >
-                <div className="text-6xl font-bold text-primary/10 mb-4">
+                <div className="text-6xl font-bold text-primary/10 dark:text-primary-light/10 mb-4">
                   {step.step}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{step.description}</p>
               </motion.div>
             ))}
           </div>
