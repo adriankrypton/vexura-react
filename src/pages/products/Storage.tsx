@@ -248,7 +248,7 @@ export function Storage() {
                     <span className="font-medium">{config.ram} GB</span>
                   </li>
                 </ul>
-                <div className="text-3xl font-bold mb-4 text-primary dark:text-primary-light">
+                <div className="text-3xl font-bold mb-4 text-primary dark:text-white">
                   {calculatePrice()} €<span className="text-sm font-normal text-gray-600 dark:text-gray-400">/Monat</span>
                 </div>
                 <button 
@@ -287,7 +287,7 @@ export function Storage() {
                 </div>
               )}
               <h3 className="text-2xl font-semibold mb-4 dark:text-white">{plan.name}</h3>
-              <div className="text-3xl font-bold mb-6">
+              <div className="text-3xl font-bold mb-6 text-primary dark:text-white">
                 {plan.price} €<span className="text-lg font-normal text-gray-600 dark:text-gray-400">/Monat</span>
               </div>
               <ul className="space-y-4 mb-8">

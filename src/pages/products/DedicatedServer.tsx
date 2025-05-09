@@ -17,7 +17,6 @@ interface Package {
 
 // Interface für den Konfigurator-Zustand
 interface ConfiguratorState {
-  cpu: string;         // Ausgewähltes CPU-Modell
   ram: number;         // Ausgewähltes RAM
   storage: string;     // Ausgewählte Speicherkonfiguration
   operatingSystem: OperatingSystem | null; // Ausgewähltes Betriebssystem
@@ -45,7 +44,6 @@ export function DedicatedServer() {
   
   // Zustand für die Server-Konfiguration
   const [config, setConfig] = useState<ConfiguratorState>({
-    cpu: 'Intel Xeon E-2236',
     ram: 32,
     storage: '2x 1TB NVMe',
     operatingSystem: null,
@@ -187,7 +185,6 @@ export function DedicatedServer() {
           productName: 'Dedicated Server (Konfigurator)',
           price: calculatePrice(),
           features: [
-            { label: 'CPU', value: config.cpu },
             { label: 'RAM', value: `${config.ram} GB` },
             { label: 'Speicher', value: config.storage },
             { label: 'Standort', value: selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven' },
@@ -257,25 +254,6 @@ export function DedicatedServer() {
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  CPU (Kerne)
-                </label>
-                <input
-                  type="range"
-                  min="4"
-                  max="32"
-                  value={config.cpu}
-                  onChange={(e) => setConfig({ ...config, cpu: Number(e.target.value) })}
-                  className="w-full accent-primary dark:accent-primary-light"
-                />
-                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-2">
-                  <span>4 Kerne</span>
-                  <span>{config.cpu} Kerne</span>
-                  <span>32 Kerne</span>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   RAM (GB)
                 </label>
                 <input
@@ -322,10 +300,6 @@ export function DedicatedServer() {
                     <span className="font-medium">
                       {selectedLocation ? (selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven') : 'Nicht ausgewählt'}
                     </span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>CPU:</span>
-                    <span className="font-medium">{config.cpu} Kerne</span>
                   </li>
                   <li className="flex justify-between">
                     <span>RAM:</span>
