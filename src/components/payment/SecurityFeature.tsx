@@ -15,15 +15,15 @@ export function SecurityFeature({ icon: Icon, title, description, index }: Secur
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+      className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
     >
       <div className="flex items-center mb-4">
         <div className="p-3 bg-primary/10 rounded-lg">
           <Icon className="h-6 w-6 text-primary" />
         </div>
-        <h3 className="ml-4 text-lg font-semibold">{title}</h3>
+        <h3 className="ml-4 text-lg font-semibold dark:text-white">{title}</h3>
       </div>
-      <p className="text-gray-600">{description}</p>
+      <p className="text-gray-600 dark:text-gray-400">{description}</p>
     </motion.div>
   );
 }

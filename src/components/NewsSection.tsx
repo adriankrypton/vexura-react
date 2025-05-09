@@ -76,10 +76,10 @@ export function NewsSection() {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-12">
-          <h2 className="text-4xl font-display font-bold">
+          <h2 className="text-4xl font-display font-bold dark:text-white">
             Aktuelle News
           </h2>
           <a 
@@ -99,11 +99,11 @@ export function NewsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:border-primary/20 transition-colors cursor-pointer"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden hover:border-primary/20 transition-colors cursor-pointer"
               onClick={() => setSelectedNews(item)}
             >
               <div className="p-6">
-                <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">
+                <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-3">
                   <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
                     {item.category}
                   </span>
@@ -112,10 +112,10 @@ export function NewsSection() {
                     {new Date(item.date).toLocaleDateString('de-DE')}
                   </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                   {item.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-400">
                   {item.excerpt}
                 </p>
               </div>
@@ -138,13 +138,13 @@ export function NewsSection() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto"
               onClick={e => e.stopPropagation()}
             >
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                    <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
                         {selectedNews.category}
                       </span>
@@ -153,18 +153,18 @@ export function NewsSection() {
                         {new Date(selectedNews.date).toLocaleDateString('de-DE')}
                       </div>
                     </div>
-                    <h2 className="text-2xl font-semibold">{selectedNews.title}</h2>
+                    <h2 className="text-2xl font-semibold dark:text-white">{selectedNews.title}</h2>
                   </div>
                   <button
                     onClick={() => setSelectedNews(null)}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                   >
                     <X className="h-6 w-6" />
                   </button>
                 </div>
-                <div className="prose max-w-none">
+                <div className="prose dark:prose-invert max-w-none">
                   {selectedNews.content.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-4">{paragraph}</p>
+                    <p key={index} className="mb-4 dark:text-gray-300">{paragraph}</p>
                   ))}
                 </div>
               </div>

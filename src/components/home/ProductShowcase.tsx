@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Server, Globe, Shield, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 interface Product {
   icon: typeof Server;
@@ -49,7 +50,7 @@ export function ProductShowcase() {
 
   return (
     <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-50" />
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900" />
       <div className="container mx-auto px-4 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -57,10 +58,10 @@ export function ProductShowcase() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-display font-bold mb-6">
+          <h2 className="text-4xl font-display font-bold mb-6 dark:text-white">
             Unsere Hosting-Lösungen
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Entdecken Sie unsere maßgeschneiderten Hosting-Lösungen für jeden Bedarf
           </p>
         </motion.div>
@@ -75,23 +76,23 @@ export function ProductShowcase() {
               transition={{ delay: index * 0.1 }}
               className="group relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent-turquoise/5 rounded-xl transform transition-transform group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent-turquoise/5 dark:from-primary/10 dark:to-accent-turquoise/10 rounded-xl transform transition-transform group-hover:scale-105" />
               <Link
                 to={product.link}
-                className="block relative bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all"
+                className="block relative bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700"
               >
                 <div className="p-3 bg-gradient-to-br from-primary to-primary-light rounded-lg w-fit mb-4">
                   <product.icon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
-                <p className="text-gray-600 mb-4">{product.description}</p>
-                <div className="text-2xl font-bold text-primary mb-4">
+                <h3 className="text-xl font-semibold mb-2 dark:text-white">{product.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{product.description}</p>
+                <div className="text-2xl font-bold text-primary dark:text-primary-light mb-4">
                   {product.price}
                 </div>
                 <ul className="space-y-2">
                   {product.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-gray-600">
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                    <li key={i} className="flex items-center text-gray-600 dark:text-gray-400">
+                      <span className="w-1.5 h-1.5 bg-primary dark:bg-primary-light rounded-full mr-2" />
                       {feature}
                     </li>
                   ))}
