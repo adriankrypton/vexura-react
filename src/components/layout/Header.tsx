@@ -117,7 +117,7 @@ export function Header() {
       'webspaces': 'Webhosting',
       'domains': 'Domains',
       'storage': 'Storageboxen',
-      'licenses': 'Plesk Lizenzen',
+      'licenses': 'Lizenzen',
       'datacenter': 'Rechenzentrum',
       'payment': 'Zahlungsmethoden',
       'reselling': 'Reselling',
