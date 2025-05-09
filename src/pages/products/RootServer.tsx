@@ -199,7 +199,7 @@ export function RootServer() {
                   className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-6 dark:bg-white/5 dark:backdrop-blur-xl"
                 >
                   <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-accent-turquoise mb-3 md:mb-4" />
-                  <h3 className="text-base md:text-lg font-semibold mb-2">{feature.title}</h3>
+                  <h3 className="text-base md:text-lg font-semibold mb-2 text-white">{feature.title}</h3>
                   <p className="text-sm md:text-base text-white/80 dark:text-white/70">{feature.description}</p>
                 </motion.div>
               ))}
@@ -208,7 +208,7 @@ export function RootServer() {
         </div>
       </div>
 
-      <div className="container mx-auto px-2 md:px-4 py-8 md:py-12 bg-white dark:bg-gray-900">
+      <div className="container mx-auto px-2 md:px-4 py-8 md:py-12">
         {/* Standortauswahl */}
         <div className="mb-8 md:mb-12">
           <div className="w-full">
@@ -332,20 +332,20 @@ export function RootServer() {
                 <div className="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 p-6 rounded-lg border border-primary/10 dark:border-primary/20">
                   <ul className="space-y-3 mb-6 dark:text-gray-300">
                     <li className="flex justify-between">
-                      <span>CPU:</span>
-                      <span className="font-medium">{config.cpu} Kerne</span>
+                      <span className="dark:text-gray-300">CPU:</span>
+                      <span className="font-medium dark:text-white">{config.cpu} Kerne</span>
                     </li>
                     <li className="flex justify-between">
-                      <span>RAM:</span>
-                      <span className="font-medium">{config.ram} GB</span>
+                      <span className="dark:text-gray-300">RAM:</span>
+                      <span className="font-medium dark:text-white">{config.ram} GB</span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Speicher:</span>
-                      <span className="font-medium">{config.storage} GB SSD</span>
+                      <span className="dark:text-gray-300">Speicher:</span>
+                      <span className="font-medium dark:text-white">{config.storage} GB SSD</span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Standort:</span>
-                      <span className="font-medium">
+                      <span className="dark:text-gray-300">Standort:</span>
+                      <span className="font-medium dark:text-white">
                         {selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven'}
                       </span>
                     </li>
@@ -373,19 +373,19 @@ export function RootServer() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 dark:bg-white/5 dark:backdrop-blur-xl">
-                <h3 className="text-lg font-semibold mb-2">Was ist ein KVM Server?</h3>
+                <h3 className="text-lg font-semibold mb-2 text-white">Was ist ein KVM Server?</h3>
                 <p className="text-white/90 dark:text-white/80">Ein KVM Server ist ein virtueller Server mit garantierten Ressourcen und voller Root-Zugriff. Sie haben die komplette Kontrolle über Ihr System und können es nach Ihren Wünschen konfigurieren.</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 dark:bg-white/5 dark:backdrop-blur-xl">
-                <h3 className="text-lg font-semibold mb-2">Welche Betriebssysteme werden unterstützt?</h3>
+                <h3 className="text-lg font-semibold mb-2 text-white">Welche Betriebssysteme werden unterstützt?</h3>
                 <p className="text-white/90 dark:text-white/80">Wir unterstützen alle gängigen Linux-Distributionen (Ubuntu, Debian, CentOS, etc.) sowie Windows Server. Sie können das Betriebssystem jederzeit neu installieren.</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 dark:bg-white/5 dark:backdrop-blur-xl">
-                <h3 className="text-lg font-semibold mb-2">Wie schnell ist die Bereitstellung?</h3>
+                <h3 className="text-lg font-semibold mb-2 text-white">Wie schnell ist die Bereitstellung?</h3>
                 <p className="text-white/90 dark:text-white/80">Die Bereitstellung Ihres KVM Server erfolgt vollautomatisch innerhalb weniger Minuten nach Zahlungseingang.</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 dark:bg-white/5 dark:backdrop-blur-xl">
-                <h3 className="text-lg font-semibold mb-2">Gibt es eine Mindestvertragslaufzeit?</h3>
+                <h3 className="text-lg font-semibold mb-2 text-white">Gibt es eine Mindestvertragslaufzeit?</h3>
                 <p className="text-white/90 dark:text-white/80">Nein, unsere Server können monatlich gekündigt werden. Wir bieten auch Rabatte bei längerer Vertragsbindung an.</p>
               </div>
             </div>
