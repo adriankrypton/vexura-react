@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
-import { DivideIcon as LucideIcon } from 'lucide-react';
 
 interface PaymentMethodCardProps {
-  icon: typeof LucideIcon;
+  icon: string;
   name: string;
   description: string;
   processingTime: string;
@@ -10,7 +9,7 @@ interface PaymentMethodCardProps {
   index: number;
 }
 
-export function PaymentMethodCard({ icon: Icon, name, description, processingTime, benefits, index }: PaymentMethodCardProps) {
+export function PaymentMethodCard({ icon, name, description, processingTime, benefits, index }: PaymentMethodCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,7 +22,7 @@ export function PaymentMethodCard({ icon: Icon, name, description, processingTim
       <div className="relative p-6">
         <div className="flex items-center mb-4">
           <div className="p-3 bg-primary/10 dark:bg-primary/20 rounded-lg group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
-            <Icon className="h-8 w-8 text-primary dark:text-primary-light" />
+            <img src={icon} alt={name} className="h-8 w-8" />
           </div>
           <div className="ml-4">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{name}</h3>

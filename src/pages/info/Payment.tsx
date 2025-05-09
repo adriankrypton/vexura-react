@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import { CreditCard, Wallet, Ban as Bank, Shield, Lock, CheckCircle2, Clock, Gift } from 'lucide-react';
+import { Shield, Lock, CheckCircle2, Clock } from 'lucide-react';
 import { PaymentMethodCard } from '../../components/payment/PaymentMethodCard';
 import { SecurityFeature } from '../../components/payment/SecurityFeature';
 
 export function Payment() {
   const paymentMethods = [
     {
-      icon: CreditCard,
+      icon: '/payment/cc.svg',
       name: "Kreditkarte",
       description: "Visa, Mastercard, American Express",
       processingTime: "Sofortige Aktivierung",
@@ -18,7 +18,7 @@ export function Payment() {
       ]
     },
     {
-      icon: Bank,
+      icon: '/payment/sepa.svg',
       name: "SEPA-Lastschrift",
       description: "Bequeme automatische Abbuchung",
       processingTime: "2-3 Werktage für Erstabbuchung",
@@ -30,7 +30,7 @@ export function Payment() {
       ]
     },
     {
-      icon: Wallet,
+      icon: '/payment/paypal.svg',
       name: "PayPal",
       description: "Schnell und sicher bezahlen",
       processingTime: "Sofortige Aktivierung",
@@ -42,7 +42,7 @@ export function Payment() {
       ]
     },
     {
-      icon: Gift,
+      icon: '/payment/voucher.svg',
       name: "Gutscheincode",
       description: "Prepaid & Geschenkgutscheine",
       processingTime: "Sofortige Aktivierung",
