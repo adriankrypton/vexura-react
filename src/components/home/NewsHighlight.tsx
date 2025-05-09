@@ -46,14 +46,13 @@ export function NewsHighlight() {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91]/5 via-white to-[#00BCD4]/5" />
+    <section className="py-24 relative overflow-hidden bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4 relative">
         <motion.h2
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="text-4xl font-display font-bold mb-12"
+          className="text-4xl font-display font-bold mb-12 text-gray-900 dark:text-white"
         >
           Aktuelle News
         </motion.h2>
@@ -77,17 +76,17 @@ export function NewsHighlight() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <span className="inline-block bg-white/90 text-primary px-3 py-1 rounded-full text-sm font-medium mb-2">
+                  <span className="inline-block bg-white/90 dark:bg-gray-800/90 text-primary dark:text-primary-light px-3 py-1 rounded-full text-sm font-medium mb-2">
                     {item.category}
                   </span>
                   <h3 className="text-white font-semibold">{item.title}</h3>
                 </div>
               </div>
-              <div className="flex items-center text-sm text-gray-600 mb-2">
+              <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
                 <Calendar className="h-4 w-4 mr-1" />
                 {new Date(item.date).toLocaleDateString('de-DE')}
               </div>
-              <p className="text-gray-600">{item.excerpt}</p>
+              <p className="text-gray-600 dark:text-gray-300">{item.excerpt}</p>
             </motion.article>
           ))}
         </div>
@@ -99,29 +98,29 @@ export function NewsHighlight() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm dark:backdrop-blur-xl z-50 flex items-center justify-center p-4"
           onClick={() => setActiveNews(null)}
         >
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-gray-200 dark:border-gray-700"
             onClick={e => e.stopPropagation()}
           >
             <div className="relative">
               <img src={activeNews.image} alt={activeNews.title} className="w-full h-64 object-cover rounded-t-xl" />
               <button
                 onClick={() => setActiveNews(null)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 bg-white/80 rounded-full p-1"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 bg-white/80 dark:bg-gray-800/80 rounded-full p-1"
               >
                 <span className="sr-only">Schließen</span>
                 ×
               </button>
             </div>
             <div className="p-6">
-              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <span className="bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light px-3 py-1 rounded-full">
                   {activeNews.category}
                 </span>
                 <div className="flex items-center">
@@ -129,10 +128,10 @@ export function NewsHighlight() {
                   {new Date(activeNews.date).toLocaleDateString('de-DE')}
                 </div>
               </div>
-              <h2 className="text-2xl font-semibold mb-4">{activeNews.title}</h2>
-              <div className="prose max-w-none">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{activeNews.title}</h2>
+              <div className="prose dark:prose-invert max-w-none">
                 {activeNews.content.split('\n').map((paragraph, idx) => (
-                  <p key={idx} className="mb-4">{paragraph}</p>
+                  <p key={idx} className="mb-4 text-gray-600 dark:text-gray-300">{paragraph}</p>
                 ))}
               </div>
             </div>
