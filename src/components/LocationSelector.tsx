@@ -35,7 +35,7 @@ export function LocationSelector({ selectedLocation, onLocationSelect, className
 
   return (
     <div className={`space-y-6 ${className}`}>
-      <h2 className="text-2xl font-semibold mb-6">Wähle deine Region</h2>
+      <h2 className="text-2xl font-semibold mb-6 dark:text-white">Wähle deine Region</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {locations.map((location) => (
@@ -46,7 +46,7 @@ export function LocationSelector({ selectedLocation, onLocationSelect, className
             whileHover={{ y: -5 }}
             onClick={() => onLocationSelect(location.id)}
             className={`relative overflow-hidden rounded-lg shadow-lg cursor-pointer group ${
-              selectedLocation === location.id ? 'ring-4 ring-primary' : ''
+              selectedLocation === location.id ? 'ring-4 ring-primary dark:ring-primary-light' : ''
             }`}
           >
             <div className={`relative h-32 ${
@@ -66,7 +66,7 @@ export function LocationSelector({ selectedLocation, onLocationSelect, className
                   </div>
                   <div className="text-white drop-shadow-lg">
                     <h3 className="text-xl font-bold">{location.name}</h3>
-                    <p className="text-sm text-white/90">{location.datacenter}</p>
+                    <p className="text-sm text-white/90 dark:text-white/80">{location.datacenter}</p>
                   </div>
                 </div>
               </div>

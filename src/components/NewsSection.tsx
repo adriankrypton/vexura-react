@@ -76,10 +76,10 @@ export function NewsSection() {
   ];
 
   return (
-    <section className="py-20 bg-white dark:bg-gray-900">
+    <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-12">
-          <h2 className="text-4xl font-display font-bold dark:text-white">
+          <h2 className="text-4xl font-display font-bold text-gray-900 dark:text-white">
             Aktuelle News
           </h2>
           <a 
@@ -104,7 +104,7 @@ export function NewsSection() {
             >
               <div className="p-6">
                 <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+                  <span className="bg-primary/10 text-primary dark:text-primary-light px-3 py-1 rounded-full">
                     {item.category}
                   </span>
                   <div className="flex items-center">
@@ -131,7 +131,7 @@ export function NewsSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedNews(null)}
           >
             <motion.div
@@ -145,7 +145,7 @@ export function NewsSection() {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
-                      <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+                      <span className="bg-primary/10 text-primary dark:text-primary-light px-3 py-1 rounded-full">
                         {selectedNews.category}
                       </span>
                       <div className="flex items-center">
@@ -153,7 +153,7 @@ export function NewsSection() {
                         {new Date(selectedNews.date).toLocaleDateString('de-DE')}
                       </div>
                     </div>
-                    <h2 className="text-2xl font-semibold dark:text-white">{selectedNews.title}</h2>
+                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{selectedNews.title}</h2>
                   </div>
                   <button
                     onClick={() => setSelectedNews(null)}
@@ -164,7 +164,7 @@ export function NewsSection() {
                 </div>
                 <div className="prose dark:prose-invert max-w-none">
                   {selectedNews.content.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-4 dark:text-gray-300">{paragraph}</p>
+                    <p key={index} className="mb-4 text-gray-600 dark:text-gray-300">{paragraph}</p>
                   ))}
                 </div>
               </div>
