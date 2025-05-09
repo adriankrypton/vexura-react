@@ -91,10 +91,12 @@ export function OrderPage() {
   };
 
   const finalPrice = orderDetails.price * (1 - discount / 100) + 
-    additionalIPv4 * ipv4Price +
-    additionalIPv6 * ipv6Price +
-    (backupAmount > 0 ? backupPrices[backupAmount as keyof typeof backupPrices] : 0) +
-    (orderDetails.isKVM ? bandwidthPrices[bandwidth as keyof typeof bandwidthPrices] : 0);
+    (orderDetails.type !== 'license' ? (
+      additionalIPv4 * ipv4Price +
+      additionalIPv6 * ipv6Price +
+      (backupAmount > 0 ? backupPrices[backupAmount as keyof typeof backupPrices] : 0) +
+      (orderDetails.isKVM ? bandwidthPrices[bandwidth as keyof typeof bandwidthPrices] : 0)
+    ) : 0);
 
   const handlePayment = () => {
     if (!termsAccepted || !withdrawalAccepted) {
@@ -198,70 +200,91 @@ export function OrderPage() {
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-3 sm:p-8 border border-gray-200 dark:border-gray-700">
                 <h2 className="text-lg sm:text-2xl font-bold mb-3 sm:mb-6 text-gray-800 dark:text-white">Zusätzliche Optionen</h2>
                 
-                {/* Backup Option */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Backup-Speicher
-                  </label>
-                  <select
-                    value={backupAmount}
-                    onChange={(e) => setBackupAmount(parseInt(e.target.value))}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  >
-                    <option value="0">Kein Backup</option>
-                    <option value="3">3x Backups (+9,99 €/Monat)</option>
-                    <option value="5">5x Backups (+14,99 €/Monat)</option>
-                    <option value="10">10x Backups (+24,99 €/Monat)</option>
-                  </select>
-                </div>
-
-                {/* Additional IPv4 */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Zusätzliche IPv4 Adressen
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="16"
-                    value={additionalIPv4}
-                    onChange={(e) => setAdditionalIPv4(parseInt(e.target.value) || 0)}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  />
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    +2,99 € pro zusätzliche IPv4
+                {/* Backup Option - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein GameServer, kein Teamspeak und kein VPN */}
+                {orderDetails.type !== 'license' && 
+                 !orderDetails.productName.includes('Speicher') && 
+                 !orderDetails.productName.includes('Webspace') &&
+                 !orderDetails.productName.includes('Game Server') &&
+                 !orderDetails.productName.includes('TeamSpeak') &&
+                 orderDetails.type !== 'vpn' && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Backup-Speicher
+                    </label>
+                    <select
+                      value={backupAmount}
+                      onChange={(e) => setBackupAmount(parseInt(e.target.value))}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    >
+                      <option value="0">Kein Backup</option>
+                      <option value="3">3x Backups (+9,99 €/Monat)</option>
+                      <option value="5">5x Backups (+14,99 €/Monat)</option>
+                      <option value="10">10x Backups (+24,99 €/Monat)</option>
+                    </select>
                   </div>
-                </div>
+                )}
 
-                {/* Additional IPv6 */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Zusätzliche IPv6 Adressen
-                  </label>
-                  <select
-                    value={additionalIPv6}
-                    onChange={(e) => setAdditionalIPv6(parseInt(e.target.value))}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  >
-                    <option value="0">Keine zusätzliche IPv6</option>
-                    <option value="1">1 IPv6 (+1,99 €/Monat)</option>
-                    <option value="2">2 IPv6 (+3,98 €/Monat)</option>
-                    <option value="3">3 IPv6 (+5,97 €/Monat)</option>
-                    <option value="4">4 IPv6 (+7,96 €/Monat)</option>
-                    <option value="5">5 IPv6 (+9,95 €/Monat)</option>
-                    <option value="6">6 IPv6 (+11,94 €/Monat)</option>
-                    <option value="7">7 IPv6 (+13,93 €/Monat)</option>
-                    <option value="8">8 IPv6 (+15,92 €/Monat)</option>
-                    <option value="9">9 IPv6 (+17,91 €/Monat)</option>
-                    <option value="10">10 IPv6 (+19,90 €/Monat)</option>
-                    <option value="11">11 IPv6 (+21,89 €/Monat)</option>
-                    <option value="12">12 IPv6 (+23,88 €/Monat)</option>
-                    <option value="13">13 IPv6 (+25,87 €/Monat)</option>
-                    <option value="14">14 IPv6 (+27,86 €/Monat)</option>
-                    <option value="15">15 IPv6 (+29,85 €/Monat)</option>
-                    <option value="16">16 IPv6 (+31,84 €/Monat)</option>
-                  </select>
-                </div>
+                {/* Additional IPv4 - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein GameServer, kein Teamspeak und kein VPN */}
+                {orderDetails.type !== 'license' && 
+                 !orderDetails.productName.includes('Speicher') && 
+                 !orderDetails.productName.includes('Webspace') &&
+                 !orderDetails.productName.includes('Game Server') &&
+                 !orderDetails.productName.includes('TeamSpeak') &&
+                 orderDetails.type !== 'vpn' && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Zusätzliche IPv4 Adressen
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="16"
+                      value={additionalIPv4}
+                      onChange={(e) => setAdditionalIPv4(parseInt(e.target.value) || 0)}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    />
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                      +2,99 € pro zusätzliche IPv4
+                    </div>
+                  </div>
+                )}
+
+                {/* Additional IPv6 - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein GameServer, kein Teamspeak und kein VPN */}
+                {orderDetails.type !== 'license' && 
+                 !orderDetails.productName.includes('Speicher') && 
+                 !orderDetails.productName.includes('Webspace') &&
+                 !orderDetails.productName.includes('Game Server') &&
+                 !orderDetails.productName.includes('TeamSpeak') &&
+                 orderDetails.type !== 'vpn' && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Zusätzliche IPv6 Adressen
+                    </label>
+                    <select
+                      value={additionalIPv6}
+                      onChange={(e) => setAdditionalIPv6(parseInt(e.target.value))}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    >
+                      <option value="0">Keine zusätzliche IPv6</option>
+                      <option value="1">1 IPv6 (+1,99 €/Monat)</option>
+                      <option value="2">2 IPv6 (+3,98 €/Monat)</option>
+                      <option value="3">3 IPv6 (+5,97 €/Monat)</option>
+                      <option value="4">4 IPv6 (+7,96 €/Monat)</option>
+                      <option value="5">5 IPv6 (+9,95 €/Monat)</option>
+                      <option value="6">6 IPv6 (+11,94 €/Monat)</option>
+                      <option value="7">7 IPv6 (+13,93 €/Monat)</option>
+                      <option value="8">8 IPv6 (+15,92 €/Monat)</option>
+                      <option value="9">9 IPv6 (+17,91 €/Monat)</option>
+                      <option value="10">10 IPv6 (+19,90 €/Monat)</option>
+                      <option value="11">11 IPv6 (+21,89 €/Monat)</option>
+                      <option value="12">12 IPv6 (+23,88 €/Monat)</option>
+                      <option value="13">13 IPv6 (+25,87 €/Monat)</option>
+                      <option value="14">14 IPv6 (+27,86 €/Monat)</option>
+                      <option value="15">15 IPv6 (+29,85 €/Monat)</option>
+                      <option value="16">16 IPv6 (+31,84 €/Monat)</option>
+                    </select>
+                  </div>
+                )}
 
                 {/* Bandwidth Option für Root-Server */}
                 {orderDetails.isKVM && (

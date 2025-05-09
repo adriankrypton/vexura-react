@@ -83,7 +83,8 @@ export function Header() {
   ];
 
   const services = [
-    { label: 'Storageboxen', href: '/products/storage' }
+    { label: 'Storageboxen', href: '/products/storage' },
+    { label: 'VPN', href: '/products/vpn' }
   ];
 
   const licenses = [

@@ -24,6 +24,7 @@ import { OrderPage } from './pages/order/OrderPage';
 import { OSSelectPage } from './pages/order/OSSelectPage';
 import { useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import VPN from './pages/products/VPN';
 
 function ScrollToTop() {
   const location = useLocation();
@@ -78,6 +79,7 @@ function App() {
               <Route path="/products/storage" element={<PageWrapper><Storage /></PageWrapper>} />
               <Route path="/products/dedicated" element={<PageWrapper><DedicatedServer /></PageWrapper>} />
               <Route path="/products/licenses" element={<PageWrapper><Licenses /></PageWrapper>} />
+              <Route path="/products/vpn" element={<VPN />} />
               
               {/* Order Page */}
               <Route path="/order" element={<PageWrapper><OrderPage /></PageWrapper>} />
