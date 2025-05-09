@@ -33,8 +33,6 @@ export function OSSelectPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedOS, setSelectedOS] = useState<string>('');
-  const [additionalIPv4, setAdditionalIPv4] = useState(0);
-  const [additionalIPv6, setAdditionalIPv6] = useState(false);
 
   const orderDetails = location.state?.orderDetails as OrderDetails;
 
@@ -45,8 +43,6 @@ export function OSSelectPage() {
         orderDetails: {
           ...orderDetails,
           selectedOS: osId,
-          additionalIPv4,
-          additionalIPv6,
         },
       },
     });
@@ -64,49 +60,6 @@ export function OSSelectPage() {
         <h1 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300">
           Betriebssystem auswählen
         </h1>
-        
-        {orderDetails?.isDedicated && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8 p-6 bg-gradient-to-br from-blue-50/50 to-white/50 dark:from-gray-700/50 dark:to-gray-800/50 rounded-xl border border-blue-100/30 dark:border-gray-600/30 relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-200/30 via-blue-100/20 to-transparent dark:from-blue-900/30 dark:via-gray-700/20 -z-10" />
-            <h2 className="text-xl font-semibold mb-4 text-blue-900 dark:text-blue-100">Zusätzliche IP-Adressen</h2>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-2">
-                  Zusätzliche IPv4-Adressen (2,99 € pro IP)
-                </label>
-                <select
-                  value={additionalIPv4}
-                  onChange={(e) => setAdditionalIPv4(Number(e.target.value))}
-                  className="w-full rounded-lg border border-blue-200 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-blue-900 dark:text-blue-100 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 focus:border-blue-400 dark:focus:border-blue-500 transition-all"
-                >
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-                    <option key={value} value={value}>{value} IP{value !== 1 ? 's' : ''}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="flex items-center gap-2 cursor-pointer group">
-                  <input
-                    type="checkbox"
-                    checked={additionalIPv6}
-                    onChange={(e) => setAdditionalIPv6(e.target.checked)}
-                    className="h-4 w-4 rounded border-blue-200 dark:border-gray-600 text-blue-500 focus:ring-blue-400 dark:focus:ring-blue-500 transition-all bg-white/50 dark:bg-gray-700/50"
-                  />
-                  <span className="text-sm text-blue-700 dark:text-blue-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
-                    Zusätzliche IPv6-Adresse (kostenlos)
-                  </span>
-                </label>
-              </div>
-            </div>
-          </motion.div>
-        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100/25 via-blue-50/20 to-transparent dark:from-blue-900/25 dark:via-gray-700/20 rounded-xl -z-10" />
