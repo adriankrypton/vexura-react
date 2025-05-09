@@ -104,7 +104,7 @@ export function Partners() {
   ];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white dark:bg-gray-900 min-h-screen">
       {/* Hero Section */}
       <div className="relative w-full min-h-[600px] flex items-center justify-center">
         <img
@@ -112,7 +112,7 @@ export function Partners() {
           alt="Background"
           className="absolute inset-0 w-full h-full object-cover object-center z-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B3D91]/90 via-[#1E88E5]/80 to-[#0B3D91]/95 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B3D91]/90 via-[#1E88E5]/80 to-[#0B3D91]/95 dark:from-[#0B3D91]/95 dark:via-[#1E88E5]/90 dark:to-[#0B3D91]/98 z-10" />
         <div className="relative z-20 container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between py-20">
           {/* Left: Text */}
           <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
@@ -131,9 +131,9 @@ export function Partners() {
       </div>
 
       {/* Partner Showcase */}
-      <div className="py-24 relative bg-gray-50">
+      <div className="py-24 relative bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center text-[#0B3D91] mb-12">
+          <h2 className="text-3xl font-display font-bold text-center text-[#0B3D91] dark:text-primary-light mb-12">
             Unsere Partner
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -143,10 +143,10 @@ export function Partners() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="relative bg-white rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[340px] border border-gray-100 hover:border-[#0B3D91] transition-colors"
+                className="relative bg-white dark:bg-gray-700 rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[340px] border border-gray-100 dark:border-gray-600 hover:border-[#0B3D91] dark:hover:border-primary-light transition-colors"
               >
                 <div className="absolute -top-16 left-1/2 -translate-x-1/2">
-                  <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] flex items-center justify-center overflow-hidden">
+                  <div className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-700 shadow-lg bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 flex items-center justify-center overflow-hidden">
                     <img
                       src={partner.logo}
                       alt={partner.name}
@@ -155,8 +155,8 @@ export function Partners() {
                   </div>
                 </div>
                 <div className="mt-20">
-                  <h3 className="text-xl font-bold mb-1 text-[#0B3D91]">{partner.name}</h3>
-                  <p className="text-gray-600 mb-4 text-base">{partner.description}</p>
+                  <h3 className="text-xl font-bold mb-1 text-[#0B3D91] dark:text-primary-light">{partner.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 text-base">{partner.description}</p>
                 </div>
                 {partner.socialMedia && (
                   <div className="flex gap-4 mt-auto pt-4">
@@ -169,7 +169,7 @@ export function Partners() {
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-400 hover:text-[#00BCD4] transition-colors p-2 rounded-full"
+                          className="text-gray-400 hover:text-[#00BCD4] dark:hover:text-primary-light transition-colors p-2 rounded-full"
                           aria-label={key}
                         >
                           <Icon className="w-6 h-6" />
@@ -185,14 +185,14 @@ export function Partners() {
       </div>
 
       {/* Vorteile/Features Container */}
-      <div className="py-32 bg-gray-50">
+      <div className="py-32 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-bold text-[#0B3D91] mb-6">
+            <h2 className="text-4xl font-bold text-[#0B3D91] dark:text-primary-light mb-6">
               Deine Vorteile
             </h2>
-            <div className="w-24 h-1 bg-[#00BCD4] mx-auto mb-8"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+            <div className="w-24 h-1 bg-[#00BCD4] dark:bg-primary-light mx-auto mb-8"></div>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
               Entdecke die exklusiven Vorteile, die wir unseren Partnern bieten.
             </p>
           </div>
@@ -203,19 +203,19 @@ export function Partners() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group h-full"
+                className="bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group h-full"
               >
                 <div className="p-8 h-full flex flex-col">
-                  <div className="bg-gradient-to-br from-[#0B3D91]/20 to-[#1E88E5]/5 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="h-10 w-10 text-[#0B3D91]" />
+                  <div className="bg-gradient-to-br from-[#0B3D91]/20 to-[#1E88E5]/5 dark:from-[#0B3D91]/30 dark:to-[#1E88E5]/20 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="h-10 w-10 text-[#0B3D91] dark:text-primary-light" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed flex-grow">
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed flex-grow">
                     {feature.description}
                   </p>
-                  <div className="h-1 bg-gradient-to-r from-[#0B3D91]/50 to-[#1E88E5] w-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 mt-6" />
+                  <div className="h-1 bg-gradient-to-r from-[#0B3D91]/50 to-[#1E88E5] dark:from-primary-light/50 dark:to-primary-light w-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 mt-6" />
                 </div>
               </motion.div>
             ))}
