@@ -160,24 +160,39 @@ export function GameServer() {
   };
 
   return (
-    <div>
+    <div className="bg-white dark:bg-gray-900 min-h-screen">
       {/* Hero-Sektion mit Hauptüberschrift und Features */}
-      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden">
-        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
-        <div className="container mx-auto px-2 md:px-4 py-12 md:py-24 relative">
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90">
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px] dark:bg-grid-white/[0.05]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent dark:from-primary/40" />
+        <div className="container mx-auto px-4 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="max-w-3xl text-white"
           >
-            <h1 className="text-3xl md:text-5xl font-display font-bold mb-4 md:mb-6">
-              Gameserver
+            <h1 className="text-5xl font-display font-bold mb-6">
+              Game Server
             </h1>
-            <p className="text-base md:text-xl mb-6 md:mb-8 text-white/90">
-              Hochperformante Server für dein optimales Gaming-Erlebnis. Starte in wenigen Minuten durch!
+            <p className="text-xl mb-8 text-white/90 dark:text-white/80">
+              Optimierte Server für Ihre Gaming-Projekte mit garantierter Performance.
             </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-lg p-6 dark:bg-white/5 dark:backdrop-blur-xl"
+                >
+                  <feature.icon className="h-8 w-8 text-accent-turquoise mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-white/80 dark:text-white/70">{feature.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -192,7 +207,7 @@ export function GameServer() {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ y: -5 }}
               className={`relative overflow-hidden rounded-xl shadow-lg cursor-pointer group ${
-                config.game === game.id ? 'ring-2 ring-primary' : ''
+                config.game === game.id ? 'ring-2 ring-primary dark:ring-primary-light' : ''
               }`}
               onClick={() => setConfig({ ...config, game: game.id })}
             >
@@ -206,7 +221,7 @@ export function GameServer() {
                   <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <div className="absolute top-2 left-2">
-                  <div className="bg-white/90 text-primary px-2 py-1 rounded text-sm font-medium">
+                  <div className="bg-white/90 dark:bg-white/80 text-primary dark:text-primary-light px-2 py-1 rounded text-sm font-medium">
                     bereits ab {getPackages(selectedLocation)[0].price.toFixed(2)} €
                   </div>
                 </div>
@@ -233,12 +248,12 @@ export function GameServer() {
         </div>
 
         {/* Konfigurator */}
-        <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 border border-gray-200">
-          <h2 className="text-2xl font-semibold mb-6">Gameserver Konfigurator</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 md:p-8 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-2xl font-semibold mb-6 dark:text-white">Gameserver Konfigurator</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 -mt-6">
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   RAM (GB)
                 </label>
                 <input
@@ -247,9 +262,9 @@ export function GameServer() {
                   max="32"
                   value={config.ram}
                   onChange={(e) => setConfig({ ...config, ram: parseInt(e.target.value) })}
-                  className="w-full accent-primary"
+                  className="w-full accent-primary dark:accent-primary-light"
                 />
-                <div className="flex justify-between text-sm text-gray-600 mt-2">
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-2">
                   <span>2 GB</span>
                   <span>{config.ram} GB</span>
                   <span>32 GB</span>
@@ -257,7 +272,7 @@ export function GameServer() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Speicher (GB)
                 </label>
                 <input
@@ -266,9 +281,9 @@ export function GameServer() {
                   max="500"
                   value={config.storage}
                   onChange={(e) => setConfig({ ...config, storage: parseInt(e.target.value) })}
-                  className="w-full accent-primary"
+                  className="w-full accent-primary dark:accent-primary-light"
                 />
-                <div className="flex justify-between text-sm text-gray-600 mt-2">
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-2">
                   <span>20 GB</span>
                   <span>{config.storage} GB</span>
                   <span>500 GB</span>
@@ -276,46 +291,41 @@ export function GameServer() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-lg border border-primary/10">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-semibold">Deine Konfiguration</h3>
-                <div className="text-2xl font-bold">
-                  {calculatePrice()} €<span className="text-lg font-normal text-gray-600">/Monat</span>
+            <div>
+              <h2 className="text-2xl font-semibold mb-6 dark:text-white">Ihre Konfiguration</h2>
+              <div className="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 p-6 rounded-lg border border-primary/10 dark:border-primary/20">
+                <ul className="space-y-3 mb-6 dark:text-gray-300">
+                  <li className="flex justify-between">
+                    <span>Spiel:</span>
+                    <span className="font-medium">
+                      {games.find(g => g.id === config.game)?.name || 'Nicht ausgewählt'}
+                    </span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Region:</span>
+                    <span className="font-medium">
+                      {selectedLocation ? (selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven') : 'Nicht ausgewählt'}
+                    </span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>RAM:</span>
+                    <span className="font-medium">{config.ram} GB</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Speicher:</span>
+                    <span className="font-medium">{config.storage} GB</span>
+                  </li>
+                </ul>
+                <div className="text-3xl font-bold mb-4 text-primary dark:text-primary-light">
+                  {calculatePrice()} €<span className="text-sm font-normal text-gray-600 dark:text-gray-400">/Monat</span>
                 </div>
+                <button 
+                  className="w-full bg-primary dark:bg-primary-light text-white py-3 rounded-lg hover:bg-primary-light dark:hover:bg-primary transition-colors"
+                  onClick={handleCustomOrder}
+                >
+                  Jetzt bestellen →
+                </button>
               </div>
-              <ul className="space-y-3 mb-6">
-                <li className="flex justify-between">
-                  <span className="text-gray-600">Spiel:</span>
-                  <span className="font-medium">
-                    {games.find(g => g.id === config.game)?.name || 'Nicht ausgewählt'}
-                  </span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-600">Region:</span>
-                  <span className="font-medium">
-                    {selectedLocation ? (selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven') : 'Nicht ausgewählt'}
-                  </span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-600">RAM:</span>
-                  <span className="font-medium">{config.ram} GB</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-600">Speicher:</span>
-                  <span className="font-medium">{config.storage} GB</span>
-                </li>
-              </ul>
-              <button 
-                className={`w-full py-3 rounded-lg transition-colors ${
-                  config.game && selectedLocation
-                    ? 'bg-primary text-white hover:bg-primary-light'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
-                onClick={handleCustomOrder}
-                disabled={!config.game || !selectedLocation}
-              >
-                {config.game && selectedLocation ? 'Jetzt bestellen' : 'Bitte wähle ein Spiel und einen Standort aus'}
-              </button>
             </div>
           </div>
         </div>

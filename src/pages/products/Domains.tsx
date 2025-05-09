@@ -117,10 +117,11 @@ export function Domains() {
   };
 
   return (
-    <div>
+    <div className="bg-white dark:bg-gray-900 min-h-screen">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
-        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 py-24">
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px] dark:bg-grid-white/[0.05]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent dark:from-primary/40" />
         <div className="container mx-auto px-4 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -135,18 +136,18 @@ export function Domains() {
             </p>
 
             {/* Domain Search */}
-            <div className="bg-white rounded-lg p-2 shadow-lg">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-2 shadow-lg">
               <div className="flex">
                 <input
                   type="text"
                   placeholder="Finde deine Domain..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-4 py-3 outline-none text-gray-800"
+                  className="flex-1 px-4 py-3 outline-none text-gray-800 dark:text-gray-200 dark:bg-gray-700"
                 />
                 <button
                   onClick={() => setSearchActive(true)}
-                  className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-light transition-colors flex items-center group"
+                  className="bg-primary dark:bg-primary-light text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-light dark:hover:bg-primary transition-colors flex items-center group"
                 >
                   Suchen
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -160,8 +161,8 @@ export function Domains() {
       {/* Search Results */}
       {searchActive && searchQuery && (
         <div className="container mx-auto px-4 -mt-12 relative z-10">
-          <div className="bg-white rounded-xl shadow-xl p-8 mb-16">
-            <h2 className="text-2xl font-semibold mb-6">Suchergebnisse für "{searchQuery}"</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8 mb-16 border border-gray-200 dark:border-gray-700">
+            <h2 className="text-2xl font-semibold mb-6 dark:text-white">Suchergebnisse für "{searchQuery}"</h2>
             <div className="space-y-4">
               {(() => {
                 const searchTld = domainPrices.find(domain => 
@@ -182,33 +183,33 @@ export function Domains() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:border-primary/20 transition-colors"
+                      className="flex items-center justify-between p-4 border rounded-lg hover:border-primary/20 dark:border-gray-700 dark:hover:border-primary-light/20 transition-colors"
                     >
                       <div className="flex items-center">
-                        <Globe className="h-5 w-5 text-primary mr-3" />
-                        <span className="font-medium">{fullDomain}</span>
+                        <Globe className="h-5 w-5 text-primary dark:text-primary-light mr-3" />
+                        <span className="font-medium dark:text-gray-200">{fullDomain}</span>
                       </div>
                       <div className="flex items-center space-x-4">
-                        <span className="font-semibold">{domain.price} €/Jahr</span>
+                        <span className="font-semibold dark:text-gray-200">{domain.price} €/Jahr</span>
                         <div className="flex items-center space-x-2">
                           {status === 'loading' ? (
-                            <div className="flex items-center text-gray-600">
+                            <div className="flex items-center text-gray-600 dark:text-gray-400">
                               <Loader2 className="h-5 w-5 mr-1 animate-spin" />
                               <span className="text-sm">Prüfe Verfügbarkeit...</span>
                             </div>
                           ) : status === 'available' ? (
-                            <div className="flex items-center text-green-600">
+                            <div className="flex items-center text-green-600 dark:text-green-400">
                               <Check className="h-5 w-5 mr-1" />
                               <span className="text-sm">Verfügbar</span>
                             </div>
                           ) : status === 'unavailable' ? (
-                            <div className="flex items-center text-red-600">
+                            <div className="flex items-center text-red-600 dark:text-red-400">
                               <X className="h-5 w-5 mr-1" />
                               <span className="text-sm">Nicht verfügbar</span>
                             </div>
                           ) : null}
                           <button 
-                            className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-primary dark:bg-primary-light text-white px-4 py-2 rounded-lg hover:bg-primary-light dark:hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={status === 'loading' || status === 'unavailable'}
                             onClick={() => handleOrder(fullDomain, domain.price)}
                           >
@@ -227,7 +228,7 @@ export function Domains() {
 
       {/* Domain Prices */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-display font-bold text-center mb-12">
+        <h2 className="text-3xl font-display font-bold text-center mb-12 dark:text-white">
           Domain-Preise
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -237,17 +238,17 @@ export function Domains() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className={`bg-white p-6 rounded-xl shadow-md border-2 ${
-                domain.special ? 'border-primary' : 'border-gray-100'
+              className={`bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border-2 ${
+                domain.special ? 'border-primary dark:border-primary-light' : 'border-gray-100 dark:border-gray-700'
               }`}
             >
-              <div className="text-2xl font-bold mb-2">{domain.tld}</div>
-              <div className="text-3xl font-bold text-primary">
+              <div className="text-2xl font-bold mb-2 dark:text-white">{domain.tld}</div>
+              <div className="text-3xl font-bold text-primary dark:text-primary-light">
                 {domain.price} €
-                <span className="text-sm font-normal text-gray-600">/Jahr</span>
+                <span className="text-sm font-normal text-gray-600 dark:text-gray-400">/Jahr</span>
               </div>
               {domain.special && (
-                <div className="mt-2 text-sm text-primary font-medium">
+                <div className="mt-2 text-sm text-primary dark:text-primary-light font-medium">
                   Sonderangebot
                 </div>
               )}
@@ -257,9 +258,9 @@ export function Domains() {
       </div>
 
       {/* Features */}
-      <div className="bg-gray-50 py-16">
+      <div className="bg-gray-50 dark:bg-gray-800/50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
+          <h2 className="text-3xl font-display font-bold text-center mb-12 dark:text-white">
             Inklusive Features
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -269,11 +270,11 @@ export function Domains() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-md"
+                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700"
               >
-                <feature.icon className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <feature.icon className="h-12 w-12 text-primary dark:text-primary-light mb-4" />
+                <h3 className="text-xl font-semibold mb-2 dark:text-white">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -282,15 +283,15 @@ export function Domains() {
 
       {/* FAQ Section */}
       <div className="container mx-auto px-4 py-16">
-        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
+        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 rounded-xl shadow-lg p-8 text-white">
           <h2 className="text-3xl font-display font-bold text-center mb-12">
             Häufig gestellte Fragen
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6 dark:bg-white/5 dark:backdrop-blur-xl">
                 <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/90">{faq.answer}</p>
+                <p className="text-white/90 dark:text-white/80">{faq.answer}</p>
               </div>
             ))}
           </div>

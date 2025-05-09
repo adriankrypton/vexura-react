@@ -84,7 +84,7 @@ export function NewsSection() {
           </h2>
           <a 
             href="/news" 
-            className="flex items-center text-primary hover:text-primary-light transition-colors font-semibold"
+            className="flex items-center text-primary dark:text-primary-light hover:text-primary-light dark:hover:text-primary transition-colors font-semibold"
           >
             Alle News
             <ArrowRight className="ml-2 h-5 w-5" />
@@ -99,12 +99,12 @@ export function NewsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden hover:border-primary/20 transition-colors cursor-pointer"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden hover:border-primary/20 dark:hover:border-primary-light/20 transition-colors cursor-pointer"
               onClick={() => setSelectedNews(item)}
             >
               <div className="p-6">
                 <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  <span className="bg-primary/10 text-primary dark:text-primary-light px-3 py-1 rounded-full">
+                  <span className="bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light px-3 py-1 rounded-full">
                     {item.category}
                   </span>
                   <div className="flex items-center">
@@ -115,7 +115,7 @@ export function NewsSection() {
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                   {item.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-gray-600 dark:text-gray-300">
                   {item.excerpt}
                 </p>
               </div>
@@ -131,21 +131,21 @@ export function NewsSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm dark:backdrop-blur-xl z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedNews(null)}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-gray-200 dark:border-gray-700"
               onClick={e => e.stopPropagation()}
             >
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
-                      <span className="bg-primary/10 text-primary dark:text-primary-light px-3 py-1 rounded-full">
+                      <span className="bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light px-3 py-1 rounded-full">
                         {selectedNews.category}
                       </span>
                       <div className="flex items-center">

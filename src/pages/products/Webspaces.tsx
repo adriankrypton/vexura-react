@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { HardDrive, Shield, Gauge, Globe, Code, Database, Clock, Users, Server } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { LocationSelector } from '../../components/LocationSelector';
+import { useState } from 'react';
 
 interface WebspaceFeature {
   icon: any;
@@ -18,8 +20,21 @@ interface WebspacePlan {
   recommended?: boolean;
 }
 
+interface Config {
+  storage: number;
+  databases: number;
+  subdomains: number;
+}
+
 export function Webspaces() {
   const navigate = useNavigate();
+  const [selectedLocation, setSelectedLocation] = useState<string>('nuremberg');
+  const [config, setConfig] = useState<Config>({
+    storage: 10,
+    databases: 1,
+    subdomains: 5
+  });
+
   const features: WebspaceFeature[] = [
     {
       icon: Shield,
@@ -124,6 +139,26 @@ export function Webspaces() {
     }
   ];
 
+  const calculatePrice = () => {
+    const basePrice = 5;
+    const storagePrice = config.storage * 0.5;
+    const databasePrice = config.databases * 2;
+    const subdomainPrice = config.subdomains * 0.2;
+    return (basePrice + storagePrice + databasePrice + subdomainPrice).toFixed(2);
+  };
+
+  const handleCustomOrder = () => {
+    navigate('/order', {
+      state: {
+        type: 'webspace',
+        config: {
+          ...config,
+          location: selectedLocation
+        }
+      }
+    });
+  };
+
   const handleOrder = (plan: WebspacePlan) => {
     const orderDetails = {
       productName: `Webspace - ${plan.name}`,
@@ -140,168 +175,153 @@ export function Webspaces() {
   };
 
   return (
-    <div>
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] py-24">
-        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px]" />
+    <div className="bg-white dark:bg-gray-900 min-h-screen">
+      {/* Hero-Sektion mit Hauptüberschrift und Features */}
+      <div className="relative bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] overflow-hidden dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90">
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[length:16px_16px] dark:bg-grid-white/[0.05]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent dark:from-primary/40" />
         <div className="container mx-auto px-4 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="max-w-3xl text-white"
           >
             <h1 className="text-5xl font-display font-bold mb-6">
-              Webhosting für Profis
+              Webspaces
             </h1>
-            <p className="text-xl text-white/90">
-              Schnelles und sicheres Hosting für Ihre Webprojekte mit modernster Technologie
+            <p className="text-xl mb-8 text-white/90 dark:text-white/80">
+              Professionelle Webhosting-Lösungen für Ihre Online-Projekte.
             </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-lg p-6 dark:bg-white/5 dark:backdrop-blur-xl"
+                >
+                  <feature.icon className="h-8 w-8 text-accent-turquoise mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-white/80 dark:text-white/70">{feature.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Pricing Plans */}
-      <div className="container mx-auto px-4 py-24">
-        <h2 className="text-3xl font-display font-bold text-center mb-12">
-          Wählen Sie Ihr Hosting-Paket
-        </h2>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="p-4 text-left">Features</th>
-                {plans.map((plan, index) => (
-                  <th key={index} className={`p-4 text-center ${plan.recommended ? 'bg-[#0B3D91] text-white' : ''}`}>
-                    <div className="font-semibold text-lg">{plan.name}</div>
-                    <div className="text-2xl font-bold mt-2">
-                      {plan.price} €<span className="text-sm font-normal">/Monat</span>
-                    </div>
-                    {plan.recommended && (
-                      <div className="mt-2 text-sm bg-white/20 px-3 py-1 rounded-full inline-block">
-                        Empfohlen
-                      </div>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td className="p-4 font-medium">SSD Speicher</td>
-                {plans.map((plan, index) => (
-                  <td key={index} className="p-4 text-center">{plan.storage}</td>
-                ))}
-              </tr>
-              <tr className="border-b">
-                <td className="p-4 font-medium">Domains</td>
-                {plans.map((plan, index) => (
-                  <td key={index} className="p-4 text-center">{plan.domains}</td>
-                ))}
-              </tr>
-              <tr className="border-b">
-                <td className="p-4 font-medium">Datenbanken</td>
-                {plans.map((plan, index) => (
-                  <td key={index} className="p-4 text-center">{plan.databases}</td>
-                ))}
-              </tr>
-              {['SSL-Zertifikate', 'PHP 8.x', 'MySQL 8.0', 'FTP-Zugang', 'Priority Support', 'Backups', 'SSH-Zugang', 'Redis Cache', 'Node.js Support'].map((feature) => (
-                <tr key={feature} className="border-b">
-                  <td className="p-4 font-medium">{feature}</td>
-                  {plans.map((plan, index) => (
-                    <td key={index} className="p-4 text-center">
-                      {plan.features.includes(feature) ? (
-                        <div className="text-[#0B3D91]">✓</div>
-                      ) : (
-                        <div className="text-gray-300">×</div>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-              <tr>
-                <td className="p-4"></td>
-                {plans.map((plan, index) => (
-                  <td key={index} className="p-4 text-center">
-                    <button 
-                      className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                        plan.recommended
-                          ? 'bg-[#0B3D91] text-white hover:bg-[#1E88E5]'
-                          : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                      }`}
-                      onClick={() => handleOrder(plan)}
-                    >
-                      Jetzt bestellen
-                    </button>
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Technologies */}
-      <div className="bg-gradient-to-b from-gray-50 to-white py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-display font-bold mb-4">
-              Unterstützte Technologien
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Wir unterstützen alle gängigen Web-Technologien für Ihre Projekte. 
-              Von klassischen PHP-Anwendungen bis hin zu modernen Node.js-Projekten.
-            </p>
+      <div className="container mx-auto px-2 md:px-4 py-8 md:py-12">
+        {/* Standortauswahl */}
+        <div className="mb-8 md:mb-12">
+          <div className="w-full">
+            <LocationSelector
+              selectedLocation={selectedLocation}
+              onLocationSelect={(location) => {
+                setSelectedLocation(location);
+              }}
+            />
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-            {[
-              { name: 'PHP', icon: '⚡', description: 'PHP 7.4 - 8.3' },
-              { name: 'MySQL', icon: '🗄️', description: 'MySQL 8.0' },
-              { name: 'Node.js', icon: '🟢', description: 'LTS Version' },
-              { name: 'Python', icon: '🐍', description: 'Python 3.x' },
-              { name: 'Ruby', icon: '💎', description: 'Ruby 3.x' },
-              { name: 'WordPress', icon: '📝', description: 'Auto-Updates' }
-            ].map((tech, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 text-center"
-              >
-                <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform">
-                  {tech.icon}
+        </div>
+
+        {/* Konfigurator */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 md:p-8 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-2xl font-semibold mb-6 dark:text-white">Webspace Konfigurator</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 -mt-6">
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Speicher (GB)
+                </label>
+                <input
+                  type="range"
+                  min="5"
+                  max="100"
+                  value={config.storage}
+                  onChange={(e) => setConfig({ ...config, storage: Number(e.target.value) })}
+                  className="w-full accent-primary dark:accent-primary-light"
+                />
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  <span>5 GB</span>
+                  <span>{config.storage} GB</span>
+                  <span>100 GB</span>
                 </div>
-                <h3 className="font-semibold text-lg mb-2">{tech.name}</h3>
-                <p className="text-sm text-gray-600">{tech.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-4 py-2">
-              <span className="text-[#0B3D91]">⚡</span>
-              <span className="text-sm text-gray-700">
-                Alle Technologien werden regelmäßig auf die neuesten Versionen aktualisiert
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] rounded-xl shadow-lg p-8 text-white">
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
-            Häufig gestellte Fragen
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/90">{faq.answer}</p>
               </div>
-            ))}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Datenbanken
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  value={config.databases}
+                  onChange={(e) => setConfig({ ...config, databases: Number(e.target.value) })}
+                  className="w-full accent-primary dark:accent-primary-light"
+                />
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  <span>1</span>
+                  <span>{config.databases}</span>
+                  <span>10</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Subdomains
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="50"
+                  value={config.subdomains}
+                  onChange={(e) => setConfig({ ...config, subdomains: Number(e.target.value) })}
+                  className="w-full accent-primary dark:accent-primary-light"
+                />
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  <span>1</span>
+                  <span>{config.subdomains}</span>
+                  <span>50</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-6 dark:text-white">Ihre Konfiguration</h2>
+              <div className="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 p-6 rounded-lg border border-primary/10 dark:border-primary/20">
+                <ul className="space-y-3 mb-6 dark:text-gray-300">
+                  <li className="flex justify-between">
+                    <span>Region:</span>
+                    <span className="font-medium">
+                      {selectedLocation ? (selectedLocation === 'nuremberg' ? 'Nürnberg' : 'Eygelshoven') : 'Nicht ausgewählt'}
+                    </span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Speicher:</span>
+                    <span className="font-medium">{config.storage} GB</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Datenbanken:</span>
+                    <span className="font-medium">{config.databases}</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Subdomains:</span>
+                    <span className="font-medium">{config.subdomains}</span>
+                  </li>
+                </ul>
+                <div className="text-3xl font-bold mb-4 text-primary dark:text-primary-light">
+                  {calculatePrice()} €<span className="text-sm font-normal text-gray-600 dark:text-gray-400">/Monat</span>
+                </div>
+                <button 
+                  className="w-full bg-primary dark:bg-primary-light text-white py-3 rounded-lg hover:bg-primary-light dark:hover:bg-primary transition-colors"
+                  onClick={handleCustomOrder}
+                >
+                  Jetzt bestellen →
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
