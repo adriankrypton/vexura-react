@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Lock, CheckCircle2, Clock } from 'lucide-react';
 import { PaymentMethodCard } from '../../components/payment/PaymentMethodCard';
-import { SecurityFeature } from '../../components/payment/SecurityFeature';
 
 export function Payment() {
   const paymentMethods = [
@@ -55,29 +53,6 @@ export function Payment() {
     }
   ];
 
-  const securityFeatures = [
-    {
-      icon: Shield,
-      title: "SSL-Verschlüsselung",
-      description: "Alle Zahlungsdaten werden mit modernster SSL-Technologie verschlüsselt übertragen."
-    },
-    {
-      icon: Lock,
-      title: "PCI DSS konform",
-      description: "Wir erfüllen alle Anforderungen der Kreditkartenindustrie für sichere Zahlungen."
-    },
-    {
-      icon: CheckCircle2,
-      title: "Geprüfte Sicherheit",
-      description: "Regelmäßige Sicherheitsaudits durch unabhängige Institutionen."
-    },
-    {
-      icon: Clock,
-      title: "24/7 Monitoring",
-      description: "Kontinuierliche Überwachung aller Zahlungssysteme für maximale Sicherheit."
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
@@ -104,29 +79,6 @@ export function Payment() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {paymentMethods.map((method, index) => (
             <PaymentMethodCard key={index} {...method} index={index} />
-          ))}
-        </div>
-      </div>
-
-      {/* Security Features */}
-      <div className="container mx-auto px-4 py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl font-display font-bold mb-4 text-gray-900 dark:text-white">
-            Ihre Sicherheit hat höchste Priorität
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Modernste Sicherheitstechnologien für Ihre Zahlungen
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {securityFeatures.map((feature, index) => (
-            <SecurityFeature key={index} {...feature} index={index} />
           ))}
         </div>
       </div>

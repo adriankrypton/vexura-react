@@ -13,7 +13,7 @@ function NavLink({ href, children }: NavLinkProps) {
   return (
     <Link
       to={href}
-      className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
+      className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium font-sans"
     >
       {children}
     </Link>
@@ -25,7 +25,7 @@ function MobileNavLink({ href, children, onClick }: NavLinkProps & { onClick?: (
     <Link
       to={href}
       onClick={onClick}
-      className="block text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium py-2"
+      className="block text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium py-2 font-sans"
     >
       {children}
     </Link>
@@ -37,7 +37,7 @@ function DropdownNavLink({ title, items }: { title: string; items: { label: stri
 
   return (
     <div className="relative group" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
-      <button className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">
+      <button className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium font-sans">
         {title}
       </button>
       <AnimatePresence>
@@ -53,7 +53,7 @@ function DropdownNavLink({ title, items }: { title: string; items: { label: stri
               <Link
                 key={index}
                 to={item.href}
-                className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 hover:text-primary dark:hover:text-primary transition-colors"
+                className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 hover:text-primary dark:hover:text-primary transition-colors font-sans"
               >
                 {item.label}
               </Link>
@@ -145,26 +145,37 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center space-x-6">
-          <NavLink href="/">Startseite</NavLink>
-          <DropdownNavLink title="Server" items={serverProducts} />
-          <DropdownNavLink title="Webhosting" items={webhosting} />
-          <DropdownNavLink title="Dienste" items={services} />
-          <DropdownNavLink title="Lizenzen" items={licenses} />
-          <DropdownNavLink title="Informationen" items={infoPages} />
+        <div className="hidden lg:flex items-center justify-between w-full ml-8">
+          <div className="flex items-center space-x-6">
+            <NavLink href="/">Startseite</NavLink>
+            <DropdownNavLink title="Server" items={serverProducts} />
+            <DropdownNavLink title="Webhosting" items={webhosting} />
+            <DropdownNavLink title="Dienste" items={services} />
+            <DropdownNavLink title="Lizenzen" items={licenses} />
+            <DropdownNavLink title="Informationen" items={infoPages} />
+          </div>
           
-          {/* Theme Switcher */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Theme wechseln"
-          >
-            {theme === 'dark' ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
-          </button>
+          <div className="flex items-center space-x-4">
+            <Link
+              to="/dashboard"
+              className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors font-medium font-sans"
+            >
+              Dashboard
+            </Link>
+            
+            {/* Theme Switcher */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Theme wechseln"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}

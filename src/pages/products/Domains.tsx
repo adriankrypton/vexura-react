@@ -101,7 +101,7 @@ export function Domains() {
     }
   }, [searchActive, searchQuery]);
 
-  const handleOrder = (domain: string, price: number) => {
+  const handleOrder = (domain: string, price: number, isTransfer: boolean = false) => {
     const orderDetails = {
       productName: `Domain - ${domain}`,
       price: price,
@@ -110,7 +110,8 @@ export function Domains() {
         { label: 'DNS-Verwaltung', value: 'Inklusive' },
         { label: 'DNSSEC', value: 'Inklusive' },
         { label: 'Whois-Datenschutz', value: 'Inklusive' }
-      ]
+      ],
+      isTransfer: isTransfer
     };
 
     navigate('/order', { state: { orderDetails } });
@@ -170,56 +171,152 @@ export function Domains() {
                 );
 
                 const domainsToShow = searchTld 
-                  ? [searchTld]
+                  ? [searchTld, ...domainPrices.slice(0, 5).filter(d => d.tld !== searchTld.tld)]
                   : domainPrices.slice(0, 5);
 
-                return domainsToShow.map((domain, index) => {
-                  const fullDomain = searchTld ? searchQuery : `${searchQuery}${domain.tld}`;
-                  const status = availabilityStatus[fullDomain];
+                return (
+                  <>
+                    {domainsToShow.map((domain, index) => {
+                      let fullDomain;
+                      if (searchTld && index === 0) {
+                        fullDomain = searchQuery;
+                      } else if (searchTld) {
+                        const baseDomain = searchQuery.slice(0, -searchTld.tld.length);
+                        fullDomain = `${baseDomain}${domain.tld}`;
+                      } else {
+                        fullDomain = `${searchQuery}${domain.tld}`;
+                      }
+                      
+                      const status = availabilityStatus[fullDomain];
+                      const isExactMatch = searchTld && index === 0;
 
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:border-primary/20 dark:border-gray-700 dark:hover:border-primary-light/20 transition-colors"
-                    >
-                      <div className="flex items-center">
-                        <Globe className="h-5 w-5 text-primary dark:text-primary-light mr-3" />
-                        <span className="font-medium dark:text-gray-200">{fullDomain}</span>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <span className="font-semibold dark:text-gray-200">{domain.price} €/Jahr</span>
-                        <div className="flex items-center space-x-2">
-                          {status === 'loading' ? (
-                            <div className="flex items-center text-gray-600 dark:text-gray-400">
-                              <Loader2 className="h-5 w-5 mr-1 animate-spin" />
-                              <span className="text-sm">Prüfe Verfügbarkeit...</span>
+                      return (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className={`flex items-center justify-between p-4 border rounded-lg hover:border-primary/20 dark:border-gray-700 dark:hover:border-primary-light/20 transition-colors ${
+                            isExactMatch ? 'border-primary dark:border-primary-light bg-primary/5 dark:bg-primary-light/5' : ''
+                          }`}
+                        >
+                          <div className="flex items-center">
+                            <Globe className="h-5 w-5 text-primary dark:text-primary-light mr-3" />
+                            <span className="font-medium dark:text-gray-200">{fullDomain}</span>
+                            {isExactMatch && (
+                              <span className="ml-2 px-2 py-1 text-xs bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light rounded">
+                                Exakte Domain
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <span className="font-semibold dark:text-gray-200">{domain.price} €/Jahr</span>
+                            <div className="flex items-center space-x-2">
+                              {status === 'loading' ? (
+                                <div className="flex items-center text-gray-600 dark:text-gray-400">
+                                  <Loader2 className="h-5 w-5 mr-1 animate-spin" />
+                                  <span className="text-sm">Prüfe Verfügbarkeit...</span>
+                                </div>
+                              ) : status === 'available' ? (
+                                <div className="flex items-center text-green-600 dark:text-green-400">
+                                  <Check className="h-5 w-5 mr-1" />
+                                  <span className="text-sm">Verfügbar</span>
+                                </div>
+                              ) : status === 'unavailable' ? (
+                                <div className="flex items-center text-red-600 dark:text-red-400">
+                                  <X className="h-5 w-5 mr-1" />
+                                  <span className="text-sm">Nicht verfügbar</span>
+                                </div>
+                              ) : null}
+                              {status === 'unavailable' ? (
+                                <button 
+                                  className="bg-primary dark:bg-primary-light text-white px-4 py-2 rounded-lg hover:bg-primary-light dark:hover:bg-primary transition-colors"
+                                  onClick={() => handleOrder(fullDomain, domain.price, true)}
+                                >
+                                  Transfer
+                                </button>
+                              ) : (
+                                <button 
+                                  className="bg-primary dark:bg-primary-light text-white px-4 py-2 rounded-lg hover:bg-primary-light dark:hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                  disabled={status === 'loading' || status === 'unavailable'}
+                                  onClick={() => handleOrder(fullDomain, domain.price)}
+                                >
+                                  Registrieren
+                                </button>
+                              )}
                             </div>
-                          ) : status === 'available' ? (
-                            <div className="flex items-center text-green-600 dark:text-green-400">
-                              <Check className="h-5 w-5 mr-1" />
-                              <span className="text-sm">Verfügbar</span>
-                            </div>
-                          ) : status === 'unavailable' ? (
-                            <div className="flex items-center text-red-600 dark:text-red-400">
-                              <X className="h-5 w-5 mr-1" />
-                              <span className="text-sm">Nicht verfügbar</span>
-                            </div>
-                          ) : null}
-                          <button 
-                            className="bg-primary dark:bg-primary-light text-white px-4 py-2 rounded-lg hover:bg-primary-light dark:hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled={status === 'loading' || status === 'unavailable'}
-                            onClick={() => handleOrder(fullDomain, domain.price)}
-                          >
-                            Registrieren
-                          </button>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                    {searchTld && (
+                      <div className="mt-6">
+                        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+                          Weitere Domain-Vorschläge
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {domainPrices
+                            .filter(d => d.tld !== searchTld.tld)
+                            .slice(0, 6)
+                            .map((domain, index) => {
+                              const baseDomain = searchQuery.slice(0, -searchTld.tld.length);
+                              const fullDomain = `${baseDomain}${domain.tld}`;
+                              const status = availabilityStatus[fullDomain];
+
+                              return (
+                                <motion.div
+                                  key={index}
+                                  initial={{ opacity: 0, y: 20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: (index + 1) * 0.1 }}
+                                  className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary/20 dark:hover:border-primary-light/20 transition-colors"
+                                >
+                                  <div className="flex items-center justify-between mb-2">
+                                    <span className="font-medium dark:text-gray-200">{fullDomain}</span>
+                                    <span className="font-semibold text-primary dark:text-primary-light">{domain.price} €/Jahr</span>
+                                  </div>
+                                  <div className="flex items-center justify-between">
+                                    {status === 'loading' ? (
+                                      <div className="flex items-center text-gray-600 dark:text-gray-400">
+                                        <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                                        <span className="text-xs">Prüfe...</span>
+                                      </div>
+                                    ) : status === 'available' ? (
+                                      <div className="flex items-center text-green-600 dark:text-green-400">
+                                        <Check className="h-4 w-4 mr-1" />
+                                        <span className="text-xs">Verfügbar</span>
+                                      </div>
+                                    ) : status === 'unavailable' ? (
+                                      <div className="flex items-center text-red-600 dark:text-red-400">
+                                        <X className="h-4 w-4 mr-1" />
+                                        <span className="text-xs">Nicht verfügbar</span>
+                                      </div>
+                                    ) : null}
+                                    {status === 'unavailable' ? (
+                                      <button 
+                                        className="bg-primary dark:bg-primary-light text-white px-3 py-1 rounded-lg text-sm hover:bg-primary-light dark:hover:bg-primary transition-colors"
+                                        onClick={() => handleOrder(fullDomain, domain.price, true)}
+                                      >
+                                        Transfer
+                                      </button>
+                                    ) : (
+                                      <button 
+                                        className="bg-primary dark:bg-primary-light text-white px-3 py-1 rounded-lg text-sm hover:bg-primary-light dark:hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        disabled={status === 'loading' || status === 'unavailable'}
+                                        onClick={() => handleOrder(fullDomain, domain.price)}
+                                      >
+                                        Registrieren
+                                      </button>
+                                    )}
+                                  </div>
+                                </motion.div>
+                              );
+                            })}
                         </div>
                       </div>
-                    </motion.div>
-                  );
-                });
+                    )}
+                  </>
+                );
               })()}
             </div>
           </div>
