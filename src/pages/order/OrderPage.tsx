@@ -221,14 +221,12 @@ export function OrderPage() {
                   </div>
                 )}
 
-                {/* Backup Option - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein GameServer, kein Teamspeak und kein VPN */}
+                {/* Backup Option - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein Teamspeak und kein VPN */}
                 {orderDetails.type !== 'license' && 
                  !orderDetails.productName.includes('Speicher') && 
                  !orderDetails.productName.includes('Webspace') &&
-                 !orderDetails.productName.includes('Game Server') &&
                  !orderDetails.productName.includes('TeamSpeak') &&
-                 orderDetails.type !== 'vpn' &&
-                 !orderDetails.productName.includes('Domain') && (
+                 orderDetails.type !== 'vpn' && (
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Backup-Speicher
@@ -246,7 +244,7 @@ export function OrderPage() {
                   </div>
                 )}
 
-                {/* Additional IPv4 - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein GameServer, kein Teamspeak und kein VPN */}
+                {/* Additional IPv4 - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein Teamspeak und kein VPN */}
                 {orderDetails.type !== 'license' && 
                  !orderDetails.productName.includes('Speicher') && 
                  !orderDetails.productName.includes('Webspace') &&
@@ -272,7 +270,7 @@ export function OrderPage() {
                   </div>
                 )}
 
-                {/* Additional IPv6 - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein GameServer, kein Teamspeak und kein VPN */}
+                {/* Additional IPv6 - nur anzeigen wenn keine Lizenz, kein Storage, kein Webspace, kein Teamspeak und kein VPN */}
                 {orderDetails.type !== 'license' && 
                  !orderDetails.productName.includes('Speicher') && 
                  !orderDetails.productName.includes('Webspace') &&
