@@ -49,7 +49,7 @@ export function OSSelectPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100/50 to-background dark:from-gray-900 dark:via-gray-800/50 dark:to-gray-900 px-4 py-16">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100/50 to-background dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 py-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
