@@ -3,8 +3,11 @@ import { Server, Users, Clock, Shield, ArrowRight } from 'lucide-react';
 import { HeroSection } from '../components/home/HeroSection';
 import { ProductShowcase } from '../components/home/ProductShowcase';
 import { NewsHighlight } from '../components/home/NewsHighlight';
+import { useNavigate } from 'react-router-dom';
 
 export function HomePage() {
+  const navigate = useNavigate();
+
   const stats = [
     {
       icon: Clock,
@@ -130,7 +133,8 @@ export function HomePage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] text-white px-4 md:px-8 py-2 md:py-4 rounded-lg font-semibold inline-flex items-center group text-sm md:text-base"
+              onClick={() => navigate('/products/root-server')}
+              className="bg-gradient-to-r from-[#0732C5] to-[#0B3D91] text-white px-4 md:px-8 py-2 md:py-4 rounded-lg font-semibold inline-flex items-center group text-sm md:text-base"
             >
               Server konfigurieren
               <ArrowRight className="ml-2 h-3 w-3 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
