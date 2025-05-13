@@ -6,15 +6,15 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0B3D91',
-          light: '#1E88E5',
+          DEFAULT: '#0732C5',
+          light: '#016CF3',
         },
         accent: {
           turquoise: '#00BCD4',
           ice: '#E3F2FD',
         },
         footer: {
-          from: '#4286f4',
+          from: '#0732C5',
           to: '#373B44',
         }
       },

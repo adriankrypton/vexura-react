@@ -112,7 +112,7 @@ export function Partners() {
           alt="Background"
           className="absolute inset-0 w-full h-full object-cover object-center z-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B3D91]/90 via-[#1E88E5]/80 to-[#0B3D91]/95 dark:from-[#0B3D91]/95 dark:via-[#1E88E5]/90 dark:to-[#0B3D91]/98 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0732C5]/90 via-[#0B3D91]/80 to-[#0732C5]/95 dark:from-[#0732C5]/95 dark:via-[#0B3D91]/90 dark:to-[#0732C5]/98 z-10" />
         <div className="relative z-20 container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between py-20">
           {/* Left: Text */}
           <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
@@ -146,7 +146,7 @@ export function Partners() {
                 className="relative bg-white dark:bg-gray-700 rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[300px] border border-gray-100 dark:border-gray-600 hover:border-[#0B3D91] dark:hover:border-primary-light transition-colors"
               >
                 <div className="absolute -top-16 left-1/2 -translate-x-1/2">
-                  <div className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-700 shadow-lg bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 flex items-center justify-center overflow-hidden">
+                  <div className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-700 shadow-lg bg-gradient-to-r from-[#0732C5] to-[#0B3D91] dark:from-[#0732C5]/90 dark:to-[#0B3D91]/90 flex items-center justify-center overflow-hidden">
                     <img
                       src={partner.logo}
                       alt={partner.name}
@@ -206,7 +206,7 @@ export function Partners() {
                 className="bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group h-full"
               >
                 <div className="p-8 h-full flex flex-col">
-                  <div className="bg-gradient-to-br from-[#0B3D91]/20 to-[#1E88E5]/5 dark:from-[#0B3D91]/30 dark:to-[#1E88E5]/20 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <div className="bg-gradient-to-br from-[#0732C5]/20 to-[#0B3D91]/5 dark:from-[#0732C5]/30 dark:to-[#0B3D91]/20 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <feature.icon className="h-10 w-10 text-[#0B3D91] dark:text-primary-light" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -215,7 +215,7 @@ export function Partners() {
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed flex-grow">
                     {feature.description}
                   </p>
-                  <div className="h-1 bg-gradient-to-r from-[#0B3D91]/50 to-[#1E88E5] dark:from-primary-light/50 dark:to-primary-light w-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 mt-6" />
+                  <div className="h-1 bg-gradient-to-r from-[#0732C5]/50 to-[#0B3D91] dark:from-primary-light/50 dark:to-primary-light w-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 mt-6" />
                 </div>
               </motion.div>
             ))}
