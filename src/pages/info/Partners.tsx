@@ -143,7 +143,7 @@ export function Partners() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="relative bg-white dark:bg-gray-700 rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[340px] border border-gray-100 dark:border-gray-600 hover:border-[#0B3D91] dark:hover:border-primary-light transition-colors"
+                className="relative bg-white dark:bg-gray-700 rounded-2xl shadow-lg pt-16 pb-6 px-6 flex flex-col items-center text-center min-h-[300px] border border-gray-100 dark:border-gray-600 hover:border-[#0B3D91] dark:hover:border-primary-light transition-colors"
               >
                 <div className="absolute -top-16 left-1/2 -translate-x-1/2">
                   <div className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-700 shadow-lg bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 flex items-center justify-center overflow-hidden">
@@ -154,7 +154,7 @@ export function Partners() {
                     />
                   </div>
                 </div>
-                <div className="mt-20">
+                <div className="mt-12">
                   <h3 className="text-xl font-bold mb-1 text-[#0B3D91] dark:text-primary-light">{partner.name}</h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4 text-base">{partner.description}</p>
                 </div>

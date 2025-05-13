@@ -7,6 +7,7 @@ interface DomainPrice {
   tld: string;
   price: number;
   special?: boolean;
+  oldPrice?: number;
 }
 
 export function Domains() {
@@ -17,8 +18,8 @@ export function Domains() {
   const [isChecking, setIsChecking] = useState(false);
 
   const domainPrices: DomainPrice[] = [
-    { tld: '.de', price: 0.99, special: true },
-    { tld: '.com', price: 9.99, special: true },
+    { tld: '.de', price: 0.99, special: true, oldPrice: 9.99 },
+    { tld: '.com', price: 9.99, special: true, oldPrice: 14.99 },
     { tld: '.net', price: 9.99 },
     { tld: '.org', price: 9.99 },
     { tld: '.eu', price: 4.99 },
@@ -345,8 +346,13 @@ export function Domains() {
                 <span className="text-sm font-normal text-gray-600 dark:text-gray-400">/Jahr</span>
               </div>
               {domain.special && (
-                <div className="mt-2 text-sm text-primary dark:text-primary-light font-medium">
-                  Sonderangebot
+                <div className="mt-2">
+                  <div className="text-sm text-primary dark:text-primary-light font-medium">
+                    Sonderangebot
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 line-through">
+                    {domain.oldPrice} €/Jahr
+                  </div>
                 </div>
               )}
             </motion.div>

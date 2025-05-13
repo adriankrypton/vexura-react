@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-[#0B3D91] via-[#1E88E5] to-[#00BCD4] pb-16 sm:pb-0">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-[#0B3D91] via-[#1E88E5] to-[#0B3D91] pb-16 sm:pb-0">
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-30">
           {/* Animated Background Elements */}
@@ -41,7 +41,7 @@ export function HeroSection() {
         >
           <h1 className="font-display text-7xl font-bold mb-8 text-white leading-tight">
             Hosting der
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent-turquoise to-white"> nächsten </span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#1E88E5] to-white"> nächsten </span>
             Generation
           </h1>
           <p className="text-2xl mb-8 text-white/90 leading-relaxed">
@@ -51,7 +51,7 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-6">
             <Link 
               to="/products/root-server"
-              className="bg-white text-primary px-8 py-4 rounded-lg font-semibold flex items-center justify-center group hover:bg-accent-turquoise hover:text-white transition-all duration-300"
+              className="bg-white text-[#0B3D91] px-8 py-4 rounded-lg font-semibold flex items-center justify-center group hover:bg-[#1E88E5] hover:text-white transition-all duration-300"
             >
               Server konfigurieren
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
