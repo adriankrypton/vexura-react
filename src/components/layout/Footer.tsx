@@ -38,7 +38,7 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Company Info */}
             <div>
-              <img src="/img/logo.png" alt="Vexura" className="h-8 mb-6" />
+              <img src="/img/logo1.png" alt="Vexura" className="h-8 mb-6" />
               <p className="text-gray-200 mb-6">
                 Professionelle Hosting-Lösungen für Ihr Unternehmen
               </p>

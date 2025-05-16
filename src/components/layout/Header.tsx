@@ -142,7 +142,7 @@ export function Header() {
     <header className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-700">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img src="/img/logo.png" alt="Vexura" className="h-8" />
+          <img src="/img/logo1.png" alt="Vexura" className="h-8" />
         </Link>
 
         {/* Desktop Navigation */}
