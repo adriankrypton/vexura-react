@@ -31,14 +31,14 @@ export function Footer() {
   return (
     <footer className="relative">
       {/* Updated gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#5691c8] to-[#457fca]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0732C5] to-[#016CF3]" />
       
       <div className="relative text-white pt-16 pb-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Company Info */}
             <div>
-              <img src="/img/logo1.png" alt="Vexura" className="h-8 mb-6" />
+              <img src="/img/logo.png" alt="Vexura" className="h-8 mb-6" />
               <p className="text-gray-200 mb-6">
                 Professionelle Hosting-Lösungen für Ihr Unternehmen
               </p>

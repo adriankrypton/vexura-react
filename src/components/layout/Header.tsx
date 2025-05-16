@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from '../../lib/ThemeContext';
 
 interface NavLinkProps {
   href: string;
@@ -13,7 +13,7 @@ function NavLink({ href, children }: NavLinkProps) {
   return (
     <Link
       to={href}
-      className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium font-sans"
+      className="text-gray-600 dark:text-gray-300 hover:text-[#0732C5] dark:hover:text-[#016CF3] transition-colors font-medium"
     >
       {children}
     </Link>
@@ -25,7 +25,7 @@ function MobileNavLink({ href, children, onClick }: NavLinkProps & { onClick?: (
     <Link
       to={href}
       onClick={onClick}
-      className="block text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium py-2 font-sans"
+      className="block text-gray-600 dark:text-gray-300 hover:text-[#0732C5] dark:hover:text-[#016CF3] transition-colors font-medium py-2"
     >
       {children}
     </Link>
@@ -37,7 +37,7 @@ function DropdownNavLink({ title, items }: { title: string; items: { label: stri
 
   return (
     <div className="relative group" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
-      <button className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium font-sans">
+      <button className="text-gray-600 dark:text-gray-300 hover:text-[#0732C5] dark:hover:text-[#016CF3] transition-colors font-medium">
         {title}
       </button>
       <AnimatePresence>
@@ -53,7 +53,7 @@ function DropdownNavLink({ title, items }: { title: string; items: { label: stri
               <Link
                 key={index}
                 to={item.href}
-                className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 hover:text-primary dark:hover:text-primary transition-colors font-sans"
+                className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-[#0732C5]/5 hover:to-[#016CF3]/10 hover:text-[#0732C5] dark:hover:text-[#016CF3] transition-colors"
               >
                 {item.label}
               </Link>
@@ -70,6 +70,8 @@ export function Header() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
 
+  const isDarkMode = theme === 'dark';
+
   const serverProducts = [
     { label: 'KVM Server', href: '/products/root-server' },
     { label: 'Dedicated Server', href: '/products/dedicated' },
@@ -83,8 +85,7 @@ export function Header() {
   ];
 
   const services = [
-    { label: 'Storageboxen', href: '/products/storage' },
-    { label: 'VPN', href: '/products/vpn' }
+    { label: 'Storageboxen', href: '/products/storage' }
   ];
 
   const licenses = [
@@ -118,7 +119,7 @@ export function Header() {
       'webspaces': 'Webhosting',
       'domains': 'Domains',
       'storage': 'Storageboxen',
-      'licenses': 'Lizenzen',
+      'licenses': 'Plesk Lizenzen',
       'datacenter': 'Rechenzentrum',
       'payment': 'Zahlungsmethoden',
       'reselling': 'Reselling',
@@ -141,58 +142,45 @@ export function Header() {
     <header className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-700">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img src="/img/logo1.png" alt="Vexura" className="h-8" />
+          <img src="/img/logo.png" alt="Vexura" className="h-8" />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center justify-between w-full ml-8">
-          <div className="flex items-center space-x-6">
-            <NavLink href="/">Startseite</NavLink>
-            <DropdownNavLink title="Server" items={serverProducts} />
-            <DropdownNavLink title="Webhosting" items={webhosting} />
-            <DropdownNavLink title="Dienste" items={services} />
-            <DropdownNavLink title="Lizenzen" items={licenses} />
-            <DropdownNavLink title="Informationen" items={infoPages} />
-          </div>
+        <div className="hidden lg:flex items-center space-x-6">
+          <NavLink href="/">Startseite</NavLink>
+          <DropdownNavLink title="Server" items={serverProducts} />
+          <DropdownNavLink title="Webhosting" items={webhosting} />
+          <DropdownNavLink title="Dienste" items={services} />
+          <DropdownNavLink title="Lizenzen" items={licenses} />
+          <DropdownNavLink title="Informationen" items={infoPages} />
           
-          <div className="flex items-center space-x-4">
-            <Link
-              to="/dashboard"
-              className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors font-medium font-sans"
-            >
-              Dashboard
-            </Link>
-            
-            {/* Theme Switcher */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label="Theme wechseln"
-            >
-              {theme === 'dark' ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="flex items-center space-x-4 lg:hidden">
-          {/* Theme Switcher for Mobile */}
+          {/* Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
             className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Theme wechseln"
+            aria-label="Toggle dark mode"
           >
-            {theme === 'dark' ? (
+            {isDarkMode ? (
               <Sun className="h-5 w-5" />
             ) : (
               <Moon className="h-5 w-5" />
             )}
           </button>
-          
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="flex items-center space-x-4 lg:hidden">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </button>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"

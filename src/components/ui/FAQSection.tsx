@@ -12,7 +12,7 @@ interface FAQSectionProps {
 export function FAQSection({ items }: FAQSectionProps) {
   return (
     <div className="container mx-auto px-4 py-16">
-      <div className="bg-gradient-to-r from-[#0B3D91] to-[#1E88E5] dark:from-[#0B3D91]/90 dark:to-[#1E88E5]/90 rounded-xl shadow-lg p-8 text-white">
+      <div className="bg-gradient-to-r from-[#0732C5] to-[#016CF3] dark:from-[#0732C5]/90 dark:to-[#016CF3]/90 rounded-xl shadow-lg p-8 text-white">
         <h2 className="text-3xl font-display font-bold text-center mb-12 dark:text-white/95">
           Häufig gestellte Fragen
         </h2>

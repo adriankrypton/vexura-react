@@ -14,7 +14,7 @@ export default {
           ice: '#E3F2FD',
         },
         footer: {
-          from: '#0732C5',
+          from: '#4286f4',
           to: '#373B44',
         }
       },
