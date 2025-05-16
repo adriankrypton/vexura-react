@@ -31,7 +31,7 @@ export function Footer() {
   return (
     <footer className="relative">
       {/* Updated gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0732C5] to-[#016CF3]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0732C5]/90 to-[#016CF3]/90" />
       
       <div className="relative text-white pt-16 pb-12">
         <div className="container mx-auto px-4">
